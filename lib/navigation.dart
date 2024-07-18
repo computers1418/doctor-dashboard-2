@@ -1,3 +1,4 @@
+import 'package:doctor_dashboard/pages/consultation/choose_consultation_view.dart';
 import 'package:doctor_dashboard/pages/dashboard/dashboard.dart';
 import 'package:doctor_dashboard/pages/forgot_password/forgot_password.dart';
 import 'package:doctor_dashboard/pages/history/history_view.dart';
@@ -234,6 +235,21 @@ class Navigation extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
                     child: const Text("History View"),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChooseConsultationView(),
+                  ),
+                ),
+                child: Card(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text("Choose Consultation"),
                   ),
                 ),
               ),
