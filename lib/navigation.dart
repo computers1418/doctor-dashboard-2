@@ -5,6 +5,7 @@ import 'package:doctor_dashboard/pages/login/login.dart';
 import 'package:doctor_dashboard/pages/new_consultation_details/new_consultation_details.dart';
 import 'package:doctor_dashboard/pages/previous_schedules/previous_schedules.dart';
 import 'package:doctor_dashboard/pages/problem_icons/problem_icons.dart';
+import 'package:doctor_dashboard/pages/profile/profile_view.dart';
 import 'package:doctor_dashboard/pages/saved_schedules/saved_schedules.dart';
 import 'package:doctor_dashboard/pages/search_result/search_result.dart';
 import 'package:doctor_dashboard/pages/set_password/set_password.dart';
@@ -203,6 +204,21 @@ class Navigation extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
                     child: const Text("Set Schedules"),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileView(),
+                  ),
+                ),
+                child: Card(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text("Profile View"),
                   ),
                 ),
               ),

@@ -229,363 +229,371 @@ class _ProfileViewState extends State<ProfileView> {
                 ],
               ),
             ),
-            Container(
-              color: const Color(0xFFF2F7FB),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Dr. Mitchell Adams",
-                        style: TextStyle(
-                          fontFamily: "Slussen",
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20,
-                          color: Color(0xFF201A3F),
+            Transform.translate(
+              offset: const Offset(0, -20),
+              child: Container(
+                color: const Color(0xFFF2F7FB),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Dr. Mitchell Adams",
+                          style: TextStyle(
+                            fontFamily: "Slussen",
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20,
+                            color: Color(0xFF201A3F),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "(BDS,MDS)",
-                        style: TextStyle(
-                          fontFamily: "Slussen",
-                          fontWeight: FontWeight.w800,
-                          fontSize: 8,
-                          color: Color(0xFFFF65DE),
+                      const SizedBox(height: 6),
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "(BDS,MDS)",
+                          style: TextStyle(
+                            fontFamily: "Slussen",
+                            fontWeight: FontWeight.w800,
+                            fontSize: 8,
+                            color: Color(0xFFFF65DE),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Row(
-                      children: [
-                        MainContainer(
-                            icon: "res/icons/calendar.png",
-                            sub: "patients Treated",
-                            title: "10K+"),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        MainContainer(
-                            icon: "res/icons/reminder.png",
-                            sub: "years exp",
-                            title: "6+",
-                            invert: true),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        MainContainer(
-                          icon: "res/icons/tools.png",
-                          sub: "Awards",
-                          title: "30+",
-                        ),
-                      ],
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 35),
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF201A3F),
-                          borderRadius: BorderRadius.circular(35)),
-                      child: Row(
+                      const SizedBox(height: 16),
+                      const Row(
                         children: [
-                          Expanded(
-                            flex: 6,
-                            child: Column(
-                              children: [
-                                ShaderMask(
-                                  shaderCallback: (Rect bounds) {
-                                    return const LinearGradient(
-                                      colors: [
-                                        Color(0xFFE7CB87),
-                                        Color(0xFFE49356)
-                                      ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ).createShader(bounds);
-                                  },
-                                  child: const Text(
-                                    "Smile Dental Clinic",
+                          MainContainer(
+                              icon: "res/icons/calendar.png",
+                              sub: "patients Treated",
+                              title: "10K+"),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          MainContainer(
+                              icon: "res/icons/reminder.png",
+                              sub: "years exp",
+                              title: "6+",
+                              invert: true),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          MainContainer(
+                            icon: "res/icons/tools.png",
+                            sub: "Awards",
+                            title: "30+",
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 35),
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF201A3F),
+                            borderRadius: BorderRadius.circular(35)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: Column(
+                                children: [
+                                  ShaderMask(
+                                    shaderCallback: (Rect bounds) {
+                                      return const LinearGradient(
+                                        colors: [
+                                          Color(0xFFE7CB87),
+                                          Color(0xFFE49356)
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ).createShader(bounds);
+                                    },
+                                    child: const Text(
+                                      "Smile Dental Clinic",
+                                      style: TextStyle(
+                                        fontFamily: "Slussen",
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20,
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  const Text(
+                                    "12/2, Mathura Road, Sector 37, Faridabad,Delhi - 101213",
                                     style: TextStyle(
                                       fontFamily: "Slussen",
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                      color: Color(0xFFFFFFFF),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 10,
+                                      color: Color(0x80FFFFFF),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                const Text(
-                                  "12/2, Mathura Road, Sector 37, Faridabad,Delhi - 101213",
-                                  style: TextStyle(
-                                    fontFamily: "Slussen",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                    color: Color(0x80FFFFFF),
+                                  const SizedBox(
+                                    height: 8,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30),
-                                        border: Border.all(
-                                          color: Colors.white.withOpacity(0.2),
-                                        ),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const ImageIcon(
-                                        AssetImage("res/icons/phone.png"),
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    const Expanded(
-                                      child: Text(
-                                        "+91 90876 54321",
-                                        style: TextStyle(
-                                          fontFamily: "Slussen",
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 10,
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30),
-                                        border: Border.all(
-                                          color: Colors.white.withOpacity(0.2),
-                                        ),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const ImageIcon(
-                                        AssetImage("res/icons/email.png"),
-                                        color: Colors.white,
-                                        size: 12,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    const Expanded(
-                                      child: Text(
-                                        "drmitchadams1414@gmail.com",
-                                        style: TextStyle(
-                                          fontFamily: "Slussen",
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 10,
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 16),
-                                  child: Image.asset(
-                                    "res/images/image.png",
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(
-                                          sigmaX: 10.0, sigmaY: 10.0),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 8),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 30,
+                                        width: 30,
                                         decoration: BoxDecoration(
-                                            color: const Color(0x80FF65DE),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: const Text(
-                                          "3rd floor",
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          border: Border.all(
+                                            color:
+                                                Colors.white.withOpacity(0.2),
+                                          ),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: const ImageIcon(
+                                          AssetImage("res/icons/phone.png"),
+                                          color: Colors.white,
+                                          size: 12,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Expanded(
+                                        child: Text(
+                                          "+91 90876 54321",
                                           style: TextStyle(
                                             fontFamily: "Slussen",
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w500,
                                             fontSize: 10,
                                             color: Color(0xFFFFFFFF),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Text(
-                      "More About You",
-                      style: TextStyle(
-                        fontFamily: "Slussen",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        color: Color(0xFFE49356),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    StyledWrapper(
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _currentShow = _currentShow == 0 ? -1 : 0;
-                              });
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    "About",
-                                    style: TextStyle(
-                                      fontFamily: "Slussen",
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18,
-                                      color: Color(0xFF201A3F),
-                                    ),
+                                  const SizedBox(
+                                    height: 4,
                                   ),
-                                ),
-                                Icon(
-                                  _currentShow == 0
-                                      ? Icons.keyboard_arrow_down_rounded
-                                      : Icons.keyboard_arrow_up_rounded,
-                                  color: const Color(0xFF201A3F),
-                                  size: 24,
-                                )
-                              ],
-                            ),
-                          ),
-                          if (_currentShow == 0) ...[
-                            const SizedBox(height: 10),
-                            const Text(
-                              "Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.",
-                              style: TextStyle(
-                                fontFamily: "Slussen",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                                color: Color(0xFF201A3F),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          border: Border.all(
+                                            color:
+                                                Colors.white.withOpacity(0.2),
+                                          ),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: const ImageIcon(
+                                          AssetImage("res/icons/email.png"),
+                                          color: Colors.white,
+                                          size: 12,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Expanded(
+                                        child: Text(
+                                          "drmitchadams1414@gmail.com",
+                                          style: TextStyle(
+                                            fontFamily: "Slussen",
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                            color: Color(0xFFFFFFFF),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ...items.map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: StyledWrapper(
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _currentShow =
-                                        _currentShow == items.indexOf(e) + 1
-                                            ? -1
-                                            : items.indexOf(e) + 1;
-                                  });
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '$e',
-                                        style: const TextStyle(
-                                          fontFamily: "Slussen",
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 18,
-                                          color: Color(0xFF201A3F),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16),
+                                    child: Image.asset(
+                                      "res/images/image.png",
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 10.0, sigmaY: 10.0),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 8),
+                                          decoration: BoxDecoration(
+                                              color: const Color(0x80FF65DE),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: const Text(
+                                            "3rd floor",
+                                            style: TextStyle(
+                                              fontFamily: "Slussen",
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 10,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Icon(
-                                      _currentShow == items.indexOf(e) + 1
-                                          ? Icons.keyboard_arrow_up_rounded
-                                          : Icons.keyboard_arrow_down_rounded,
-                                      color: Color(0xFF201A3F),
-                                      size: 24,
-                                    )
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
-                              if (_currentShow == items.indexOf(e) + 1) ...[
-                                const SizedBox(height: 10),
-                                const Text(
-                                  "Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.",
-                                  style: TextStyle(
-                                    fontFamily: "Slussen",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                    color: Color(0xFF201A3F),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Text(
+                        "More About You",
+                        style: TextStyle(
+                          fontFamily: "Slussen",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: Color(0xFFE49356),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      StyledWrapper(
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _currentShow = _currentShow == 0 ? -1 : 0;
+                                });
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Expanded(
+                                    child: Text(
+                                      "About",
+                                      style: TextStyle(
+                                        fontFamily: "Slussen",
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 18,
+                                        color: Color(0xFF201A3F),
+                                      ),
+                                    ),
                                   ),
-                                )
-                              ],
+                                  Icon(
+                                    _currentShow == 0
+                                        ? Icons.keyboard_arrow_down_rounded
+                                        : Icons.keyboard_arrow_up_rounded,
+                                    color: const Color(0xFF201A3F),
+                                    size: 24,
+                                  )
+                                ],
+                              ),
+                            ),
+                            if (_currentShow == 0) ...[
+                              const SizedBox(height: 10),
+                              const Text(
+                                "Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.",
+                                style: TextStyle(
+                                  fontFamily: "Slussen",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10,
+                                  color: Color(0xFF201A3F),
+                                ),
+                              )
                             ],
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ...items.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: StyledWrapper(
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _currentShow =
+                                          _currentShow == items.indexOf(e) + 1
+                                              ? -1
+                                              : items.indexOf(e) + 1;
+                                    });
+                                  },
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '$e',
+                                          style: const TextStyle(
+                                            fontFamily: "Slussen",
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 18,
+                                            color: Color(0xFF201A3F),
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        _currentShow == items.indexOf(e) + 1
+                                            ? Icons.keyboard_arrow_up_rounded
+                                            : Icons.keyboard_arrow_down_rounded,
+                                        color: Color(0xFF201A3F),
+                                        size: 24,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                if (_currentShow == items.indexOf(e) + 1) ...[
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.",
+                                    style: TextStyle(
+                                      fontFamily: "Slussen",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 10,
+                                      color: Color(0xFF201A3F),
+                                    ),
+                                  )
+                                ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             Container(
               color: const Color(0xFFF2F7FB),
               child: Container(
-                height: 50,
+                height: 40,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
                   color: Color(0xFF201A3F),
@@ -634,12 +642,21 @@ class _ProfileViewState extends State<ProfileView> {
                           height: 16,
                         ),
                         Container(
+                          height: 230,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
                             image: const DecorationImage(
                               image: AssetImage("res/images/card_bg.png"),
                               fit: BoxFit.fitWidth,
                             ),
+                            // box-shadow: 0px 4px 4px 0px #00000040;
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                              )
+                            ],
                           ),
                           child: Stack(
                             children: [
@@ -679,13 +696,14 @@ class _ProfileViewState extends State<ProfileView> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 70),
+                                    // SizedBox(height: 70),
+                                    Spacer(),
                                     Text(
                                       "Dr. Mitchell Adams",
                                       style: TextStyle(
                                         fontFamily: "Slussen",
                                         fontWeight: FontWeight.w800,
-                                        fontSize: 12,
+                                        fontSize: 13,
                                         color: Color(0xFFFFFFFF),
                                       ),
                                     ),
@@ -693,11 +711,11 @@ class _ProfileViewState extends State<ProfileView> {
                                       height: 6,
                                     ),
                                     Text(
-                                      "1818   8372   7366   ****",
+                                      "1818 8372 7366 ****",
                                       style: TextStyle(
                                         fontFamily: "Slussen",
                                         fontWeight: FontWeight.w800,
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         color: Color(0xFFFFFFFF),
                                       ),
                                     ),
