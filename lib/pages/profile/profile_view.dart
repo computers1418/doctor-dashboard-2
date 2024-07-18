@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/list_item.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/main_container.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/offer_popup.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/styled_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -84,6 +86,7 @@ class _ProfileViewState extends State<ProfileView> {
       // canPop: false,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 0.002),
+        // backgroundColor: HexColor(primaryColor),
         body: ListView(
           children: [
             SizedBox(
@@ -97,18 +100,19 @@ class _ProfileViewState extends State<ProfileView> {
                       height: 200,
                     ),
                   ),
-                  ColorFiltered(
-                    colorFilter: const ColorFilter.mode(
-                      Colors.grey,
-                      BlendMode.modulate,
-                    ),
-                    child: Image.asset(
-                      "res/images/top_bg.png",
-                      height: 300,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    ),
+                  Image.asset(
+                    "res/images/top_bg.png",
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
                   ),
+                  // ColorFiltered(
+                  //   colorFilter: const ColorFilter.mode(
+                  //     Colors.grey,
+                  //     BlendMode.modulate,
+                  //   ),
+                  //   child:
+                  // ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
