@@ -4,7 +4,6 @@ import 'package:doctor_dashboard/pages/login/login.dart';
 import 'package:doctor_dashboard/pages/new_consultation_details/new_consultation_details.dart';
 import 'package:doctor_dashboard/pages/previous_schedules/previous_schedules.dart';
 import 'package:doctor_dashboard/pages/problem_icons/problem_icons.dart';
-import 'package:doctor_dashboard/pages/profile/profile.dart';
 import 'package:doctor_dashboard/pages/saved_schedules/saved_schedules.dart';
 import 'package:doctor_dashboard/pages/search_result/search_result.dart';
 import 'package:doctor_dashboard/pages/set_password/set_password.dart';
@@ -16,18 +15,19 @@ import 'pages/new_consultation_details/select_problem.dart';
 import 'pages/otp/otp.dart';
 
 class Navigation extends StatelessWidget {
-  const Navigation({ Key? key }) : super(key: key);
+  const Navigation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: SafeArea(
-                      child: SingleChildScrollView(
-              child: Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const Dashboard())),
-                          child: Card(
+              InkWell(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Dashboard())),
+                child: Card(
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
@@ -35,9 +35,12 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const SearchResult())),
-                          child: Card(
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchResult())),
+                child: Card(
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
@@ -45,10 +48,13 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const NewConsultationDetails(
-                isNew: true,
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewConsultationDetails(
+                              isNew: true,
+                            ))),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -57,10 +63,13 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const NewConsultationDetails(
-                isNew: false,
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewConsultationDetails(
+                              isNew: false,
+                            ))),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -69,7 +78,8 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () =>showBottomSheet(context),
+              InkWell(
+                onTap: () => showBottomSheet(context),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -78,10 +88,13 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const SetProblem(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SetProblem(),
+                  ),
+                ),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -90,10 +103,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-               InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const ProblemIcons(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProblemIcons())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -102,10 +116,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const LoginScreen(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -114,10 +129,9 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const OtpScreen(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const OtpScreen())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -126,10 +140,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const ForgotPasswordScreen(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPasswordScreen())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -138,10 +153,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const SetPasswordScreen(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SetPasswordScreen())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -150,10 +166,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const SavedSchedules(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SavedSchedules())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -162,10 +179,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const PreviousSchedules(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PreviousSchedules())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -174,10 +192,11 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(onTap: () => Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const SetSchedule(
-               
-              ))),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SetSchedule())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -186,9 +205,9 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              // InkWell(onTap: () => Navigator.push(context, 
+              // InkWell(onTap: () => Navigator.push(context,
               // MaterialPageRoute(builder: (context) => const Profile(
-               
+
               // ))),
               //   child: Card(
               //     child: Container(
@@ -205,39 +224,40 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  void showBottomSheet(context){
+  void showBottomSheet(context) {
     showModalBottomSheet<void>(
       // barrierColor: Colors.white.withOpacity(.00000000001),
       backgroundColor: Colors.white.withOpacity(.0000000001),
       isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return SizedBox(height: MediaQuery.of(context).size.height * .8,
-                child: Column(
-                  children: [
-                    Container(width: 40, height: 6,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Colors.white
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(fit: BoxFit.fill,
-                            image: 
-                          AssetImage("lib/pages/new_consultation_details/assets/bottom-sheet-bg.png"))
-                        ),
-                        child: SelectProblem(callback: (){
-
-                        },)
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * .8,
+          child: Column(
+            children: [
+              Container(
+                width: 40,
+                height: 6,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(45),
+                    color: Colors.white),
+              ),
+              Expanded(
+                child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(
+                                "lib/pages/new_consultation_details/assets/bottom-sheet-bg.png"))),
+                    child: SelectProblem(
+                      callback: () {},
+                    )),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
