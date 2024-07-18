@@ -1,5 +1,6 @@
 import 'package:doctor_dashboard/pages/dashboard/dashboard.dart';
 import 'package:doctor_dashboard/pages/forgot_password/forgot_password.dart';
+import 'package:doctor_dashboard/pages/history/history_view.dart';
 import 'package:doctor_dashboard/pages/login/login.dart';
 import 'package:doctor_dashboard/pages/new_consultation_details/new_consultation_details.dart';
 import 'package:doctor_dashboard/pages/previous_schedules/previous_schedules.dart';
@@ -205,6 +206,22 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HistoryView(),
+                  ),
+                ),
+                child: Card(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text("History View"),
+                  ),
+                ),
+              ),
+
               // InkWell(onTap: () => Navigator.push(context,
               // MaterialPageRoute(builder: (context) => const Profile(
 

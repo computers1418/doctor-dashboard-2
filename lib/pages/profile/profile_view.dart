@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:doctor_dashboard/pages/profile/widgets/list_item.dart';
-import 'package:doctor_dashboard/pages/profile/widgets/location_popup.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/main_container.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/offer_popup.dart';
 import 'package:doctor_dashboard/pages/profile/widgets/styled_wrapper.dart';
