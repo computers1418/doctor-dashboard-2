@@ -43,6 +43,12 @@ dependencies:
   otp_text_field:
   glass_kit: ^3.0.0
   dropdown_button2: ^2.3.9
+  get:
+  http:
+  fluttertoast: ^8.2.6
+  flutter_screenutil: ^5.9.3
+  gradient_borders: ^1.0.1
+  intl:
 
 dev_dependencies:
   flutter_test:
@@ -113,6 +119,18 @@ flutter:
           weight: 300
         - asset: assets/fonts/Slussen-Extended-Thin.otf
           weight: 200
+    - family: Metropolis
+      fonts:
+        - asset: assets/fonts/Metropolis-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Metropolis-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Metropolis-Regular.ttf
+          weight: 400
+    - family: Lufga
+      fonts:
+        - asset: assets/fonts/LufgaBold.ttf
+          weight: 700
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

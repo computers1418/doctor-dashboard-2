@@ -34,7 +34,7 @@ const List smsHistory = [
 const List voiceHistory = [
   {
     "image": "voice-pic-1",
-    "name": "Amanda Liz",
+    "name": "amanda Liz",
     "phone": "+91 9087654321",
     "time": "29 May, 6:37 PM",
     "received": true

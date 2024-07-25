@@ -61,8 +61,8 @@ class Win32Window {
   // inheriting classes can handle.
   virtual LRESULT MessageHandler(HWND window,
                                  UINT const message,
-                                 WPARAM const wparam,
-                                 LPARAM const lparam) noexcept;
+                                 WPARam const wparam,
+                                 LPARam const lparam) noexcept;
 
   // Called when CreateAndShow is called, allowing subclass window-related
   // setup. Subclasses should return false if setup fails.
@@ -81,8 +81,8 @@ class Win32Window {
   // MessageHandler.
   static LRESULT CALLBACK WndProc(HWND const window,
                                   UINT const message,
-                                  WPARAM const wparam,
-                                  LPARAM const lparam) noexcept;
+                                  WPARam const wparam,
+                                  LPARam const lparam) noexcept;
 
   // Retrieves a class instance pointer for |window|
   static Win32Window* GetThisFromHandle(HWND const window) noexcept;

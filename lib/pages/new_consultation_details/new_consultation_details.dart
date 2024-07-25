@@ -105,7 +105,7 @@ class _NewConsultationDetailsState extends State<NewConsultationDetails>
   initializeFields(){
     setState(() {
       date.text = "27 Feb, Tuesday";
-      time.text = "10:00 AM";
+      time.text = "10:00 am";
       consultationType.text = "Clinic Visit";
       problem.text = "Dental Braces";
       test.text = "None";
@@ -785,7 +785,7 @@ class _NewConsultationDetailsState extends State<NewConsultationDetails>
                                                 ),
                                               ),
                                             ),
-                                            Text("Amount",
+                                            Text("amount",
                                               style: CustomFonts.slussen14W700(
                                                 color: HexColor("#201A3F").withOpacity(.6)
                                               ),

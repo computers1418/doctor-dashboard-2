@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomFonts {
   static TextStyle slussen8W700({Color? color = Colors.black}) {
@@ -45,6 +46,22 @@ class CustomFonts {
     return TextStyle(
         fontFamily: "Slussen",
         fontSize: 15,
+        fontWeight: FontWeight.w700,
+        color: color);
+  }
+
+  static TextStyle slussen9W500({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Slussen",
+        fontSize: 9.sp,
+        fontWeight: FontWeight.w500,
+        color: color);
+  }
+
+  static TextStyle slussen22W700({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Slussen",
+        fontSize: 22.sp,
         fontWeight: FontWeight.w700,
         color: color);
   }
@@ -342,6 +359,46 @@ class CustomFonts {
         fontFamily: "Slussen",
         fontSize: 10,
         fontWeight: FontWeight.w400,
+        color: color);
+  }
+
+  static TextStyle metropolis12W600({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Metropolis",
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w600,
+        color: color);
+  }
+
+  static TextStyle metropolis8W500({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Metropolis",
+        fontSize: 8.sp,
+        fontWeight: FontWeight.w500,
+        color: color);
+  }
+
+  static TextStyle metropolis16W700({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Metropolis",
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+        color: color);
+  }
+
+  static TextStyle metropolis10W400({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Metropolis",
+        fontSize: 10.sp,
+        fontWeight: FontWeight.w400,
+        color: color);
+  }
+
+  static TextStyle Lufga10W700({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Lufga",
+        fontSize: 10.sp,
+        fontWeight: FontWeight.w700,
         color: color);
   }
 }

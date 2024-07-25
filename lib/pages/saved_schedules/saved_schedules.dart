@@ -118,12 +118,12 @@ class _SavedSchedulesState extends State<SavedSchedules>
         scale: _scaleAnimation,
         child: Material(
           animationDuration: duration,
-          borderRadius: BorderRadius.all(Radius.circular(
-            isCollapsed ? 0 : 40)),
+          borderRadius: BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
           elevation: 8,
           color: Colors.white,
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
             child: Container(
               width: double.infinity,
               color: HexColor("#201A3F"),
@@ -177,8 +177,7 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                     const EdgeInsets.symmetric(horizontal: 16),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 20
-                                  ),
+                                      horizontal: 16, vertical: 20),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(35)),
@@ -213,44 +212,57 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                           Row(
                                             children: [
                                               Container(
-                                                padding: const EdgeInsets.all(9),
-                                                height: 30, width: 30,
+                                                padding:
+                                                    const EdgeInsets.all(9),
+                                                height: 30,
+                                                width: 30,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
                                                   color: HexColor("#F7F9FC"),
                                                 ),
-                                                child: Center(child: Image.asset("assets/images/edit.png")),
+                                                child: Center(
+                                                    child: Image.asset(
+                                                        "assets/images/edit.png")),
                                               ),
-                                              const SizedBox(width: 4,),
+                                              const SizedBox(
+                                                width: 4,
+                                              ),
                                               InkWell(
                                                 onTap: () => setState(() {
-                                                  if(selectedDate == -1){
+                                                  if (selectedDate == -1) {
                                                     selectedDate = -2;
-                                                  }else{
+                                                  } else {
                                                     selectedDate = -1;
                                                   }
                                                 }),
                                                 child: Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 8),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
                                                   height: 30,
                                                   decoration: BoxDecoration(
                                                     color: HexColor(pinkColor),
                                                     borderRadius:
-                                                        BorderRadius.circular(40),
+                                                        BorderRadius.circular(
+                                                            40),
                                                   ),
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         "schedules ",
-                                                        style:
-                                                            CustomFonts.slussen9W700(
-                                                                color: Colors.white),
+                                                        style: CustomFonts
+                                                            .slussen9W700(
+                                                                color: Colors
+                                                                    .white),
                                                       ),
-                                                      Icon(selectedDate != -2 ?
-                                                        Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                                                      Icon(
+                                                        selectedDate != -2
+                                                            ? Icons
+                                                                .keyboard_arrow_up
+                                                            : Icons
+                                                                .keyboard_arrow_down,
                                                         color: Colors.white,
                                                         size: 14,
                                                       )
@@ -262,12 +274,14 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                           )
                                         ],
                                       ),
-                                      if(selectedDate != -2)
-                                      const SizedBox(height: 8,),
-                                      if(selectedDate != -2)
-                                      Row(
-                                        children: [
-                                          Container(
+                                      if (selectedDate != -2)
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                      if (selectedDate != -2)
+                                        Row(
+                                          children: [
+                                            Container(
                                               width: 68,
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -290,7 +304,9 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(width: 6,),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
                                             Container(
                                               width: 68,
                                               padding:
@@ -299,22 +315,27 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      HexColor(goldDarkColor).withOpacity(.2),
-                                                      HexColor(goldLightColor).withOpacity(.1),
-                                                    ]),
+                                                gradient:
+                                                    LinearGradient(colors: [
+                                                  HexColor(goldDarkColor)
+                                                      .withOpacity(.2),
+                                                  HexColor(goldLightColor)
+                                                      .withOpacity(.1),
+                                                ]),
                                               ),
                                               child: Center(
                                                 child: Text(
                                                   "Afternoon",
                                                   style:
                                                       CustomFonts.slussen10W500(
-                                                          color: HexColor("#E49356")),
+                                                          color: HexColor(
+                                                              "#E49356")),
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(width: 6,),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
                                             Container(
                                               width: 68,
                                               padding:
@@ -323,90 +344,105 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      HexColor(goldDarkColor).withOpacity(.2),
-                                                      HexColor(goldLightColor).withOpacity(.1),
-                                                    ]),
+                                                gradient:
+                                                    LinearGradient(colors: [
+                                                  HexColor(goldDarkColor)
+                                                      .withOpacity(.2),
+                                                  HexColor(goldLightColor)
+                                                      .withOpacity(.1),
+                                                ]),
                                               ),
                                               child: Center(
                                                 child: Text(
                                                   "Evening",
                                                   style:
                                                       CustomFonts.slussen10W500(
-                                                          color: HexColor("#E49356")),
+                                                          color: HexColor(
+                                                              "#E49356")),
                                                 ),
                                               ),
                                             ),
-                                        ],
-                                      ),
-                                      if(selectedDate != -2)
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      if(selectedDate != -2)
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 0),
-                                          child: Row(
-                                            children: [
-                                              for (int i = 0; i < 8; i++)
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 8),
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 24,
-                                                        vertical: 16),
-                                                    // height: 110,
-                                                    decoration: BoxDecoration(
-                                                      color: HexColor("#F7F9FC"),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
+                                          ],
+                                        ),
+                                      if (selectedDate != -2)
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                      if (selectedDate != -2)
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 0),
+                                            child: Row(
+                                              children: [
+                                                for (int i = 0; i < 8; i++)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 24,
+                                                          vertical: 16),
+                                                      // height: 110,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            HexColor("#F7F9FC"),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            "am",
+                                                            style: CustomFonts.slussen10W600(
+                                                                color: HexColor(
+                                                                        primaryColor)
+                                                                    .withOpacity(
+                                                                        .5)),
+                                                          ),
+                                                          Text(
+                                                            "09:00",
+                                                            style: CustomFonts
+                                                                .slussen14W700(
+                                                                    color: HexColor(
+                                                                        primaryColor)),
+                                                          ),
+                                                          Text(
+                                                            "-",
+                                                            style: CustomFonts
+                                                                .slussen14W700(
+                                                                    color: HexColor(
+                                                                        primaryColor)),
+                                                          ),
+                                                          Text(
+                                                            "09:30",
+                                                            style: CustomFonts
+                                                                .slussen14W700(
+                                                                    color: HexColor(
+                                                                        primaryColor)),
+                                                          ),
+                                                          Text(
+                                                            "am",
+                                                            style: CustomFonts
+                                                                .slussen10W600(
+                                                                    color: HexColor(
+                                                                        primaryColor)),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Text(
-                                                          "am",
-                                                          style: CustomFonts
-                                                              .slussen10W600(
-                                                                  color: HexColor(primaryColor).withOpacity(.5)),
-                                                        ),
-                                                         Text(
-                                                          "09:00",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "-",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "09:30",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "am",
-                                                          style: CustomFonts
-                                                              .slussen10W600(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                            ],
+                                                  )
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -416,8 +452,7 @@ class _SavedSchedulesState extends State<SavedSchedules>
                               ),
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 16
-                                  ),
+                                    horizontal: 14, vertical: 16),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: HexColor("#F2F7FB"),
@@ -428,14 +463,15 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                     // bottomRight: Radius.circular(45),
                                   ),
                                 ),
-                                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 16),
-                                      child: Text("Upcomoing",
-                                      style: CustomFonts.slussen16W700(
-                                        color: HexColor(primaryColor)
-                                      ),
+                                      child: Text(
+                                        "Upcomoing",
+                                        style: CustomFonts.slussen16W700(
+                                            color: HexColor(primaryColor)),
                                       ),
                                     ),
                                     const SizedBox(
@@ -447,241 +483,322 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                           bottom: 12,
                                         ),
                                         child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 20
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25)),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 14, vertical: 20),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Column(
                                             children: [
-                                              Text(
-                                                "26 Feb, Monday",
-                                                style:
-                                                    CustomFonts.slussen16W700(
-                                                        color: HexColor(
-                                                            primaryColor)),
-                                              ),
-                                              Text(
-                                                "10 Appointments scheduled for today",
-                                                style: TextStyle(
-                                                  color: HexColor(primaryColor)
-                                                      .withOpacity(.4),
-                                                  fontSize: 8,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                padding: const EdgeInsets.all(9),
-                                                height: 30, width: 30,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: HexColor("#F7F9FC"),
-                                                ),
-                                                child: Center(child: Image.asset("assets/images/edit.png")),
-                                              ),
-                                              const SizedBox(width: 4,),
-                                              InkWell(
-                                                onTap: () => setState(() {
-                                                  if(selectedDate == i){
-                                                    selectedDate = -1;
-                                                  }else{
-                                                    selectedDate = i;
-                                                  }
-                                                }),
-                                                child: Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                    color: HexColor(pinkColor),
-                                                    borderRadius:
-                                                        BorderRadius.circular(40),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
-                                                        "schedules ",
-                                                        style:
-                                                            CustomFonts.slussen9W700(
-                                                                color: Colors.white),
+                                                        "26 Feb, Monday",
+                                                        style: CustomFonts
+                                                            .slussen16W700(
+                                                                color: HexColor(
+                                                                    primaryColor)),
                                                       ),
-                                                      Icon(selectedDate == i ?
-                                                        Icons.keyboard_arrow_down : Icons.keyboard_arrow_down,
-                                                        color: Colors.white,
-                                                        size: 14,
-                                                      )
+                                                      Text(
+                                                        "10 Appointments scheduled for today",
+                                                        style: TextStyle(
+                                                          color: HexColor(
+                                                                  primaryColor)
+                                                              .withOpacity(.4),
+                                                          fontSize: 8,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(9),
+                                                        height: 30,
+                                                        width: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: HexColor(
+                                                              "#F7F9FC"),
+                                                        ),
+                                                        child: Center(
+                                                            child: Image.asset(
+                                                                "assets/images/edit.png")),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () =>
+                                                            setState(() {
+                                                          if (selectedDate ==
+                                                              i) {
+                                                            selectedDate = -1;
+                                                          } else {
+                                                            selectedDate = i;
+                                                          }
+                                                        }),
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      8),
+                                                          height: 30,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: HexColor(
+                                                                pinkColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "schedules ",
+                                                                style: CustomFonts
+                                                                    .slussen9W700(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                              Icon(
+                                                                selectedDate ==
+                                                                        i
+                                                                    ? Icons
+                                                                        .keyboard_arrow_down
+                                                                    : Icons
+                                                                        .keyboard_arrow_down,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 14,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              if (selectedDate == i)
+                                                const SizedBox(
+                                                  height: 8,
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      if(selectedDate == i)
-                                      const SizedBox(height: 8,),
-                                      if(selectedDate == i)
-                                      Row(
-                                        children: [
-                                          Container(
-                                              width: 68,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      HexColor(goldDarkColor),
-                                                      HexColor(goldLightColor)
-                                                    ]),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Morning",
-                                                  style:
-                                                      CustomFonts.slussen10W500(
-                                                          color: Colors.white),
+                                              if (selectedDate == i)
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 68,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        gradient:
+                                                            LinearGradient(
+                                                                colors: [
+                                                              HexColor(
+                                                                  goldDarkColor),
+                                                              HexColor(
+                                                                  goldLightColor)
+                                                            ]),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Morning",
+                                                          style: CustomFonts
+                                                              .slussen10W500(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 6,
+                                                    ),
+                                                    Container(
+                                                      width: 68,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        gradient:
+                                                            LinearGradient(
+                                                                colors: [
+                                                              HexColor(
+                                                                      goldDarkColor)
+                                                                  .withOpacity(
+                                                                      .2),
+                                                              HexColor(
+                                                                      goldLightColor)
+                                                                  .withOpacity(
+                                                                      .1),
+                                                            ]),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Afternoon",
+                                                          style: CustomFonts
+                                                              .slussen10W500(
+                                                                  color: HexColor(
+                                                                      "#E49356")),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 6,
+                                                    ),
+                                                    Container(
+                                                      width: 68,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        gradient:
+                                                            LinearGradient(
+                                                                colors: [
+                                                              HexColor(
+                                                                      goldDarkColor)
+                                                                  .withOpacity(
+                                                                      .2),
+                                                              HexColor(
+                                                                      goldLightColor)
+                                                                  .withOpacity(
+                                                                      .1),
+                                                            ]),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Evening",
+                                                          style: CustomFonts
+                                                              .slussen10W500(
+                                                                  color: HexColor(
+                                                                      "#E49356")),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 6,),
-                                            Container(
-                                              width: 68,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      HexColor(goldDarkColor).withOpacity(.2),
-                                                      HexColor(goldLightColor).withOpacity(.1),
-                                                    ]),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Afternoon",
-                                                  style:
-                                                      CustomFonts.slussen10W500(
-                                                          color: HexColor("#E49356")),
+                                              if (selectedDate == i)
+                                                const SizedBox(
+                                                  height: 16,
                                                 ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 6,),
-                                            Container(
-                                              width: 68,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      HexColor(goldDarkColor).withOpacity(.2),
-                                                      HexColor(goldLightColor).withOpacity(.1),
-                                                    ]),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  "Evening",
-                                                  style:
-                                                      CustomFonts.slussen10W500(
-                                                          color: HexColor("#E49356")),
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                      if(selectedDate == i)
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      if(selectedDate == i)
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 0),
-                                          child: Row(
-                                            children: [
-                                              for (int i = 0; i < 8; i++)
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 8),
-                                                  child: Container(
+                                              if (selectedDate == i)
+                                                SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: Padding(
                                                     padding: const EdgeInsets
                                                         .symmetric(
-                                                        horizontal: 24,
-                                                        vertical: 16),
-                                                    // height: 110,
-                                                    decoration: BoxDecoration(
-                                                      color: HexColor("#F7F9FC"),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                    ),
-                                                    child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                                        horizontal: 0),
+                                                    child: Row(
                                                       children: [
-                                                        Text(
-                                                          "am",
-                                                          style: CustomFonts
-                                                              .slussen10W600(
-                                                                  color: HexColor(primaryColor).withOpacity(.5)),
-                                                        ),
-                                                         Text(
-                                                          "09:00",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "-",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "09:30",
-                                                          style: CustomFonts
-                                                              .slussen14W700(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
-                                                         Text(
-                                                          "am",
-                                                          style: CustomFonts
-                                                              .slussen10W600(
-                                                                  color: HexColor(primaryColor)),
-                                                        ),
+                                                        for (int i = 0;
+                                                            i < 8;
+                                                            i++)
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right: 8),
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          24,
+                                                                      vertical:
+                                                                          16),
+                                                              // height: 110,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: HexColor(
+                                                                    "#F7F9FC"),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            25),
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                    "am",
+                                                                    style: CustomFonts
+                                                                        .slussen10W600(
+                                                                            color:
+                                                                                HexColor(primaryColor).withOpacity(.5)),
+                                                                  ),
+                                                                  Text(
+                                                                    "09:00",
+                                                                    style: CustomFonts
+                                                                        .slussen14W700(
+                                                                            color:
+                                                                                HexColor(primaryColor)),
+                                                                  ),
+                                                                  Text(
+                                                                    "-",
+                                                                    style: CustomFonts
+                                                                        .slussen14W700(
+                                                                            color:
+                                                                                HexColor(primaryColor)),
+                                                                  ),
+                                                                  Text(
+                                                                    "09:30",
+                                                                    style: CustomFonts
+                                                                        .slussen14W700(
+                                                                            color:
+                                                                                HexColor(primaryColor)),
+                                                                  ),
+                                                                  Text(
+                                                                    "am",
+                                                                    style: CustomFonts
+                                                                        .slussen10W600(
+                                                                            color:
+                                                                                HexColor(primaryColor)),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )
                                                       ],
                                                     ),
                                                   ),
-                                                )
+                                                ),
                                             ],
                                           ),
                                         ),
-                                      ),                                    
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                      ),
                                   ],
                                 ),
                               ),

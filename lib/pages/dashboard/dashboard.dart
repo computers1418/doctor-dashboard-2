@@ -704,7 +704,7 @@ class _DashboardState extends State<Dashboard>
                                                 color: HexColor("#E957C9")),
                                             child: Center(
                                               child: Text(
-                                                "Today, 09:00 AM",
+                                                "Today, 09:00 am",
                                                 style:
                                                     CustomFonts.slussen14W600(
                                                         color: Colors.white),
@@ -948,7 +948,7 @@ class _DashboardState extends State<Dashboard>
                                                                               BorderRadius.circular(35)),
                                                                   child: Center(
                                                                     child: Text(
-                                                                        "Today at 10:30 AM",
+                                                                        "Today at 10:30 am",
                                                                         style: CustomFonts.slussen10W500(
                                                                             color:
                                                                                 Colors.white)),

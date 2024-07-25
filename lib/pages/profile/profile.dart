@@ -434,7 +434,7 @@ class _ProfileState extends State<Profile>
                                           color: HexColor("#E957C9")
                                         ),
                                         child: Center(
-                                          child: Text("Today, 09:00 AM",
+                                          child: Text("Today, 09:00 am",
                                           style: CustomFonts.slussen14W600(
                                             color: Colors.white
                                           ),),
@@ -599,7 +599,7 @@ class _ProfileState extends State<Profile>
                                                                 borderRadius: BorderRadius.circular(35)
                                                               ),
                                                               child: Center(
-                                                                child: Text("Today at 10:30 AM",
+                                                                child: Text("Today at 10:30 am",
                                                                   style: CustomFonts.slussen10W500(
                                                                   color: Colors.white)),
                                                               ),

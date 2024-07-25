@@ -156,8 +156,8 @@ bool Win32Window::Show() {
 // static
 LRESULT CALLBACK Win32Window::WndProc(HWND const window,
                                       UINT const message,
-                                      WPARAM const wparam,
-                                      LPARAM const lparam) noexcept {
+                                      WPARam const wparam,
+                                      LPARam const lparam) noexcept {
   if (message == WM_NCCREATE) {
     auto window_struct = reinterpret_cast<CREATESTRUCT*>(lparam);
     SetWindowLongPtr(window, GWLP_USERDATA,
@@ -176,8 +176,8 @@ LRESULT CALLBACK Win32Window::WndProc(HWND const window,
 LRESULT
 Win32Window::MessageHandler(HWND hwnd,
                             UINT const message,
-                            WPARAM const wparam,
-                            LPARAM const lparam) noexcept {
+                            WPARam const wparam,
+                            LPARam const lparam) noexcept {
   switch (message) {
     case WM_DESTROY:
       window_handle_ = nullptr;

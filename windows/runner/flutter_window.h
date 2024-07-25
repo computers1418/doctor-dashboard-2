@@ -19,8 +19,8 @@ class FlutterWindow : public Win32Window {
   // Win32Window:
   bool OnCreate() override;
   void OnDestroy() override;
-  LRESULT MessageHandler(HWND window, UINT const message, WPARAM const wparam,
-                         LPARAM const lparam) noexcept override;
+  LRESULT MessageHandler(HWND window, UINT const message, WPARam const wparam,
+                         LPARam const lparam) noexcept override;
 
  private:
   // The project to run.

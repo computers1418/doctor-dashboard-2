@@ -38,7 +38,7 @@ class _ProfileViewState extends State<ProfileView> {
     },
     {
       "title": "Company",
-      "sub": "Paid on 21 Feb, 09:37 AM",
+      "sub": "Paid on 21 Feb, 09:37 am",
       "status": "Debited",
       "amount": "-500",
       "success": false,
@@ -47,7 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
     {"header": "January, 2024"},
     {
       "title": "Company",
-      "sub": "Paid on 21 Feb, 09:37 AM",
+      "sub": "Paid on 21 Feb, 09:37 am",
       "status": "Debited",
       "amount": "-500",
       "success": false,
@@ -72,7 +72,7 @@ class _ProfileViewState extends State<ProfileView> {
     },
     {
       "title": "Company",
-      "sub": "Paid on 21 Feb, 09:37 AM",
+      "sub": "Paid on 21 Feb, 09:37 am",
       "status": "Debited",
       "amount": "-500",
       "success": false,
