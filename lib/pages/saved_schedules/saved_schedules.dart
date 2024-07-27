@@ -26,11 +26,19 @@ class _SavedSchedulesState extends State<SavedSchedules>
   late Animation<double> _scaleAnimation;
   late Animation<double> _menuScaleAnimation;
   late Animation<Offset> _slideAnimation;
+  List<TextEditingController> startTimeController = [];
+  List<TextEditingController> endTimeController = [];
 
   final _scrollController = ScrollController();
   double _currentOffset = 0.0;
 
   int selectedDate = -1;
+  List<dynamic> timeData = [
+    {"startTime": "09:00", "endtime": "09:30"},
+    {"startTime": "09:00", "endtime": "09:30"},
+    {"startTime": "09:00", "endtime": "09:30"},
+    {"startTime": "09:00", "endtime": "09:30"}
+  ];
 
   @override
   void initState() {
@@ -608,101 +616,97 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                 Row(
                                                   children: [
                                                     Container(
-                                                      width: 68,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 4),
+                                                      height: 22,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              HexColor(
-                                                                  goldDarkColor),
-                                                              HexColor(
-                                                                  goldLightColor)
-                                                            ]),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Morning",
-                                                          style: CustomFonts
-                                                              .slussen10W500(
-                                                                  color: Colors
-                                                                      .white),
-                                                        ),
+                                                          color: HexColor(
+                                                              "#FF65DE"),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12)),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 15),
+                                                      child: Text(
+                                                        "Save",
+                                                        style: CustomFonts
+                                                            .slussen10W500(
+                                                                color: Colors
+                                                                    .white),
                                                       ),
                                                     ),
-                                                    const SizedBox(
+                                                    SizedBox(
                                                       width: 6,
                                                     ),
                                                     Container(
-                                                      width: 68,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 4),
+                                                      height: 22,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              HexColor(
-                                                                      goldDarkColor)
-                                                                  .withOpacity(
-                                                                      .2),
-                                                              HexColor(
-                                                                      goldLightColor)
-                                                                  .withOpacity(
-                                                                      .1),
-                                                            ]),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Afternoon",
-                                                          style: CustomFonts
-                                                              .slussen10W500(
-                                                                  color: HexColor(
-                                                                      "#E49356")),
-                                                        ),
+                                                          color: HexColor(
+                                                              "#FF65DE"),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12)),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding: EdgeInsets.only(
+                                                          left: 5, right: 12),
+                                                      child: Row(
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/images/white_add.png",
+                                                            height: 12,
+                                                            width: 12,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 4,
+                                                          ),
+                                                          Text(
+                                                            "Add",
+                                                            style: CustomFonts
+                                                                .slussen10W500(
+                                                                    color: Colors
+                                                                        .white),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                    const SizedBox(
+                                                    SizedBox(
                                                       width: 6,
                                                     ),
                                                     Container(
-                                                      width: 68,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 4),
+                                                      height: 22,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              HexColor(
-                                                                      goldDarkColor)
-                                                                  .withOpacity(
-                                                                      .2),
-                                                              HexColor(
-                                                                      goldLightColor)
-                                                                  .withOpacity(
-                                                                      .1),
-                                                            ]),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Evening",
-                                                          style: CustomFonts
-                                                              .slussen10W500(
-                                                                  color: HexColor(
-                                                                      "#E49356")),
-                                                        ),
+                                                          color: HexColor(
+                                                              "#201A3F"),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12)),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding: EdgeInsets.only(
+                                                          left: 5, right: 12),
+                                                      child: Row(
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/images/blue_delete.png",
+                                                            height: 12,
+                                                            width: 12,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 4,
+                                                          ),
+                                                          Text(
+                                                            "Delete",
+                                                            style: CustomFonts
+                                                                .slussen10W500(
+                                                                    color: Colors
+                                                                        .white),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
@@ -712,89 +716,239 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                   height: 16,
                                                 ),
                                               if (selectedDate == i)
-                                                SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 0),
-                                                    child: Row(
-                                                      children: [
-                                                        for (int i = 0;
-                                                            i < 8;
-                                                            i++)
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    right: 8),
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          24,
-                                                                      vertical:
-                                                                          16),
-                                                              // height: 110,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: HexColor(
-                                                                    "#F7F9FC"),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            25),
+                                                Container(
+                                                  height: 110,
+                                                  child: ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemCount: timeData.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      startTimeController.add(
+                                                          new TextEditingController());
+                                                      endTimeController.add(
+                                                          new TextEditingController());
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(right: 8),
+                                                        child: Container(
+                                                          width: 88,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: HexColor(
+                                                                "#F7F9FC"),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25),
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "am",
+                                                                style: CustomFonts.slussen10W600(
+                                                                    color: HexColor(
+                                                                            primaryColor)
+                                                                        .withOpacity(
+                                                                            .5)),
                                                               ),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
+                                                              TextField(
+                                                                controller:
+                                                                    startTimeController[index],
+                                                                style: CustomFonts
+                                                                    .slussen14W700(
+                                                                        color: HexColor(
+                                                                            primaryColor)),
+                                                                textAlign:
+                                                                    TextAlign
                                                                         .center,
-                                                                children: [
-                                                                  Text(
-                                                                    "am",
-                                                                    style: CustomFonts
-                                                                        .slussen10W600(
-                                                                            color:
-                                                                                HexColor(primaryColor).withOpacity(.5)),
-                                                                  ),
-                                                                  Text(
-                                                                    "09:00",
-                                                                    style: CustomFonts
-                                                                        .slussen14W700(
-                                                                            color:
-                                                                                HexColor(primaryColor)),
-                                                                  ),
-                                                                  Text(
-                                                                    "-",
-                                                                    style: CustomFonts
-                                                                        .slussen14W700(
-                                                                            color:
-                                                                                HexColor(primaryColor)),
-                                                                  ),
-                                                                  Text(
-                                                                    "09:30",
-                                                                    style: CustomFonts
-                                                                        .slussen14W700(
-                                                                            color:
-                                                                                HexColor(primaryColor)),
-                                                                  ),
-                                                                  Text(
-                                                                    "am",
-                                                                    style: CustomFonts
-                                                                        .slussen10W600(
-                                                                            color:
-                                                                                HexColor(primaryColor)),
-                                                                  ),
-                                                                ],
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  isDense: true,
+                                                                  border:
+                                                                      InputBorder
+                                                                          .none,
+                                                                  hintText:
+                                                                      "00:00",
+                                                                  hintStyle: CustomFonts.slussen14W700(
+                                                                      color: HexColor(
+                                                                              primaryColor)
+                                                                          .withOpacity(
+                                                                              .3)),
+                                                                ),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  if (value.length ==
+                                                                          3 &&
+                                                                      value[2] ==
+                                                                          ':') {
+                                                                    startTimeController[index]
+                                                                            .text =
+                                                                        startTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                2);
+                                                                    startTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            startTimeController[index].text.length));
+                                                                  } else if (value
+                                                                          .length ==
+                                                                      3) {
+                                                                    String
+                                                                        char =
+                                                                    startTimeController[index]
+                                                                            .text[2];
+                                                                    startTimeController[index]
+                                                                            .text =
+                                                                        startTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                2);
+                                                                    startTimeController[index]
+                                                                            .text +=
+                                                                        ':$char';
+                                                                    startTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            startTimeController[index].text.length));
+                                                                  } else if (value
+                                                                          .length ==
+                                                                      5) {
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  } else if (value
+                                                                          .length >
+                                                                      5) {
+                                                                    startTimeController[index]
+                                                                            .text =
+                                                                        startTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                5);
+                                                                    startTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            startTimeController[index].text.length));
+                                                                  }
+                                                                },
                                                               ),
-                                                            ),
-                                                          )
-                                                      ],
-                                                    ),
+                                                              Text(
+                                                                "-",
+                                                                style: CustomFonts
+                                                                    .slussen14W700(
+                                                                        color: HexColor(
+                                                                            primaryColor)),
+                                                              ),
+                                                              TextField(
+                                                                controller:
+                                                                endTimeController[index],
+                                                                style: CustomFonts
+                                                                    .slussen14W700(
+                                                                        color: HexColor(
+                                                                            primaryColor)),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  isDense: true,
+                                                                  border:
+                                                                      InputBorder
+                                                                          .none,
+                                                                  hintText:
+                                                                      "00:00",
+                                                                  hintStyle: CustomFonts.slussen14W700(
+                                                                      color: HexColor(
+                                                                              primaryColor)
+                                                                          .withOpacity(
+                                                                              .3)),
+                                                                ),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  if (value.length ==
+                                                                          3 &&
+                                                                      value[2] ==
+                                                                          ':') {
+                                                                    endTimeController[index]
+                                                                            .text =
+                                                                        endTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                2);
+                                                                    endTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            endTimeController[index].text.length));
+                                                                  } else if (value
+                                                                          .length ==
+                                                                      3) {
+                                                                    String
+                                                                        char =
+                                                                    endTimeController[index]
+                                                                            .text[2];
+                                                                    endTimeController[index]
+                                                                            .text =
+                                                                        endTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                2);
+                                                                    endTimeController[index]
+                                                                            .text +=
+                                                                        ':$char';
+                                                                    endTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            endTimeController[index].text.length));
+                                                                  } else if (value
+                                                                          .length ==
+                                                                      5) {
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  } else if (value
+                                                                          .length >
+                                                                      5) {
+                                                                    endTimeController[index]
+                                                                            .text =
+                                                                        endTimeController[index]
+                                                                            .text
+                                                                            .substring(0,
+                                                                                5);
+                                                                    endTimeController[index]
+                                                                            .selection =
+                                                                        TextSelection.fromPosition(TextPosition(
+                                                                            offset:
+                                                                            endTimeController[index].text.length));
+                                                                  }
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                "am",
+                                                                style: CustomFonts
+                                                                    .slussen10W600(
+                                                                        color: HexColor(
+                                                                            primaryColor)),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
-                                                ),
+                                                )
                                             ],
                                           ),
                                         ),
