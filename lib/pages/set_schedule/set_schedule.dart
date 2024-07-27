@@ -260,7 +260,7 @@ class _SetScheduleState extends State<SetSchedule>
                                 ),
                                 onTap: () {
                                   setScheduleController.createSchedule({
-                                    "doctorId": "66a0d21754c2bd0642e7adc4",
+                                    "doctorId": "66a46fc554c2bd0642e7b1be",
                                     "startTime":
                                         "${startTimeController} ${startTimeam}",
                                     "endTime":
