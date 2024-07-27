@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 
+import '../../constants/delete_dialog.dart';
 import '../../widgets/drawer.dart';
 
 class PreviousSchedules extends StatefulWidget {
@@ -474,7 +475,6 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                   Row(
                                                     children: [
                                                       GestureDetector(
-
                                                         child: Container(
                                                           padding:
                                                           const EdgeInsets
@@ -494,13 +494,22 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                         ),
                                                         onTap: () {
                                                           setState(() {
-                                                            for (int i = 0; i < timeData.length; i++) {
-                                                              if (i == scheduleSelect) {
+                                                            for (int i = 0;
+                                                            i <
+                                                                timeData
+                                                                    .length;
+                                                            i++) {
+                                                              if (i ==
+                                                                  scheduleSelect) {
                                                                 // Set edit to true for the selected index
-                                                                timeData[i]['edit'] = false;
+                                                                timeData[i][
+                                                                'edit'] =
+                                                                false;
                                                               } else {
                                                                 // Set edit to false for all other indices
-                                                                timeData[i]['edit'] = true;
+                                                                timeData[i][
+                                                                'edit'] =
+                                                                true;
                                                               }
                                                             }
                                                           });
@@ -574,7 +583,6 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                 Row(
                                                   children: [
                                                     GestureDetector(
-
                                                       child: Container(
                                                         height: 22,
                                                         decoration: BoxDecoration(
@@ -586,8 +594,8 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                                 12)),
                                                         alignment:
                                                         Alignment.center,
-                                                        padding:
-                                                        EdgeInsets.symmetric(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
                                                             horizontal: 15),
                                                         child: Text(
                                                           "Save",
@@ -601,8 +609,13 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                         setState(() {
                                                           timeData.add({
                                                             "startTime":
-                                                            startTimeController[scheduleSelect].text,
-                                                            "endtime": endTimeController[scheduleSelect].text,
+                                                            startTimeController[
+                                                            scheduleSelect]
+                                                                .text,
+                                                            "endtime":
+                                                            endTimeController[
+                                                            scheduleSelect]
+                                                                .text,
                                                             "edit": true
                                                           });
                                                           scheduleSelect = -1;
@@ -616,9 +629,8 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                       onTap: () {
                                                         setState(() {
                                                           timeData.add({
-                                                            "startTime":
-                                                            "09:00",
-                                                            "endtime": "09:30",
+                                                            "startTime": "",
+                                                            "endtime": "",
                                                             "edit": true
                                                           });
                                                         });
@@ -664,11 +676,25 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                     ),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        setState(() {
-                                                          timeData.removeAt(
-                                                              scheduleSelect);
-                                                          scheduleSelect = -1;
-                                                        });
+
+                                                        showModalBottomSheet(
+                                                          context: context,
+                                                          barrierColor:
+                                                          HexColor("#201A3F")
+                                                              .withOpacity(0.8),
+                                                          builder: (context) {
+                                                            return DeleteDialog(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  timeData.removeAt(
+                                                                      scheduleSelect);
+                                                                  scheduleSelect = -1;
+                                                                });
+                                                                Navigator.pop(context);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
                                                       },
                                                       child: Container(
                                                         height: 22,
@@ -721,16 +747,31 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                     itemCount: timeData.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      startTimeController.add(
-                                                          new TextEditingController(
-                                                              text: timeData[
-                                                              index][
-                                                              "startTime"]));
-                                                      endTimeController.add(
-                                                          new TextEditingController(
-                                                              text: timeData[
-                                                              index]
-                                                              ["endtime"]));
+                                                      if (timeData[index]
+                                                      ["startTime"] ==
+                                                          "") {
+                                                        startTimeController.add(
+                                                            new TextEditingController());
+                                                        endTimeController.add(
+                                                            new TextEditingController());
+                                                        startTimeController[
+                                                        index]
+                                                            .clear();
+                                                        endTimeController[index]
+                                                            .clear();
+                                                      } else {
+                                                        startTimeController.add(
+                                                            new TextEditingController(
+                                                                text: timeData[
+                                                                index][
+                                                                "startTime"]));
+                                                        endTimeController.add(
+                                                            new TextEditingController(
+                                                                text: timeData[
+                                                                index][
+                                                                "endtime"]));
+                                                      }
+
                                                       return Padding(
                                                         padding:
                                                         const EdgeInsets
@@ -743,9 +784,6 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
 
                                                               // if (timeData.containsKey(scheduleSelect)) {
                                                               // Retrieve the current data for the selected schedule
-
-
-
                                                             });
                                                           },
                                                           child: Container(
@@ -784,7 +822,9 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                                           .5)),
                                                                 ),
                                                                 TextField(
-                                                                  readOnly: timeData[index]["edit"],
+                                                                  readOnly: timeData[
+                                                                  index]
+                                                                  ["edit"],
                                                                   controller:
                                                                   startTimeController[
                                                                   index],
@@ -882,7 +922,9 @@ class _PreviousSchedulesState extends State<PreviousSchedules>
                                                                       HexColor(primaryColor)),
                                                                 ),
                                                                 TextField(
-                                                                  readOnly: timeData[index]["edit"],
+                                                                  readOnly: timeData[
+                                                                  index]
+                                                                  ["edit"],
                                                                   controller:
                                                                   endTimeController[
                                                                   index],

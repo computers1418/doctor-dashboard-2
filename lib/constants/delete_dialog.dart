@@ -19,17 +19,17 @@ class _DeleteDialogState extends State<DeleteDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.h),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(40.h)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 20.h,
+              height: 20,
             ),
             // Image.asset(
             //   "assets/images/icon.png",
@@ -40,11 +40,11 @@ class _DeleteDialogState extends State<DeleteDialog> {
               alignment: Alignment.topCenter,
               children: [
                 Container(
-                  height: 8.h,
-                  width: 60.h,
+                  height: 8,
+                  width: 60,
                   decoration: BoxDecoration(
                       color: HexColor("#F0F0F0"),
-                      borderRadius: BorderRadius.circular(30.h)),
+                      borderRadius: BorderRadius.circular(30)),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -54,15 +54,15 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     alignment: Alignment.topRight,
                     child: Image.asset(
                       "assets/images/close_blue.png",
-                      width: 26.h,
-                      height: 26.h,
+                      width: 26,
+                      height: 26,
                     ),
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 34.h,
+              height: 34,
             ),
             Text(
               "Are you sure want to delete?",
@@ -70,18 +70,18 @@ class _DeleteDialogState extends State<DeleteDialog> {
             ),
 
             SizedBox(
-              height: 25.h,
+              height: 25,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   child: Container(
-                    height: 50.h,
-                    width: 104.h,
+                    height: 50,
+                    width: 104,
                     decoration: BoxDecoration(
                         color: HexColor("#FF65DE").withOpacity(0.07),
-                        borderRadius: BorderRadius.circular(32.h)),
+                        borderRadius: BorderRadius.circular(32)),
                     child: Text(
                       "NO",
                       style:
@@ -94,12 +94,12 @@ class _DeleteDialogState extends State<DeleteDialog> {
                   },
                 ),
                 SizedBox(
-                  width: 12.h,
+                  width: 12,
                 ),
                 GestureDetector(
                   child: Container(
-                    width: 104.h,
-                    height: 50.h,
+                    width: 104,
+                    height: 50,
                     decoration: BoxDecoration(
                         color: HexColor("#FF65DE"),
                         borderRadius: BorderRadius.circular(30)),

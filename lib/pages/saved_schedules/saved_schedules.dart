@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 
+import '../../constants/delete_dialog.dart';
 import '../../widgets/drawer.dart';
 
 class SavedSchedules extends StatefulWidget {
@@ -232,7 +233,6 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                           Row(
                                             children: [
                                               GestureDetector(
-
                                                 child: Container(
                                                   padding:
                                                       const EdgeInsets.all(9),
@@ -248,17 +248,23 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                 ),
                                                 onTap: () {
                                                   setState(() {
-                                                    for (int i = 0; i < firsttimeData.length; i++) {
-                                                      if (i == firstscheduleSelect) {
+                                                    for (int i = 0;
+                                                        i <
+                                                            firsttimeData
+                                                                .length;
+                                                        i++) {
+                                                      if (i ==
+                                                          firstscheduleSelect) {
                                                         // Set edit to true for the selected index
-                                                        firsttimeData[i]['edit'] = false;
+                                                        firsttimeData[i]
+                                                            ['edit'] = false;
                                                       } else {
                                                         // Set edit to false for all other indices
-                                                        firsttimeData[i]['edit'] = true;
+                                                        firsttimeData[i]
+                                                            ['edit'] = true;
                                                       }
                                                     }
                                                   });
-                                                  print("ssxccxcx===${firsttimeData}");
                                                 },
                                               ),
                                               const SizedBox(
@@ -319,35 +325,34 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                         Row(
                                           children: [
                                             GestureDetector(
-
                                               child: Container(
                                                 height: 22,
                                                 decoration: BoxDecoration(
-                                                    color: HexColor(
-                                                        "#FF65DE"),
+                                                    color: HexColor("#FF65DE"),
                                                     borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        12)),
-                                                alignment:
-                                                Alignment.center,
-                                                padding:
-                                                EdgeInsets.symmetric(
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.symmetric(
                                                     horizontal: 15),
                                                 child: Text(
                                                   "Save",
-                                                  style: CustomFonts
-                                                      .slussen10W500(
-                                                      color: Colors
-                                                          .white),
+                                                  style:
+                                                      CustomFonts.slussen10W500(
+                                                          color: Colors.white),
                                                 ),
                                               ),
                                               onTap: () {
                                                 setState(() {
                                                   firsttimeData.add({
                                                     "startTime":
-                                                    firststartTimeController[firstscheduleSelect].text,
-                                                    "endtime": firstendTimeController[firstscheduleSelect].text,
+                                                        firststartTimeController[
+                                                                firstscheduleSelect]
+                                                            .text,
+                                                    "endtime":
+                                                        firstendTimeController[
+                                                                firstscheduleSelect]
+                                                            .text,
                                                     "edit": true
                                                   });
                                                   firstscheduleSelect = -1;
@@ -361,9 +366,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                               onTap: () {
                                                 setState(() {
                                                   firsttimeData.add({
-                                                    "startTime":
-                                                    "09:00",
-                                                    "endtime": "09:30",
+                                                    "startTime": "",
+                                                    "endtime": "",
                                                     "edit": true
                                                   });
                                                 });
@@ -371,18 +375,13 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                               child: Container(
                                                 height: 22,
                                                 decoration: BoxDecoration(
-                                                    color: HexColor(
-                                                        "#FF65DE"),
+                                                    color: HexColor("#FF65DE"),
                                                     borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        12)),
-                                                alignment:
-                                                Alignment.center,
-                                                padding:
-                                                EdgeInsets.only(
-                                                    left: 5,
-                                                    right: 12),
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.only(
+                                                    left: 5, right: 12),
                                                 child: Row(
                                                   children: [
                                                     Image.asset(
@@ -397,8 +396,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                       "Add",
                                                       style: CustomFonts
                                                           .slussen10W500(
-                                                          color: Colors
-                                                              .white),
+                                                              color:
+                                                                  Colors.white),
                                                     ),
                                                   ],
                                                 ),
@@ -409,27 +408,36 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                setState(() {
-                                                  firsttimeData.removeAt(
-                                                      firstscheduleSelect);
-                                                  firstscheduleSelect = -1;
-                                                });
+                                                showModalBottomSheet(
+                                                  context: context,
+                                                  barrierColor:
+                                                      HexColor("#201A3F")
+                                                          .withOpacity(0.8),
+                                                  builder: (context) {
+                                                    return DeleteDialog(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          firsttimeData.removeAt(
+                                                              firstscheduleSelect);
+                                                          firstscheduleSelect =
+                                                              -1;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                    );
+                                                  },
+                                                );
                                               },
                                               child: Container(
                                                 height: 22,
                                                 decoration: BoxDecoration(
-                                                    color: HexColor(
-                                                        "#201A3F"),
+                                                    color: HexColor("#201A3F"),
                                                     borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                        12)),
-                                                alignment:
-                                                Alignment.center,
-                                                padding:
-                                                EdgeInsets.only(
-                                                    left: 5,
-                                                    right: 12),
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.only(
+                                                    left: 5, right: 12),
                                                 child: Row(
                                                   children: [
                                                     Image.asset(
@@ -444,8 +452,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                       "Delete",
                                                       style: CustomFonts
                                                           .slussen10W500(
-                                                          color: Colors
-                                                              .white),
+                                                              color:
+                                                                  Colors.white),
                                                     ),
                                                   ],
                                                 ),
@@ -461,25 +469,32 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                         Container(
                                           height: 140,
                                           child: ListView.builder(
-                                            scrollDirection:
-                                            Axis.horizontal,
+                                            scrollDirection: Axis.horizontal,
                                             itemCount: firsttimeData.length,
-                                            itemBuilder:
-                                                (context, index) {
-                                                  firststartTimeController.add(
-                                                  new TextEditingController(
-                                                      text: firsttimeData[
-                                                      index][
-                                                      "startTime"]));
-                                                  firstendTimeController.add(
-                                                  new TextEditingController(
-                                                      text: firsttimeData[
-                                                      index]
-                                                      ["endtime"]));
+                                            itemBuilder: (context, index) {
+                                              firststartTimeController
+                                                  .add(TextEditingController(
+                                                text: firsttimeData[index]
+                                                                ["startTime"]
+                                                            ?.isNotEmpty ??
+                                                        false
+                                                    ? firsttimeData[index]
+                                                        ["startTime"]
+                                                    : '',
+                                              ));
+                                              firstendTimeController
+                                                  .add(TextEditingController(
+                                                text: firsttimeData[index]
+                                                                ["endtime"]
+                                                            ?.isNotEmpty ??
+                                                        false
+                                                    ? firsttimeData[index]
+                                                        ["endtime"]
+                                                    : '',
+                                              ));
                                               return Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(right: 8),
+                                                padding: const EdgeInsets.only(
+                                                    right: 8),
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     setState(() {
@@ -488,134 +503,144 @@ class _SavedSchedulesState extends State<SavedSchedules>
 
                                                       // if (timeData.containsKey(scheduleSelect)) {
                                                       // Retrieve the current data for the selected schedule
-
-
-
                                                     });
                                                   },
                                                   child: Container(
                                                     width: 88,
                                                     height: 140,
-                                                    decoration:
-                                                    BoxDecoration(
-                                                      color: HexColor(
-                                                          "#F7F9FC"),
-                                                      gradient: firstscheduleSelect ==
-                                                          index
-                                                          ? LinearGradient(
-                                                          colors: [
-                                                            HexColor(
-                                                                goldLightColor),
-                                                            HexColor(
-                                                                goldDarkColor)
-                                                          ])
-                                                          : null,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          HexColor("#F7F9FC"),
+                                                      gradient:
+                                                          firstscheduleSelect ==
+                                                                  index
+                                                              ? LinearGradient(
+                                                                  colors: [
+                                                                      HexColor(
+                                                                          goldLightColor),
+                                                                      HexColor(
+                                                                          goldDarkColor)
+                                                                    ])
+                                                              : null,
                                                       borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          25),
+                                                          BorderRadius.circular(
+                                                              25),
                                                     ),
                                                     child: Column(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: [
                                                         Text(
                                                           "am",
-                                                          style: CustomFonts.slussen10W600(
-                                                              color: HexColor(
-                                                                  primaryColor)
-                                                                  .withOpacity(
-                                                                  .5)),
+                                                          style: CustomFonts
+                                                              .slussen10W600(
+                                                                  color: HexColor(
+                                                                          primaryColor)
+                                                                      .withOpacity(
+                                                                          .5)),
                                                         ),
                                                         TextField(
-                                                          readOnly: firsttimeData[index]["edit"],
+                                                          readOnly:
+                                                              firsttimeData[
+                                                                      index]
+                                                                  ["edit"],
                                                           controller:
-                                                          firststartTimeController[
-                                                          index],
+                                                              firststartTimeController[
+                                                                  index],
                                                           style: CustomFonts
                                                               .slussen14W700(
-                                                              color:
-                                                              HexColor(primaryColor)),
+                                                                  color: HexColor(
+                                                                      primaryColor)),
                                                           textAlign:
-                                                          TextAlign
-                                                              .center,
+                                                              TextAlign.center,
                                                           decoration:
-                                                          InputDecoration(
-                                                            isDense:
-                                                            true,
-                                                            border:
-                                                            InputBorder
+                                                              InputDecoration(
+                                                            isDense: true,
+                                                            border: InputBorder
                                                                 .none,
-                                                            hintText:
-                                                            "00:00",
+                                                            hintText: "00:00",
                                                             hintStyle: CustomFonts
                                                                 .slussen14W700(
-                                                                color:
-                                                                HexColor(primaryColor).withOpacity(.3)),
+                                                                    color: HexColor(
+                                                                            primaryColor)
+                                                                        .withOpacity(
+                                                                            .3)),
                                                           ),
-                                                          onChanged:
-                                                              (value) {
+                                                          onChanged: (value) {
                                                             if (value.length ==
-                                                                3 &&
+                                                                    3 &&
                                                                 value[2] ==
                                                                     ':') {
                                                               firststartTimeController[
-                                                              index]
-                                                                  .text = firststartTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  2);
-                                                              firststartTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firststartTimeController[index].text.length));
-                                                            } else if (value
-                                                                .length ==
-                                                                3) {
-                                                              String
-                                                              char =
-                                                              firststartTimeController[index]
-                                                                  .text[2];
+                                                                          index]
+                                                                      .text =
+                                                                  firststartTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 2);
                                                               firststartTimeController[
-                                                              index]
-                                                                  .text = firststartTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  2);
-                                                              firststartTimeController[index]
-                                                                  .text +=
-                                                              ':$char';
-                                                              firststartTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firststartTimeController[index].text.length));
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firststartTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
                                                             } else if (value
-                                                                .length ==
+                                                                    .length ==
+                                                                3) {
+                                                              String char =
+                                                                  firststartTimeController[
+                                                                          index]
+                                                                      .text[2];
+                                                              firststartTimeController[
+                                                                          index]
+                                                                      .text =
+                                                                  firststartTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 2);
+                                                              firststartTimeController[
+                                                                          index]
+                                                                      .text +=
+                                                                  ':$char';
+                                                              firststartTimeController[
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firststartTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
+                                                            } else if (value
+                                                                    .length ==
                                                                 5) {
                                                               FocusManager
                                                                   .instance
                                                                   .primaryFocus
                                                                   ?.unfocus();
                                                             } else if (value
-                                                                .length >
+                                                                    .length >
                                                                 5) {
                                                               firststartTimeController[
-                                                              index]
-                                                                  .text = firststartTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  5);
-                                                              firststartTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firststartTimeController[index].text.length));
+                                                                          index]
+                                                                      .text =
+                                                                  firststartTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 5);
+                                                              firststartTimeController[
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firststartTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
                                                             }
                                                           },
                                                         ),
@@ -623,97 +648,110 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                           "-",
                                                           style: CustomFonts
                                                               .slussen14W700(
-                                                              color:
-                                                              HexColor(primaryColor)),
+                                                                  color: HexColor(
+                                                                      primaryColor)),
                                                         ),
                                                         TextField(
-                                                          readOnly: firsttimeData[index]["edit"],
+                                                          readOnly:
+                                                              firsttimeData[
+                                                                      index]
+                                                                  ["edit"],
                                                           controller:
-                                                          firstendTimeController[
-                                                          index],
+                                                              firstendTimeController[
+                                                                  index],
                                                           style: CustomFonts
                                                               .slussen14W700(
-                                                              color:
-                                                              HexColor(primaryColor)),
+                                                                  color: HexColor(
+                                                                      primaryColor)),
                                                           textAlign:
-                                                          TextAlign
-                                                              .center,
+                                                              TextAlign.center,
                                                           decoration:
-                                                          InputDecoration(
-                                                            isDense:
-                                                            true,
-                                                            border:
-                                                            InputBorder
+                                                              InputDecoration(
+                                                            isDense: true,
+                                                            border: InputBorder
                                                                 .none,
-                                                            hintText:
-                                                            "00:00",
+                                                            hintText: "00:00",
                                                             hintStyle: CustomFonts
                                                                 .slussen14W700(
-                                                                color:
-                                                                HexColor(primaryColor).withOpacity(.3)),
+                                                                    color: HexColor(
+                                                                            primaryColor)
+                                                                        .withOpacity(
+                                                                            .3)),
                                                           ),
-                                                          onChanged:
-                                                              (value) {
+                                                          onChanged: (value) {
                                                             if (value.length ==
-                                                                3 &&
+                                                                    3 &&
                                                                 value[2] ==
                                                                     ':') {
                                                               firstendTimeController[
-                                                              index]
-                                                                  .text = firstendTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  2);
-                                                              firstendTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firstendTimeController[index].text.length));
-                                                            } else if (value
-                                                                .length ==
-                                                                3) {
-                                                              String
-                                                              char =
-                                                              firstendTimeController[index]
-                                                                  .text[2];
+                                                                          index]
+                                                                      .text =
+                                                                  firstendTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 2);
                                                               firstendTimeController[
-                                                              index]
-                                                                  .text = firstendTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  2);
-                                                              firstendTimeController[index]
-                                                                  .text +=
-                                                              ':$char';
-                                                              firstendTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firstendTimeController[index].text.length));
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firstendTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
                                                             } else if (value
-                                                                .length ==
+                                                                    .length ==
+                                                                3) {
+                                                              String char =
+                                                                  firstendTimeController[
+                                                                          index]
+                                                                      .text[2];
+                                                              firstendTimeController[
+                                                                          index]
+                                                                      .text =
+                                                                  firstendTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 2);
+                                                              firstendTimeController[
+                                                                          index]
+                                                                      .text +=
+                                                                  ':$char';
+                                                              firstendTimeController[
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firstendTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
+                                                            } else if (value
+                                                                    .length ==
                                                                 5) {
                                                               FocusManager
                                                                   .instance
                                                                   .primaryFocus
                                                                   ?.unfocus();
                                                             } else if (value
-                                                                .length >
+                                                                    .length >
                                                                 5) {
                                                               firstendTimeController[
-                                                              index]
-                                                                  .text = firstendTimeController[
-                                                              index]
-                                                                  .text
-                                                                  .substring(
-                                                                  0,
-                                                                  5);
-                                                              firstendTimeController[index]
-                                                                  .selection =
-                                                                  TextSelection.fromPosition(
-                                                                      TextPosition(offset: firstendTimeController[index].text.length));
+                                                                          index]
+                                                                      .text =
+                                                                  firstendTimeController[
+                                                                          index]
+                                                                      .text
+                                                                      .substring(
+                                                                          0, 5);
+                                                              firstendTimeController[
+                                                                          index]
+                                                                      .selection =
+                                                                  TextSelection.fromPosition(TextPosition(
+                                                                      offset: firstendTimeController[
+                                                                              index]
+                                                                          .text
+                                                                          .length));
                                                             }
                                                           },
                                                         ),
@@ -721,8 +759,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                           "am",
                                                           style: CustomFonts
                                                               .slussen10W600(
-                                                              color:
-                                                              HexColor(primaryColor)),
+                                                                  color: HexColor(
+                                                                      primaryColor)),
                                                         ),
                                                       ],
                                                     ),
@@ -813,7 +851,6 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                   Row(
                                                     children: [
                                                       GestureDetector(
-
                                                         child: Container(
                                                           padding:
                                                               const EdgeInsets
@@ -833,13 +870,22 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                         ),
                                                         onTap: () {
                                                           setState(() {
-                                                            for (int i = 0; i < timeData.length; i++) {
-                                                              if (i == scheduleSelect) {
+                                                            for (int i = 0;
+                                                                i <
+                                                                    timeData
+                                                                        .length;
+                                                                i++) {
+                                                              if (i ==
+                                                                  scheduleSelect) {
                                                                 // Set edit to true for the selected index
-                                                                timeData[i]['edit'] = false;
+                                                                timeData[i][
+                                                                        'edit'] =
+                                                                    false;
                                                               } else {
                                                                 // Set edit to false for all other indices
-                                                                timeData[i]['edit'] = true;
+                                                                timeData[i][
+                                                                        'edit'] =
+                                                                    true;
                                                               }
                                                             }
                                                           });
@@ -913,7 +959,6 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                 Row(
                                                   children: [
                                                     GestureDetector(
-
                                                       child: Container(
                                                         height: 22,
                                                         decoration: BoxDecoration(
@@ -925,8 +970,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                                         12)),
                                                         alignment:
                                                             Alignment.center,
-                                                        padding:
-                                                            EdgeInsets.symmetric(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
                                                                 horizontal: 15),
                                                         child: Text(
                                                           "Save",
@@ -940,8 +985,13 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                         setState(() {
                                                           timeData.add({
                                                             "startTime":
-                                                            startTimeController[scheduleSelect].text,
-                                                            "endtime": endTimeController[scheduleSelect].text,
+                                                                startTimeController[
+                                                                        scheduleSelect]
+                                                                    .text,
+                                                            "endtime":
+                                                                endTimeController[
+                                                                        scheduleSelect]
+                                                                    .text,
                                                             "edit": true
                                                           });
                                                           scheduleSelect = -1;
@@ -955,9 +1005,8 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                       onTap: () {
                                                         setState(() {
                                                           timeData.add({
-                                                            "startTime":
-                                                                "09:00",
-                                                            "endtime": "09:30",
+                                                            "startTime": "",
+                                                            "endtime": "",
                                                             "edit": true
                                                           });
                                                         });
@@ -1003,11 +1052,25 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                     ),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        setState(() {
-                                                          timeData.removeAt(
-                                                              scheduleSelect);
-                                                          scheduleSelect = -1;
-                                                        });
+
+                                                        showModalBottomSheet(
+                                                          context: context,
+                                                          barrierColor:
+                                                          HexColor("#201A3F")
+                                                              .withOpacity(0.8),
+                                                          builder: (context) {
+                                                            return DeleteDialog(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  timeData.removeAt(
+                                                                      scheduleSelect);
+                                                                  scheduleSelect = -1;
+                                                                });
+                                                                Navigator.pop(context);
+                                                              },
+                                                            );
+                                                          },
+                                                        );
                                                       },
                                                       child: Container(
                                                         height: 22,
@@ -1060,16 +1123,31 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                     itemCount: timeData.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      startTimeController.add(
-                                                          new TextEditingController(
-                                                              text: timeData[
-                                                                      index][
-                                                                  "startTime"]));
-                                                      endTimeController.add(
-                                                          new TextEditingController(
-                                                              text: timeData[
-                                                                      index]
-                                                                  ["endtime"]));
+                                                      if (timeData[index]
+                                                              ["startTime"] ==
+                                                          "") {
+                                                        startTimeController.add(
+                                                            new TextEditingController());
+                                                        endTimeController.add(
+                                                            new TextEditingController());
+                                                        startTimeController[
+                                                                index]
+                                                            .clear();
+                                                        endTimeController[index]
+                                                            .clear();
+                                                      } else {
+                                                        startTimeController.add(
+                                                            new TextEditingController(
+                                                                text: timeData[
+                                                                        index][
+                                                                    "startTime"]));
+                                                        endTimeController.add(
+                                                            new TextEditingController(
+                                                                text: timeData[
+                                                                        index][
+                                                                    "endtime"]));
+                                                      }
+
                                                       return Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -1081,10 +1159,7 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                                   index;
 
                                                               // if (timeData.containsKey(scheduleSelect)) {
-                                                                // Retrieve the current data for the selected schedule
-
-
-
+                                                              // Retrieve the current data for the selected schedule
                                                             });
                                                           },
                                                           child: Container(
@@ -1123,7 +1198,9 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                                               .5)),
                                                                 ),
                                                                 TextField(
-                                                                  readOnly: timeData[index]["edit"],
+                                                                  readOnly: timeData[
+                                                                          index]
+                                                                      ["edit"],
                                                                   controller:
                                                                       startTimeController[
                                                                           index],
@@ -1221,7 +1298,9 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                                               HexColor(primaryColor)),
                                                                 ),
                                                                 TextField(
-                                                                  readOnly: timeData[index]["edit"],
+                                                                  readOnly: timeData[
+                                                                          index]
+                                                                      ["edit"],
                                                                   controller:
                                                                       endTimeController[
                                                                           index],

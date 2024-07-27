@@ -47,7 +47,7 @@ class _ProfileState extends State<Profile>
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness:
-          Brightness.light, //<-- For Android SEE HERE (dark icons)
+      Brightness.light, //<-- For Android SEE HERE (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
     setState(() {

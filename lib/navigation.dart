@@ -239,21 +239,21 @@ class Navigation extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChooseConsultationView(),
-                  ),
-                ),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Choose Consultation"),
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const ChooseConsultationView(),
+              //     ),
+              //   ),
+              //   child: Card(
+              //     child: Container(
+              //       width: double.infinity,
+              //       padding: const EdgeInsets.all(10.0),
+              //       child: const Text("Choose Consultation"),
+              //     ),
+              //   ),
+              // ),
               InkWell(
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const ModeOfTreatment())),

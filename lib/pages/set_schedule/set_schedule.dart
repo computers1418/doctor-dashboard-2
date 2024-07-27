@@ -38,6 +38,7 @@ class _SetScheduleState extends State<SetSchedule>
   late Animation<double> _menuScaleAnimation;
   late Animation<Offset> _slideAnimation;
   DateTime dateTime = DateTime.now();
+  final ScrollController _firstController = ScrollController();
 
   final _scrollController = ScrollController();
   double _currentOffset = 0.0;
@@ -1051,38 +1052,166 @@ class _SetScheduleState extends State<SetSchedule>
                               const SizedBox(
                                 height: 16,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Container(
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        insetPadding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        backgroundColor: HexColor("#E49356"),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(35)),
+                                        child: Container(
+                                          height: 400,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 25, right: 20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Copy Schedule",
+                                                      style: CustomFonts
+                                                          .slussen16W700(
+                                                              color: HexColor(
+                                                                  "#7F4010")),
+                                                    ),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40),
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 8,
+                                                              horizontal: 18),
+                                                      child: Text(
+                                                        "DONE",
+                                                        style: CustomFonts
+                                                            .slussen10W700(
+                                                                color: HexColor(
+                                                                    "#201A3F")),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 11,
+                                                ),
+                                                Expanded(
+                                                  child: Scrollbar(
+                                                    controller:
+                                                        _firstController,
+                                                    thickness: 10.0,
+                                                    trackVisibility: true,
+                                                    thumbVisibility: true,
+                                                    child: ListView.builder(
+                                                      primary: true,
+                                                      shrinkWrap: false,
+                                                      itemCount: 10,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              color: HexColor(
+                                                                  "#F1A165"),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          45)),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 30,
+                                                                  right: 14,
+                                                                  top: 10,
+                                                                  bottom: 10),
+                                                          child: Row(
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    "2024",
+                                                                    style: CustomFonts
+                                                                        .slussen8W500(
+                                                                            color:
+                                                                                HexColor("#7F4010")),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 2,
+                                                                  ),
+                                                                  Text(
+                                                                    "21 Feb, Wed",
+                                                                    style: CustomFonts
+                                                                        .slussen14W700(
+                                                                            color:
+                                                                                Colors.white),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 4),
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: HexColor("#E49356"),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: Image.asset(
-                                            "assets/images/note.png"),
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        "Copy previous schedule for today",
-                                        style: CustomFonts.slussen12W700(
-                                            color: Colors.white),
-                                      )),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.white,
-                                      )
-                                    ],
+                                      horizontal: 16),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 4),
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: HexColor("#E49356"),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Image.asset(
+                                              "assets/images/note.png"),
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          "Copy Today's schedule for future",
+                                          style: CustomFonts.slussen12W700(
+                                              color: Colors.white),
+                                        )),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
