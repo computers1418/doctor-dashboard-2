@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                 .copyWith(textScaler: const TextScaler.linear(1.0)),
             child: child!);
       },
-      home: const Navigation(),
+      home: Navigation(),
     );
   }
 }

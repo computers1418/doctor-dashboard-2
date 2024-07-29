@@ -1,3 +1,19 @@
+// import 'package:flutter/material.dart';
+//
+// class AppartmentHistory extends StatefulWidget {
+//   const AppartmentHistory({super.key});
+//
+//   @override
+//   State<AppartmentHistory> createState() => _AppartmentHistoryState();
+// }
+//
+// class _AppartmentHistoryState extends State<AppartmentHistory> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }
+
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
 import 'package:doctor_dashboard/widgets/custom_appbar.dart';
@@ -12,14 +28,14 @@ import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 
 import '../../widgets/drawer.dart';
 
-class SearchResult extends StatefulWidget {
-  const SearchResult({Key? key}) : super(key: key);
+class AppointmentHistory extends StatefulWidget {
+  const AppointmentHistory({Key? key}) : super(key: key);
 
   @override
-  State<SearchResult> createState() => _SearchResultState();
+  State<AppointmentHistory> createState() => _AppointmentHistoryState();
 }
 
-class _SearchResultState extends State<SearchResult>
+class _AppointmentHistoryState extends State<AppointmentHistory>
     with SingleTickerProviderStateMixin {
   bool isCollapsed = true;
   late double screenWidth, screenHeight;

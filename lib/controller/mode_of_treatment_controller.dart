@@ -28,7 +28,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'GET',
           Uri.parse(
-              '$baseUrl/api/doctor/66a46fc554c2bd0642e7b1be/guideline/get'));
+              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/get'));
 
       request.headers.addAll(headers);
 
@@ -64,7 +64,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66a46fc554c2bd0642e7b1be/guideline/add'));
+              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/add'));
 
       request.headers.addAll(headers);
 
@@ -101,7 +101,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66a46fc554c2bd0642e7b1be/guideline/delete'));
+              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/delete'));
 
       request.headers.addAll(headers);
 
@@ -232,7 +232,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'GET',
           Uri.parse(
-              '$baseUrl/api/treatment-mode/detailsByDoctorId/66a46fc554c2bd0642e7b1be'));
+              '$baseUrl/api/treatment-mode/detailsByDoctorId/66a776f354c2bd0642e7b5e7'));
 
       request.headers.addAll(headers);
 

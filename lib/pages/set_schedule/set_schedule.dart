@@ -13,6 +13,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
+import 'package:vs_scrollbar/vs_scrollbar.dart';
 
 import '../../date_picker/src/properties/date_formatter.dart';
 import '../../date_picker/src/properties/day_style.dart';
@@ -52,6 +53,15 @@ class _SetScheduleState extends State<SetSchedule>
   final minController = TextEditingController();
   String startTimeam = "Am";
   String endTimeam = "Am";
+
+  List<dynamic> schedule = [
+    {"date": "21 Feb, Wed", "check": false},
+    {"date": "22 Feb, Thu", "check": true},
+    {"date": "23 Feb, Fri", "check": true},
+    {"date": "24 Feb, Sat", "check": false},
+    {"date": "25 Feb, Sun", "check": false},
+    {"date": "25 Feb, Mon", "check": false},
+  ];
 
   List days = [
     'Sun',
@@ -261,7 +271,7 @@ class _SetScheduleState extends State<SetSchedule>
                                 ),
                                 onTap: () {
                                   setScheduleController.createSchedule({
-                                    "doctorId": "66a46fc554c2bd0642e7b1be",
+                                    "doctorId": "66a776f354c2bd0642e7b5e7",
                                     "startTime":
                                         "${startTimeController} ${startTimeam}",
                                     "endTime":
@@ -1054,130 +1064,7 @@ class _SetScheduleState extends State<SetSchedule>
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Dialog(
-                                        insetPadding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        backgroundColor: HexColor("#E49356"),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(35)),
-                                        child: Container(
-                                          height: 400,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 25, right: 20),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SizedBox(
-                                                  height: 16,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Copy Schedule",
-                                                      style: CustomFonts
-                                                          .slussen16W700(
-                                                              color: HexColor(
-                                                                  "#7F4010")),
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(40),
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 8,
-                                                              horizontal: 18),
-                                                      child: Text(
-                                                        "DONE",
-                                                        style: CustomFonts
-                                                            .slussen10W700(
-                                                                color: HexColor(
-                                                                    "#201A3F")),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 11,
-                                                ),
-                                                Expanded(
-                                                  child: Scrollbar(
-                                                    controller:
-                                                        _firstController,
-                                                    thickness: 10.0,
-                                                    trackVisibility: true,
-                                                    thumbVisibility: true,
-                                                    child: ListView.builder(
-                                                      primary: true,
-                                                      shrinkWrap: false,
-                                                      itemCount: 10,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Container(
-                                                          decoration: BoxDecoration(
-                                                              color: HexColor(
-                                                                  "#F1A165"),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          45)),
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 30,
-                                                                  right: 14,
-                                                                  top: 10,
-                                                                  bottom: 10),
-                                                          child: Row(
-                                                            children: [
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    "2024",
-                                                                    style: CustomFonts
-                                                                        .slussen8W500(
-                                                                            color:
-                                                                                HexColor("#7F4010")),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 2,
-                                                                  ),
-                                                                  Text(
-                                                                    "21 Feb, Wed",
-                                                                    style: CustomFonts
-                                                                        .slussen14W700(
-                                                                            color:
-                                                                                Colors.white),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  todayScheduleDialog();
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -1218,38 +1105,43 @@ class _SetScheduleState extends State<SetSchedule>
                               const SizedBox(
                                 height: 8,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Container(
+                              GestureDetector(
+                                onTap: () {
+                                  previousScheduleDialog();
+                                },
+                                child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 4),
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: HexColor("#E49356"),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: Image.asset(
-                                            "assets/images/note.png"),
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        "Copy previous schedule for today",
-                                        style: CustomFonts.slussen12W700(
-                                            color: Colors.white),
-                                      )),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.white,
-                                      )
-                                    ],
+                                      horizontal: 16),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 4),
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: HexColor("#E49356"),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Image.asset(
+                                              "assets/images/note.png"),
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          "Copy previous schedule for today",
+                                          style: CustomFonts.slussen12W700(
+                                              color: Colors.white),
+                                        )),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1328,6 +1220,331 @@ class _SetScheduleState extends State<SetSchedule>
               )),
         ),
       ),
+    );
+  }
+
+  Future todayScheduleDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 20),
+          backgroundColor: HexColor("#E49356"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          child: StatefulBuilder(
+            builder: (context, setState) => ClipRRect(
+              borderRadius: BorderRadius.circular(35),
+              child: Container(
+                height: 400,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(35)),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 25, right: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Copy Schedule",
+                            style: CustomFonts.slussen16W700(
+                                color: HexColor("#7F4010")),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 18),
+                            child: Text(
+                              "DONE",
+                              style: CustomFonts.slussen10W700(
+                                  color: HexColor("#201A3F")),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 11,
+                      ),
+                      Expanded(
+                        child: Theme(
+                          data: ThemeData(
+                            highlightColor: Colors.white, //Does not work
+                          ),
+                          child: RawScrollbar(
+                            controller: _firstController,
+                            thumbColor: Colors.white,
+                            trackColor: HexColor("#F1A165"),
+                            radius: Radius.circular(25),
+                            trackRadius: Radius.circular(25),
+                            trackBorderColor: HexColor("#F1A165"),
+                            padding: EdgeInsets.only(bottom: 50),
+                            thickness: 6,
+                            trackVisibility: true,
+                            thumbVisibility: true,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 6,
+                                );
+                              },
+                              padding: EdgeInsets.only(right: 25),
+                              controller: _firstController,
+// primary: true,
+// shrinkWrap: false,
+                              itemCount: schedule.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (schedule[index]["check"] == true) {
+                                        schedule[index]["check"] = false;
+                                      } else {
+                                        schedule[index]["check"] = true;
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: HexColor("#F1A165"),
+                                        borderRadius:
+                                            BorderRadius.circular(45)),
+                                    padding: EdgeInsets.only(
+                                        left: 30,
+                                        right: 14,
+                                        top: 10,
+                                        bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "2024",
+                                                style: CustomFonts.slussen8W500(
+                                                    color: HexColor("#7F4010")),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                schedule[index]["date"],
+                                                style:
+                                                    CustomFonts.slussen14W700(
+                                                        color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        schedule[index]["check"] == true
+                                            ? Image.asset(
+                                                "lib/pages/set_schedule/assets/blue_check.png",
+                                                height: 34,
+                                                width: 34,
+                                              )
+                                            : Image.asset(
+                                                "lib/pages/set_schedule/assets/add.png",
+                                                height: 26,
+                                                width: 26,
+                                              )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future previousScheduleDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 20),
+          backgroundColor: HexColor("#E49356"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          child: StatefulBuilder(
+            builder: (context, setState) => ClipRRect(
+              borderRadius: BorderRadius.circular(35),
+              child: Container(
+                height: 400,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(35)),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 25, right: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Copy Schedule",
+                            style: CustomFonts.slussen16W700(
+                                color: HexColor("#7F4010")),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 18),
+                            child: Text(
+                              "DONE",
+                              style: CustomFonts.slussen10W700(
+                                  color: HexColor("#201A3F")),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 11,
+                      ),
+                      Expanded(
+                        child: Theme(
+                          data: ThemeData(
+                            highlightColor: Colors.white, //Does not work
+                          ),
+                          child: RawScrollbar(
+                            controller: _firstController,
+                            thumbColor: Colors.white,
+                            trackColor: HexColor("#F1A165"),
+                            radius: Radius.circular(25),
+                            trackRadius: Radius.circular(25),
+                            trackBorderColor: HexColor("#F1A165"),
+                            padding: EdgeInsets.only(bottom: 50),
+                            thickness: 6,
+                            trackVisibility: true,
+                            thumbVisibility: true,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 6,
+                                );
+                              },
+                              padding: EdgeInsets.only(right: 25),
+                              controller: _firstController,
+                              itemCount: schedule.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (schedule[index]["check"] == true) {
+                                        schedule[index]["check"] = false;
+                                      } else {
+                                        schedule[index]["check"] = true;
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: HexColor("#F1A165"),
+                                        borderRadius:
+                                            BorderRadius.circular(45)),
+                                    padding: EdgeInsets.only(
+                                        left: 30,
+                                        right: 14,
+                                        top: 10,
+                                        bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "2024",
+                                                style: CustomFonts.slussen8W500(
+                                                    color: HexColor("#7F4010")),
+                                              ),
+                                              SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                schedule[index]["date"],
+                                                style:
+                                                    CustomFonts.slussen14W700(
+                                                        color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: HexColor("#E957C9"),
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 14),
+                                          child: Text(
+                                            "View",
+                                            style: CustomFonts.slussen9W700(
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        Container(
+                                          width: 34,
+                                          alignment: Alignment.center,
+                                          child:
+                                              schedule[index]["check"] == true
+                                                  ? Image.asset(
+                                                      "lib/pages/set_schedule/assets/blue_check.png",
+                                                      height: 34,
+                                                      width: 34,
+                                                    )
+                                                  : Image.asset(
+                                                      "lib/pages/set_schedule/assets/add.png",
+                                                      height: 26,
+                                                      width: 26,
+                                                    ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

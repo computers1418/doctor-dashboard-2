@@ -6,6 +6,7 @@ import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 
 class SelectProblem extends StatefulWidget {
   final Function callback;
+
   const SelectProblem({Key? key, required this.callback}) : super(key: key);
 
   @override

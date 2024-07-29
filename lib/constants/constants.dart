@@ -18,8 +18,7 @@ showToast(FToast fToast, String text, bool error) {
     toastDuration: Duration(seconds: 3),
     child: Container(
       decoration: BoxDecoration(
-          color: HexColor("#201A3F"),
-          borderRadius: BorderRadius.circular(45)),
+          color: HexColor("#201A3F"), borderRadius: BorderRadius.circular(45)),
       padding: EdgeInsets.all(7),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -49,5 +48,46 @@ showToast(FToast fToast, String text, bool error) {
       ),
     ),
     gravity: ToastGravity.BOTTOM,
+  );
+}
+
+showDifferentToast(FToast fToast, String text, bool error) {
+  return fToast.showToast(
+    toastDuration: Duration(seconds: 3),
+    child: Container(
+      decoration: BoxDecoration(
+          color: error ? HexColor("#FF5462") : HexColor("#65FF7E"),
+          borderRadius: BorderRadius.circular(30)),
+      padding: EdgeInsets.only(right: 14, left: 4, top: 4, bottom: 4),
+      child: Wrap(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  fToast.removeCustomToast();
+                },
+                child: Image.asset(
+                    error
+                        ? "assets/images/failed.png"
+                        : "assets/images/success.png",
+                    width: 24,
+                    height: 24),
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              Text(
+                text,
+                style: CustomFonts.slussen12W700(
+                    color: error ? HexColor("#FFFFFF") : HexColor("#201A3F")),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+    gravity: ToastGravity.TOP,
   );
 }

@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
+import 'package:vector_math/vector_math.dart' as vector;
 
 import '../../widgets/drawer.dart';
 
@@ -44,6 +45,7 @@ class _SetProblemState extends State<SetProblem>
   //   'Dental Cleaning',
   //   'Teeth Straightening',
   // ];
+
   List<dynamic> problems = [
     {
       "image": "Dental Braces",
@@ -74,6 +76,8 @@ class _SetProblemState extends State<SetProblem>
   final ScrollController _firstController = ScrollController();
   List<TextEditingController> textController = [];
   bool edit = true;
+
+  int selectBtn = 0;
 
   @override
   void initState() {
@@ -150,6 +154,67 @@ class _SetProblemState extends State<SetProblem>
         ));
   }
 
+  Transform navigationBar() {
+    return Transform(
+      transform: Matrix4.rotationX(3.14),
+      alignment: Alignment.center,
+      child: AnimatedContainer(
+        height: 40.0,
+        duration: const Duration(milliseconds: 400),
+        decoration: BoxDecoration(
+          color: HexColor("#201A3F"),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            for (int i = 0; i < icons.length; i++) iconBtn(i),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox iconBtn(int i) {
+    bool isActive = selectBtn == i ? true : false;
+    // var height = isActive ? 50.0 : 0.0;
+    // var width = isActive ? 50.0 : 0.0;
+    return SizedBox(
+      width: 79.0,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: AnimatedContainer(
+              color: HexColor("#201A3F"),
+              height: 70,
+              width: 55,
+              duration: const Duration(milliseconds: 600),
+              child: isActive
+                  ? CustomPaint(
+                      painter: ButtonNotch(),
+                    )
+                  : const SizedBox(),
+            ),
+          ),
+          isActive
+              ? Positioned(
+                  bottom: 30,
+                  child: Container(
+                    // margin: EdgeInsets.only(bottom: 23),
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: HexColor("#E957C9")),
+                  ),
+                )
+              : SizedBox()
+        ],
+      ),
+    );
+  }
+
   Widget content(context) {
     return AnimatedPositioned(
       duration: duration,
@@ -182,47 +247,59 @@ class _SetProblemState extends State<SetProblem>
                             GestureDetector(
                               onTap: () => setState(() {
                                 selectedIcon = i;
+                                selectBtn = i;
                               }),
                               child: Container(
-                                height: 70,
-                                width: 70,
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:
-                                        selectedIcon == i ? null : Colors.white,
-                                    gradient: selectedIcon == i
-                                        ? LinearGradient(colors: [
-                                            HexColor(goldLightColor),
-                                            HexColor(goldDarkColor)
-                                          ])
-                                        : null),
-                                child: Image.asset(
-                                  "lib/pages/set_problem/assets/${icons[i]}.png",
-                                  color: selectedIcon == i
-                                      ? Colors.white
-                                      : HexColor(primaryColor),
+                                width: 79,
+                                height: 110,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 79,
+                                      width: 79,
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: selectedIcon == i
+                                              ? null
+                                              : Colors.white.withOpacity(0.1),
+                                          gradient: selectedIcon == i
+                                              ? LinearGradient(colors: [
+                                                  HexColor(goldLightColor),
+                                                  HexColor(goldDarkColor)
+                                                ])
+                                              : null),
+                                      child: Image.asset(
+                                        "lib/pages/set_problem/assets/${icons[i]}.png",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      icons[i],
+                                      style: selectedIcon == i
+                                          ? CustomFonts.slussen10W600(
+                                              color: Colors.white)
+                                          : CustomFonts.slussen8W500(
+                                              color: Colors.white
+                                                  .withOpacity(0.3)),
+                                    ),
+                                  ],
                                 ),
                               ),
                             )
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SizedBox(
-                      height: screenHeight * .01,
-                    ),
+                    navigationBar(),
                     Expanded(
                       child: DynMouseScroll(
                         durationMS: 5000,
                         scrollSpeed: -4.4,
                         builder: (context, controller, physics) => ListView(
+                          padding: EdgeInsets.zero,
                           controller: _scrollController,
-                          physics: isCollapsed
-                              ? physics
-                              : const NeverScrollableScrollPhysics(),
+                          // physics:  NeverScrollableScrollPhysics(),
                           children: [
                             Container(
                               color: HexColor("#F2F7FB"),
@@ -257,7 +334,7 @@ class _SetProblemState extends State<SetProblem>
                                                       const EdgeInsets.only(
                                                           top: 14),
                                                   child: Text(
-                                                    "Details",
+                                                    "Problem",
                                                     style: CustomFonts
                                                         .slussen30W700(
                                                             color: HexColor(
@@ -265,7 +342,7 @@ class _SetProblemState extends State<SetProblem>
                                                   ),
                                                 ),
                                                 Text(
-                                                  "Add",
+                                                  "Set",
                                                   style:
                                                       CustomFonts.slussen14W700(
                                                           color: HexColor(
@@ -369,12 +446,21 @@ class _SetProblemState extends State<SetProblem>
                                               bottom: 8,
                                               left: 8,
                                               right: 16),
-                                          child: Scrollbar(
-                                            thickness: 10.0,
+                                          child: RawScrollbar(
+                                            controller: _firstController,
+                                            thumbColor: HexColor("#E957C9"),
+                                            trackColor: HexColor("#F2F7FB"),
+                                            radius: Radius.circular(25),
+                                            trackRadius: Radius.circular(25),
+                                            trackBorderColor:
+                                                HexColor("#F2F7FB"),
+                                            padding: EdgeInsets.only(
+                                                bottom: 43, top: 10),
+                                            thickness: 10,
                                             trackVisibility: true,
                                             thumbVisibility: true,
-                                            controller: _firstController,
                                             child: ListView.separated(
+                                              controller: _firstController,
                                               separatorBuilder:
                                                   (context, index) {
                                                 return SizedBox(
@@ -382,7 +468,7 @@ class _SetProblemState extends State<SetProblem>
                                                 );
                                               },
                                               padding: EdgeInsets.only(
-                                                  right: 32, top: 10),
+                                                  right: 20, top: 10),
                                               itemCount: problems.length,
                                               itemBuilder: (context, i) {
                                                 textController.add(
@@ -451,7 +537,7 @@ class _SetProblemState extends State<SetProblem>
                                                                 children: [
                                                                   TextField(
                                                                     style: CustomFonts
-                                                                        .slussen16W700(
+                                                                        .slussen14W700(
                                                                             color:
                                                                                 HexColor(primaryColor)),
                                                                     textAlign:
@@ -499,41 +585,49 @@ class _SetProblemState extends State<SetProblem>
                                                                             "price"],
                                                                         style: CustomFonts.slussen10W500(
                                                                             color:
-                                                                                Colors.white),
+                                                                                Colors.white,
+                                                                            overFlow: TextOverflow.ellipsis),
+                                                                        maxLines:
+                                                                            1,
                                                                       ),
                                                                     ),
                                                                 ],
                                                               ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 8,
                                                             ),
                                                             GestureDetector(
                                                               onTap: () {},
                                                               child: Container(
                                                                 decoration: BoxDecoration(
                                                                     color: HexColor(
-                                                                        "#201A3F"),
+                                                                        "#FF65DE"),
                                                                     borderRadius:
                                                                         BorderRadius.circular(
                                                                             14)),
                                                                 padding: EdgeInsets
                                                                     .symmetric(
                                                                         vertical:
-                                                                            5,
+                                                                            2,
                                                                         horizontal:
-                                                                            14),
+                                                                            10),
                                                                 child: Row(
                                                                   children: [
                                                                     Image.asset(
                                                                       "res/images/light.png",
                                                                       height:
-                                                                          18,
-                                                                      width: 18,
+                                                                          16,
+                                                                      width: 16,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                     SizedBox(
                                                                       width: 2,
                                                                     ),
                                                                     Text(
                                                                       "Live",
-                                                                      style: CustomFonts.slussen10W700(
+                                                                      style: CustomFonts.slussen9W700(
                                                                           color:
                                                                               Colors.white),
                                                                     ),
@@ -561,8 +655,8 @@ class _SetProblemState extends State<SetProblem>
                                                           },
                                                           child: Image.asset(
                                                             "res/images/delete.png",
-                                                            width: 24,
-                                                            height: 24,
+                                                            width: 22,
+                                                            height: 22,
                                                           ),
                                                         ),
                                                       )
@@ -625,5 +719,34 @@ class _SetProblemState extends State<SetProblem>
         ),
       ),
     );
+  }
+}
+
+class ButtonNotch extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var dotPoint = Offset(size.width / 2, 2);
+
+    var paint_1 = Paint()
+      ..color = HexColor("#F2F7FB")
+      ..style = PaintingStyle.fill;
+    var paint_2 = Paint()
+      ..color = HexColor("#E957C9")
+      ..style = PaintingStyle.fill;
+
+    var path = Path();
+
+    path.moveTo(0, 0);
+    path.quadraticBezierTo(7.5, 0, 12, 5);
+    path.quadraticBezierTo(size.width / 2, size.height / 2, size.width - 12, 5);
+    path.quadraticBezierTo(size.width - 7.5, 0, size.width, 0);
+    path.close();
+    canvas.drawPath(path, paint_1);
+    // canvas.drawCircle(dotPoint, 6, paint_2);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
