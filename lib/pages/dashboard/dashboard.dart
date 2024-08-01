@@ -1,5 +1,6 @@
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
+import 'package:doctor_dashboard/pages/notification/notification_screen.dart';
 import 'package:doctor_dashboard/pages/profile/profile_view.dart';
 import 'package:doctor_dashboard/widgets/custom_appbar.dart';
 import 'package:doctor_dashboard/widgets/drawer.dart';
@@ -89,6 +90,7 @@ class _DashboardState extends State<Dashboard>
       if (isCollapsed) {
         _scrollController.animateTo(_currentOffset,
             duration: const Duration(microseconds: 10), curve: Curves.easeIn);
+
         SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
@@ -397,21 +399,23 @@ class _DashboardState extends State<Dashboard>
                                     child: Stack(
                                       children: [
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#E1EAF1"), // Default: Black
-                                          offset: const Offset(
-                                              5, 5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#E1EAF1"),
+                                          // Default: Black
+                                          offset: const Offset(5, 5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape1.png'),
                                         ),
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#FFFFFF"), // Default: Black
-                                          offset: const Offset(
-                                              -5, -5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#FFFFFF"),
+                                          // Default: Black
+                                          offset: const Offset(-5, -5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape1.png'),
@@ -483,21 +487,23 @@ class _DashboardState extends State<Dashboard>
                                       alignment: Alignment.center,
                                       children: [
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#E1EAF1"), // Default: Black
-                                          offset: const Offset(
-                                              5, 5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#E1EAF1"),
+                                          // Default: Black
+                                          offset: const Offset(5, 5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape2.png'), // Default: 2
                                         ),
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#FFFFFF"), // Default: Black
-                                          offset: const Offset(
-                                              -5, -5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#FFFFFF"),
+                                          // Default: Black
+                                          offset: const Offset(-5, -5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape2.png'),
@@ -568,21 +574,23 @@ class _DashboardState extends State<Dashboard>
                                     child: Stack(
                                       children: [
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#E1EAF1"), // Default: Black
-                                          offset: const Offset(
-                                              5, 5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#E1EAF1"),
+                                          // Default: Black
+                                          offset: const Offset(5, 5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape3.png'),
                                         ),
                                         SimpleShadow(
-                                          opacity: 1, // Default: 0.5
-                                          color: HexColor(
-                                              "#FFFFFF"), // Default: Black
-                                          offset: const Offset(
-                                              -5, -5), // Default: Offset(2, 2)
+                                          opacity: 1,
+                                          // Default: 0.5
+                                          color: HexColor("#FFFFFF"),
+                                          // Default: Black
+                                          offset: const Offset(-5, -5),
+                                          // Default: Offset(2, 2)
                                           sigma: 5,
                                           child: Image.asset(
                                               'lib/pages/dashboard/assets/shape3.png'),

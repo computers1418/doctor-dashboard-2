@@ -15,7 +15,7 @@ String baseUrl = 'http://13.127.57.197';
 
 showToast(FToast fToast, String text, bool error) {
   return fToast.showToast(
-    toastDuration: Duration(seconds: 3),
+    // toastDuration: Duration(seconds: 3),
     child: Container(
       decoration: BoxDecoration(
           color: HexColor("#201A3F"), borderRadius: BorderRadius.circular(45)),
