@@ -272,6 +272,14 @@ class CustomFonts {
         color: color);
   }
 
+  static TextStyle slussen9W400({Color? color = Colors.black}) {
+    return TextStyle(
+        fontFamily: "Slussen",
+        fontSize: 9,
+        fontWeight: FontWeight.w400,
+        color: color);
+  }
+
   static TextStyle slussen11W400({Color? color = Colors.black}) {
     return TextStyle(
         fontFamily: "Slussen",

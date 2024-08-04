@@ -1,3 +1,5 @@
+import 'package:doctor_dashboard/extensions/number_exten.dart';
+import 'package:doctor_dashboard/extensions/string_exten.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 

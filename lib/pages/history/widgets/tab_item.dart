@@ -1,13 +1,15 @@
-import 'package:doctor_dashboard/constants/constants.dart';
-import 'package:doctor_dashboard/constants/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../../../constants/constants.dart';
+import '../../../constants/text_style.dart';
 
 class TabItem extends StatelessWidget {
   final String type;
   final String count;
   final bool isSelected;
+
   const TabItem(
       {super.key,
       required this.type,
@@ -17,7 +19,8 @@ class TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(15),
+      // margin: const EdgeInsets.all(15),
+      height: 50,
       decoration: BoxDecoration(
           color: HexColor("#ffffff"),
           borderRadius: BorderRadius.circular(30),
@@ -27,12 +30,12 @@ class TabItem extends StatelessWidget {
                   end: Alignment.centerRight,
                   colors: [HexColor("#E49356"), HexColor("#FF65DE")])
               : null),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
           Container(
-            width: 34,
-            height: 34,
+            width: 32,
+            height: 32,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: HexColor("#ffffff"),
@@ -53,7 +56,7 @@ class TabItem extends StatelessWidget {
           ),
           Text(
             count,
-            style: CustomFonts.slussen24W800(
+            style: CustomFonts.slussen20W800(
                 color: HexColor(isSelected ? "#FFFFFF" : primaryColor)),
           ),
           const SizedBox(
@@ -61,7 +64,7 @@ class TabItem extends StatelessWidget {
           ),
           Text(
             type == "sms" ? "SMS\nSent" : "Voice\nCall",
-            style: CustomFonts.slussen10W700(
+            style: CustomFonts.slussen8W700(
                     color: HexColor(isSelected ? "#FFFFFF" : primaryColor))
                 .copyWith(height: 1.1),
           ),

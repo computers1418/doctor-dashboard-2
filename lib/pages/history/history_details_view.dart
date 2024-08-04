@@ -1,11 +1,13 @@
-import 'package:doctor_dashboard/constants/constants.dart';
-import 'package:doctor_dashboard/constants/data_const.dart';
+
 import 'package:doctor_dashboard/pages/history/widgets/history_call_item.dart';
 import 'package:doctor_dashboard/pages/history/widgets/history_sms_item.dart';
+import 'package:doctor_dashboard/pages/history/widgets/sms_info_dialog.dart';
 import 'package:doctor_dashboard/pages/history/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../constants/constants.dart';
+import '../../constants/data_const.dart';
 import '../../constants/text_style.dart';
 import '../../widgets/custom_appbar.dart';
 
@@ -90,10 +92,17 @@ class _HistoryDetailsViewState extends State<HistoryDetailsView> {
                                         active = "sms";
                                       });
                                     },
-                                    child: TabItem(
-                                        type: "sms",
-                                        count: "486",
-                                        isSelected: active == "sms"))),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 35,
+                                          left: 20,
+                                          right: 15,
+                                          bottom: 0),
+                                      child: TabItem(
+                                          type: "sms",
+                                          count: "486",
+                                          isSelected: active == "sms"),
+                                    ))),
                             Expanded(
                                 child: GestureDetector(
                                     onTap: () {
@@ -101,10 +110,17 @@ class _HistoryDetailsViewState extends State<HistoryDetailsView> {
                                         active = "voice";
                                       });
                                     },
-                                    child: TabItem(
-                                        type: "voice-call",
-                                        count: "238",
-                                        isSelected: active == "voice")))
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 35,
+                                          left: 15,
+                                          right: 20,
+                                          bottom: 0),
+                                      child: TabItem(
+                                          type: "voice-call",
+                                          count: "238",
+                                          isSelected: active == "voice"),
+                                    )))
                           ],
                         ),
                         Expanded(
@@ -152,16 +168,31 @@ class _HistoryDetailsViewState extends State<HistoryDetailsView> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-                margin: const EdgeInsets.all(25),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: HexColor(primaryColor)),
-                child: Text("READ GUIDLINES",
-                    style:
-                        CustomFonts.slussen12W700(color: HexColor("#FFFFFF")))),
+            child: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(40))),
+                  backgroundColor: Colors.white,
+                  barrierColor: HexColor("#201A3F").withOpacity(0.8),
+                  context: context,
+                  builder: (context) {
+                    return SmsInfoDialog();
+                  },
+                );
+              },
+              child: Container(
+                  margin: const EdgeInsets.all(25),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: HexColor(primaryColor)),
+                  child: Text("READ GUIDLINES",
+                      style: CustomFonts.slussen12W700(
+                          color: HexColor("#FFFFFF")))),
+            ),
           ),
         ],
       ),

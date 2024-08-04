@@ -1,7 +1,8 @@
-import 'package:doctor_dashboard/constants/constants.dart';
-import 'package:doctor_dashboard/constants/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../../../constants/constants.dart';
+import '../../../constants/text_style.dart';
 
 class HistorySmsItem extends StatelessWidget {
   final String name;
@@ -19,7 +20,7 @@ class HistorySmsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 40),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
       child: Row(
         children: [
           CircleAvatar(
@@ -60,8 +61,7 @@ class HistorySmsItem extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: Text(
                     "Time : $time",
-                    style:
-                        CustomFonts.slussen10W700(color: HexColor("#FFFFFF")),
+                    style: CustomFonts.slussen9W700(color: HexColor("#FFFFFF")),
                   ),
                 )
               ],

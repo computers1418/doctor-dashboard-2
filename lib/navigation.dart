@@ -6,6 +6,7 @@ import 'package:doctor_dashboard/pages/history/history_view.dart';
 import 'package:doctor_dashboard/pages/login/login.dart';
 import 'package:doctor_dashboard/pages/mode_of_treatment/mode_of_treatment.dart';
 import 'package:doctor_dashboard/pages/new_consultation_details/new_consultation_details.dart';
+import 'package:doctor_dashboard/pages/notification/notification_screen.dart';
 import 'package:doctor_dashboard/pages/previous_schedules/previous_schedules.dart';
 import 'package:doctor_dashboard/pages/problem_icons/problem_icons.dart';
 import 'package:doctor_dashboard/pages/profile/profile_view.dart';
@@ -14,6 +15,7 @@ import 'package:doctor_dashboard/pages/search_result/search_result.dart';
 import 'package:doctor_dashboard/pages/set_password/set_password.dart';
 import 'package:doctor_dashboard/pages/set_problem/set_problem.dart';
 import 'package:doctor_dashboard/pages/set_schedule/set_schedule.dart';
+import 'package:doctor_dashboard/pages/sms_voice_note/sms_voice_note.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
@@ -82,6 +84,32 @@ class Navigation extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
                     child: const Text("Dashboard"),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationScreen())),
+                child: Card(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text("Notification"),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SmsVoiceNote())),
+                child: Card(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Text("SMS & Voice Notes"),
                   ),
                 ),
               ),

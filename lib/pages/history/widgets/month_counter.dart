@@ -1,13 +1,15 @@
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
-import 'package:doctor_dashboard/pages/history/history_view_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../history_details_view.dart';
 
 class MonthCounter extends StatelessWidget {
   final String month;
   final String smsCount;
   final String callCount;
+
   const MonthCounter(
       {super.key,
       required this.month,
