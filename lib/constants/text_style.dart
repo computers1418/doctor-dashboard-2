@@ -231,7 +231,7 @@ class CustomFonts {
 
   static TextStyle slussen7W700(
       {Color? color = Colors.black,
-        TextOverflow overflow = TextOverflow.visible}) {
+      TextOverflow overflow = TextOverflow.visible}) {
     return TextStyle(
         fontFamily: "Slussen",
         fontSize: 7,
@@ -288,12 +288,14 @@ class CustomFonts {
         color: color);
   }
 
-  static TextStyle slussen20W700({Color? color = Colors.black}) {
+  static TextStyle slussen20W700(
+      {Color? color = Colors.black, double? height}) {
     return TextStyle(
         fontFamily: "Slussen",
         fontSize: 20,
         fontWeight: FontWeight.w700,
-        color: color);
+        color: color,
+        height: height);
   }
 
   static TextStyle slussen20W600({Color? color = Colors.black}) {

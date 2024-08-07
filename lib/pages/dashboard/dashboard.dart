@@ -1,5 +1,17 @@
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
+import 'package:doctor_dashboard/extensions/number_exten.dart';
+import 'package:doctor_dashboard/notification_popup/popup_1.dart';
+import 'package:doctor_dashboard/notification_popup/popup_10.dart';
+import 'package:doctor_dashboard/notification_popup/popup_11.dart';
+import 'package:doctor_dashboard/notification_popup/popup_2.dart';
+import 'package:doctor_dashboard/notification_popup/popup_3.dart';
+import 'package:doctor_dashboard/notification_popup/popup_4.dart';
+import 'package:doctor_dashboard/notification_popup/popup_5.dart';
+import 'package:doctor_dashboard/notification_popup/popup_6.dart';
+import 'package:doctor_dashboard/notification_popup/popup_7.dart';
+import 'package:doctor_dashboard/notification_popup/popup_8.dart';
+import 'package:doctor_dashboard/notification_popup/popup_9.dart';
 import 'package:doctor_dashboard/pages/notification/notification_screen.dart';
 import 'package:doctor_dashboard/pages/profile/profile_view.dart';
 import 'package:doctor_dashboard/widgets/custom_appbar.dart';
@@ -49,6 +61,7 @@ class _DashboardState extends State<Dashboard>
           Brightness.light, //<-- For Android SEE HERE (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
+
     setState(() {
       greatestValue = graphData
           .reduce((value, element) => value > element ? value : element);
@@ -1455,6 +1468,13 @@ class _DashboardState extends State<Dashboard>
                   ),
                 ),
                 CustomAppbar(callback: callback)
+                // CustomAppbar(callback: () {
+                //   showDialog(
+                //     barrierColor: Colors.transparent,
+                //     context: context,
+                //     builder: (context) => Popup11(),
+                //   );
+                // })
               ],
             ),
           ),
