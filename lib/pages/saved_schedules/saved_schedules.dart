@@ -1052,21 +1052,24 @@ class _SavedSchedulesState extends State<SavedSchedules>
                                                     ),
                                                     GestureDetector(
                                                       onTap: () {
-
                                                         showModalBottomSheet(
                                                           context: context,
                                                           barrierColor:
-                                                          HexColor("#201A3F")
-                                                              .withOpacity(0.8),
+                                                              HexColor(
+                                                                      "#201A3F")
+                                                                  .withOpacity(
+                                                                      0.8),
                                                           builder: (context) {
                                                             return DeleteDialog(
                                                               onTap: () {
                                                                 setState(() {
                                                                   timeData.removeAt(
                                                                       scheduleSelect);
-                                                                  scheduleSelect = -1;
+                                                                  scheduleSelect =
+                                                                      -1;
                                                                 });
-                                                                Navigator.pop(context);
+                                                                Navigator.pop(
+                                                                    context);
                                                               },
                                                             );
                                                           },

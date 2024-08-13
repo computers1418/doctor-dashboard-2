@@ -50,7 +50,7 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      width: screenWidth * 0.3,
+      // width: screenWidth * 0.3,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -79,15 +79,11 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
           const SizedBox(
             width: 10,
           ),
-          Expanded(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                _yearMonths[_currentMonth].name,
-                textAlign: TextAlign.center,
-                style: widget.style,
-              ),
-            ),
+          Text(
+            _yearMonths[_currentMonth].name,
+            textAlign: TextAlign.center,
+            style: widget.style,
+            maxLines: 1,
           ),
           const SizedBox(
             width: 10,

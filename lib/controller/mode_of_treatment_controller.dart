@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -233,12 +234,12 @@ class ModeOfTreatmentController extends GetxController {
           'GET',
           Uri.parse(
               '$baseUrl/api/treatment-mode/detailsByDoctorId/66a776f354c2bd0642e7b5e7'));
-
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 401) {
+        // Handle unauthorized error
       } else if (response.statusCode == 400) {
         treatment = false;
       } else {
@@ -256,7 +257,13 @@ class ModeOfTreatmentController extends GetxController {
           }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      if (e is SocketException) {
+        print('Network error: ${e.message}');
+      } else {
+        print('An error occurred: $e');
+      }
+    }
     return resp;
   }
 }

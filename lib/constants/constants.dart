@@ -11,7 +11,9 @@ const String goldLightColor = "#E7CB87";
 const String goldDarkColor = "#E49356";
 const String pinkColor = "#FF65DE";
 
-String baseUrl = 'http://13.127.57.197';
+// String baseUrl = 'http://13.127.57.197';
+// String baseUrl = 'http://www.health24.fun';
+String baseUrl = 'https://162.240.106.108:9091';
 
 showToast(FToast fToast, String text, bool error) {
   return fToast.showToast(
