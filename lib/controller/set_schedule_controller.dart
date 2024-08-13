@@ -82,10 +82,7 @@ class SetScheduleController extends GetxController {
 
       http.StreamedResponse response = await request.send();
       resp = await CommonMethods.decodeStreamedResponse(response);
-      print("sdsdsds=====${resp}");
       if (response.statusCode == 401) {
-      } else if (response.statusCode == 400) {
-        showToast(fToast, resp["message"], true);
       } else if (response.statusCode == 400) {
         showToast(fToast, resp["message"], true);
       } else {
