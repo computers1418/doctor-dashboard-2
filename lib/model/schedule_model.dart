@@ -34,7 +34,7 @@ class Datum {
     return Datum(
       id: json['_id'],
       date: json['date'],
-      duration: json['duration'],
+      duration: json['duration'] ?? 0,
       doctorId: json['doctorId'],
       slots: slotsList,
     );

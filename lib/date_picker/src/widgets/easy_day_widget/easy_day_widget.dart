@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../properties/day_style.dart';
@@ -222,7 +221,7 @@ class EasyDayWidget extends StatelessWidget {
   ///
   /// This method returns a `DayInfoText` widget that displays the short name of the month of the current date, in uppercase.
   /// The `textStyle` property of the widget is determined based on the `isSelected` boolean value and the `easyDayProps` object.
-  DayInfoText _buildMonth(bool isToday) {
+  Widget _buildMonth(bool isToday) {
     //TODO: remove `easyDayProps.activeMothStrStyle` because it is deprecated.
     final activeMothStrStyle = _activeDayStyle.monthStrStyle ??
         easyDayProps.activeMothStrStyle ??

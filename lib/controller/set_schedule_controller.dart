@@ -34,7 +34,6 @@ class SetScheduleController extends GetxController {
       http.StreamedResponse response = await request.send();
       resp = await CommonMethods.decodeStreamedResponse(response);
       if (response.statusCode == 401) {
-      } else if (response.statusCode == 400) {
         showToast(fToast, resp["message"], true);
       } else if (response.statusCode == 400) {
         showToast(fToast, resp["message"], true);
@@ -45,9 +44,8 @@ class SetScheduleController extends GetxController {
             "doctorId": "66a776f354c2bd0642e7b5e7",
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
-          // getGuideline();
         } else {
-          showToast(fToast, resp["message"], false);
+          showToast(fToast, resp["message"]["message"], true);
           isDataLoading.value = false;
           if (kDebugMode) {
             print(response.reasonPhrase);
@@ -82,19 +80,26 @@ class SetScheduleController extends GetxController {
 
       http.StreamedResponse response = await request.send();
       resp = await CommonMethods.decodeStreamedResponse(response);
+
       if (response.statusCode == 401) {
+        isDataLoading.value = false;
+        showToast(fToast, resp["error"], true);
       } else if (response.statusCode == 400) {
-        showToast(fToast, resp["message"], true);
+        isDataLoading.value = false;
+        showToast(fToast, resp["error"], true);
+      } else if (response.statusCode == 201) {
+        isDataLoading.value = false;
+        showToast(fToast, resp["message"], false);
       } else {
         if (response.statusCode == 200) {
+          isDataLoading.value = false;
           showToast(fToast, resp["message"], false);
           getScheduleByDate({
             "doctorId": "66a776f354c2bd0642e7b5e7",
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
-          // getGuideline();
         } else {
-          showToast(fToast, resp["message"], false);
+          showToast(fToast, resp["error"], true);
           isDataLoading.value = false;
           if (kDebugMode) {
             print(response.reasonPhrase);
@@ -124,15 +129,96 @@ class SetScheduleController extends GetxController {
 
       http.StreamedResponse response = await request.send();
       resp = await CommonMethods.decodeStreamedResponse(response);
-
-      if (response.statusCode == 401) {
+      if (response.statusCode == 404) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 201) {
+        showToast(fToast, resp["message"], false);
       } else if (response.statusCode == 400) {
         showToast(fToast, resp["message"], true);
       } else {
         if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
         } else {
+          showToast(fToast, resp["message"], true);
+          isDataLoading.value = false;
+          if (kDebugMode) {
+            print(response.reasonPhrase);
+          }
+        }
+      }
+    } catch (e) {}
+    isDataLoading.value = false;
+    return resp;
+  }
+
+  Future<Map<String, dynamic>> copyScheduleForMultipleDay(
+      body, BuildContext context, fToast) async {
+    Map<String, dynamic> resp = {};
+
+    // isDataLoading.value = true;
+    print("sdsdsds=====${body}");
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = http.Request(
+          'POST', Uri.parse('$baseUrl/api/doctor/schedule/multicopy'));
+
+      request.headers.addAll(headers);
+
+      request.body = jsonEncode(body);
+
+      http.StreamedResponse response = await request.send();
+      resp = await CommonMethods.decodeStreamedResponse(response);
+      if (response.statusCode == 404) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 201) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 400) {
+        showToast(fToast, resp["message"], true);
+      } else {
+        if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
+        } else {
+          showToast(fToast, resp["message"], true);
+          // isDataLoading.value = false;
+          if (kDebugMode) {
+            print(response.reasonPhrase);
+          }
+        }
+      }
+    } catch (e) {}
+    // isDataLoading.value = false;
+    return resp;
+  }
+
+  Future<Map<String, dynamic>> deleteAllSchedule(
+      String id, BuildContext context, fToast) async {
+    Map<String, dynamic> resp = {};
+
+    isDataLoading.value = true;
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = http.Request(
+          'DELETE', Uri.parse('$baseUrl/api/doctor/schedule/delete/$id'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      resp = await CommonMethods.decodeStreamedResponse(response);
+      if (response.statusCode == 404) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 201) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 400) {
+        showToast(fToast, resp["message"], true);
+      } else {
+        if (response.statusCode == 200) {
+          showToast(fToast, resp["message"], false);
+        } else {
+          showToast(fToast, resp["message"], true);
           isDataLoading.value = false;
           if (kDebugMode) {
             print(response.reasonPhrase);
@@ -150,60 +236,102 @@ class SetScheduleController extends GetxController {
     isDataLoading.value = true;
     for (int i = 0; i < newList.length; i++) {
       if (newList[i]["edit"] == true) {
-        try {
-          var headers = {
-            'Content-Type': 'application/json',
-          };
-          var request = http.Request(
-              'PUT', Uri.parse('$baseUrl/api/doctor/schedule/update'));
+        // try {
+        var headers = {
+          'Content-Type': 'application/json',
+        };
+        var request = http.Request(
+            'PUT', Uri.parse('$baseUrl/api/doctor/schedule/update'));
 
-          request.headers.addAll(headers);
-
+        request.headers.addAll(headers);
+        if (doesTimeRangeCrossMidnight(
+            "${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+            "${newList[i]["endController"].text} ${newList[i]["endAm"]}")) {
           request.body = jsonEncode({
             "doctorId": "66a776f354c2bd0642e7b5e7",
             "newSlot": {
               "slotStartTime":
-                  "${dateTime} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
               "slotEndTime":
-                  "${dateTime} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
+                  "${DateFormat("yyyy-MM-dd").format(dateTime.add(Duration(days: 1)))} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
             },
             "oldSlot": {
               "slotStartTime": schduleList.first.slots[i].slotStartTime,
               "slotEndTime": schduleList.first.slots[i].slotEndTime,
             },
-            "date": dateTime
+            "date": DateFormat("yyyy-MM-dd").format(dateTime)
           });
+        } else {
+          request.body = jsonEncode({
+            "doctorId": "66a776f354c2bd0642e7b5e7",
+            "newSlot": {
+              "slotStartTime":
+                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+              "slotEndTime":
+                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
+            },
+            "oldSlot": {
+              "slotStartTime": schduleList.first.slots[i].slotStartTime,
+              "slotEndTime": schduleList.first.slots[i].slotEndTime,
+            },
+            "date": DateFormat("yyyy-MM-dd").format(dateTime)
+          });
+        }
 
-          http.StreamedResponse response = await request.send();
-          resp = await CommonMethods.decodeStreamedResponse(response);
-          if (response.statusCode == 401) {
-          } else if (response.statusCode == 400) {
-            showToast(fToast, resp["message"], true);
+        http.StreamedResponse response = await request.send();
+        resp = await CommonMethods.decodeStreamedResponse(response);
+        if (response.statusCode == 401) {
+        } else if (response.statusCode == 400) {
+          showToast(fToast, resp["error"], true);
+        } else {
+          if (response.statusCode == 200) {
+            showToast(fToast, resp["message"], false);
           } else {
-            if (response.statusCode == 200) {
-              showToast(fToast, resp["message"], false);
-            } else {
-              showToast(fToast, resp["message"], false);
-              isDataLoading.value = false;
-              if (kDebugMode) {
-                print(response.reasonPhrase);
-              }
+            showToast(fToast, resp["error"], true);
+            isDataLoading.value = false;
+            if (kDebugMode) {
+              print(response.reasonPhrase);
             }
           }
-        } catch (e) {}
+        }
+        // } catch (e) {}
       }
     }
     isDataLoading.value = false;
     return resp;
   }
 
+  bool doesTimeRangeCrossMidnight(
+      String startTimeString, String endTimeString) {
+    DateTime startTime = DateFormat("hh:mm a").parse(startTimeString);
+    DateTime endTime = DateFormat("hh:mm a").parse(endTimeString);
+
+    DateTime startDateTime = DateTime(DateTime.now().year, DateTime.now().month,
+        DateTime.now().day, startTime.hour, startTime.minute);
+    DateTime endDateTime;
+
+    if (endTime.isBefore(startTime)) {
+      endDateTime = DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day + 1, endTime.hour, endTime.minute);
+    } else {
+      endDateTime = DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day, endTime.hour, endTime.minute);
+    }
+
+    return endDateTime.day != startDateTime.day;
+  }
+
+  clearnewList() {
+    newList.clear();
+    update();
+  }
+
   Future<Map<String, dynamic>> getScheduleByDate(
       body, BuildContext context) async {
     schduleList = [];
-    newList = [];
-
-    update();
+    clearnewList();
     isDataLoading.value = true;
+    update();
 
     Map<String, dynamic> resp = {};
     try {
@@ -225,6 +353,7 @@ class SetScheduleController extends GetxController {
       } else {
         if (response.statusCode == 200) {
           resp = await CommonMethods.decodeStreamedResponse(response);
+
           if (resp["data"] is List) {
             List<dynamic> dataList = resp["data"];
             schduleList = dataList.expand((innerList) {
@@ -232,6 +361,7 @@ class SetScheduleController extends GetxController {
                   .map<Datum>((data) => Datum.fromJson(data))
                   .toList();
             }).toList();
+            clearnewList();
             for (var element in schduleList.first.slots) {
               newList.add({
                 "startAm": element.slotStartTime.split(' ')[2],
@@ -274,29 +404,48 @@ class SetScheduleController extends GetxController {
     update();
   }
 
-  void updateStartAMPM(Map<dynamic, dynamic> element) {
-    for (int i = 0; i < newList.length; i++) {
-      if (element == newList[i]) {
-        if (newList[i]["startAm"] == "AM") {
-          newList[i]["startAm"] = "PM";
-        } else {
-          newList[i]["startAm"] = "AM";
+  void updateStartAMPM(dynamic element, index) {
+    // print("sdsd====${element}");
+    if (element == null) {
+      if (newList[index]["startAm"] == "AM") {
+        newList[index]["startAm"] = "PM";
+      } else {
+        newList[index]["startAm"] = "AM";
+      }
+    } else {
+      for (int i = 0; i < newList.length; i++) {
+        if (element == newList[i]) {
+          if (newList[i]["startAm"] == "AM") {
+            newList[i]["startAm"] = "PM";
+          } else {
+            newList[i]["startAm"] = "AM";
+          }
         }
       }
     }
+
     update();
   }
 
-  void updateEndAMPM(Map<dynamic, dynamic> element) {
-    for (int i = 0; i < newList.length; i++) {
-      if (element == newList[i]) {
-        if (newList[i]["endAm"] == "AM") {
-          newList[i]["endAm"] = "PM";
-        } else {
-          newList[i]["endAm"] = "AM";
+  void updateEndAMPM(dynamic element, index) {
+    if (element == null) {
+      if (newList[index]["endAm"] == "AM") {
+        newList[index]["endAm"] = "PM";
+      } else {
+        newList[index]["endAm"] = "AM";
+      }
+    } else {
+      for (int i = 0; i < newList.length; i++) {
+        if (element == newList[i]) {
+          if (newList[i]["endAm"] == "AM") {
+            newList[i]["endAm"] = "PM";
+          } else {
+            newList[i]["endAm"] = "AM";
+          }
         }
       }
     }
+
     update();
   }
 

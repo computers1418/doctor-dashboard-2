@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../easy_infinite_date_time/widgets/web_scroll_behavior.dart';
@@ -72,13 +71,19 @@ class TimeLineWidget extends StatefulWidget {
 
 class _TimeLineWidgetState extends State<TimeLineWidget> {
   EasyDayProps get _dayProps => widget.dayProps;
+
   EasyTimeLineProps get _timeLineProps => widget.timeLineProps;
+
   bool get _isLandscapeMode => _dayProps.landScapeMode;
+
   double get _dayWidth => _dayProps.width;
+
   double get _dayHeight => _dayProps.height;
+
   double get _dayOffsetConstrains => _isLandscapeMode ? _dayHeight : _dayWidth;
 
   late ScrollController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -101,7 +106,9 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
   /// (which is either the value of widget.easyDayProps.width or a default value of EasyConstants.dayWidgetWidth).
   /// It then adds to this value the product of offset and [EasyConstants.separatorPadding] (which represents the width of the space between each day widget)
   double _calculateDateOffset(DateTime date) {
-    final startDate = DateTime(date.year, date.month, 1);
+    final startDate = DateTime.now().month == widget.initialDate.month
+        ? DateTime(DateTime.now().year, DateTime.now().month, dayCount())
+        : widget.initialDate;
     int offset = date.difference(startDate).inDays;
     double adjustedHPadding =
         _timeLineProps.hPadding > EasyConstants.timelinePadding
@@ -142,8 +149,11 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
               vertical: _timeLineProps.vPadding,
             ),
             itemBuilder: (context, index) {
-              final currentDate =
-                  DateTime(initialDate.year, initialDate.month, index + 1);
+              final currentDate = DateTime.now().month ==
+                      widget.initialDate.month
+                  ? DateTime(
+                      initialDate.year, initialDate.month, index + dayCount())
+                  : DateTime(initialDate.year, initialDate.month, index + 1);
 
               final isSelected = EasyDateUtils.isSameDay(
                   widget.focusedDate ?? initialDate, currentDate);
@@ -164,7 +174,11 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
                       isSelected,
                       currentDate,
                     )
-                  : EasyDayWidget(
+                  :
+                  // isDisabledDay
+                  //         ? SizedBox()
+                  //         :
+                  EasyDayWidget(
                       easyDayProps: _dayProps,
                       date: currentDate,
                       locale: widget.locale,
@@ -180,11 +194,23 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
                 width: _timeLineProps.separatorPadding,
               );
             },
-            itemCount: EasyDateUtils.getDaysInMonth(initialDate),
+            itemCount: DateTime.now().month == widget.initialDate.month
+                ? EasyDateUtils.getDaysInMonth(initialDate) - dayCount() + 1
+                : EasyDateUtils.getDaysInMonth(initialDate),
           ),
         ),
       ),
     );
+  }
+
+  int dayCount() {
+    DateTime endDate = DateTime.now();
+    DateTime startDate = DateTime(endDate.year, endDate.month, 1);
+
+    Duration difference = endDate.difference(startDate);
+
+    int daysCount = difference.inDays + 1;
+    return daysCount;
   }
 
   Widget _dayItemBuilder(

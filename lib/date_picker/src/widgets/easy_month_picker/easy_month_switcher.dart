@@ -39,7 +39,8 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
   void initState() {
     super.initState();
     _yearMonths = EasyDateUtils.getYearMonths(DateTime.now(), widget.locale);
-    _currentMonth = widget.value != null ? ((widget.value!.vale - 1)) : 0;
+
+    _currentMonth = widget.value != null ? ((widget.value!.vale)) : 0;
   }
 
   bool get _isLastMonth => _currentMonth == _yearMonths.length - 1;
@@ -49,38 +50,42 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
+
     return SizedBox(
       // width: screenWidth * 0.3,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              if (_isFirstMonth) {
-                return;
-              }
-              _currentMonth--;
-              widget.onMonthChange?.call(_yearMonths[_currentMonth]);
-            },
-            child: Container(
-              height: 36,
-              width: 36,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.white),
-              child: Center(
-                child: Icon(
-                  Icons.keyboard_arrow_left,
-                  size: 20,
-                  color: HexColor(primaryColor),
+          _currentMonth == DateTime.now().month
+              ? SizedBox()
+              : GestureDetector(
+                  onTap: () {
+                    // print("sdsdsd======${_currentMonth}");
+                    if (_isFirstMonth) {
+                      return;
+                    }
+                    _currentMonth--;
+                    widget.onMonthChange?.call(_yearMonths[_currentMonth - 1]);
+                  },
+                  child: Container(
+                    height: 36,
+                    width: 36,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: Center(
+                      child: Icon(
+                        Icons.keyboard_arrow_left,
+                        size: 20,
+                        color: HexColor(primaryColor),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           const SizedBox(
             width: 10,
           ),
           Text(
-            _yearMonths[_currentMonth].name,
+            _yearMonths[_currentMonth - 1].name,
             textAlign: TextAlign.center,
             style: widget.style,
             maxLines: 1,
@@ -94,7 +99,7 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
                 return;
               }
               _currentMonth++;
-              widget.onMonthChange?.call(_yearMonths[_currentMonth]);
+              widget.onMonthChange?.call(_yearMonths[_currentMonth - 1]);
             },
             child: Container(
               height: 36,
