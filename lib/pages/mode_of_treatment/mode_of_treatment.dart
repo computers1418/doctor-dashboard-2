@@ -225,7 +225,7 @@ class _ModeOfTreatmentState extends State<ModeOfTreatment> {
                                         if (controller.treatment == false) {
                                           controller.createTreatmentModes({
                                             "doctorId":
-                                                "66a776f354c2bd0642e7b5e7",
+                                                "66bf3adcdd3df57c89074fe1",
                                             "treatmentMode": data.name
                                           }, context);
                                         } else {

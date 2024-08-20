@@ -274,7 +274,7 @@ class Navigation extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PreviousSchedules())),
+                        builder: (context) => PreviousSchedules())),
                 child: Card(
                   child: Container(
                     width: double.infinity,
@@ -284,10 +284,8 @@ class Navigation extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SetSchedule())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SetSchedule())),
                 child: Card(
                   child: Container(
                     width: double.infinity,

@@ -29,7 +29,8 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) {
     var slotsJson = json['slots'] as List;
-    List<Slot> slotsList = slotsJson.map((slot) => Slot.fromJson(slot)).toList();
+    List<Slot> slotsList =
+        slotsJson.map((slot) => Slot.fromJson(slot)).toList();
 
     return Datum(
       id: json['_id'],

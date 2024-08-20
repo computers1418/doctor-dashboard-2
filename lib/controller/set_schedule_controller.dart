@@ -13,6 +13,8 @@ import '../constants/constants.dart';
 
 class SetScheduleController extends GetxController {
   List<Datum> schduleList = [];
+  List<Datum> previousScheduleList = [];
+  List<Datum> savedScheduleList = [];
   List<Map<dynamic, dynamic>> newList = [];
   RxBool isDataLoading = true.obs;
 
@@ -41,7 +43,7 @@ class SetScheduleController extends GetxController {
         if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
           getScheduleByDate({
-            "doctorId": "66a776f354c2bd0642e7b5e7",
+            "doctorId": "66bf3adcdd3df57c89074fe1",
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
         } else {
@@ -95,7 +97,7 @@ class SetScheduleController extends GetxController {
           isDataLoading.value = false;
           showToast(fToast, resp["message"], false);
           getScheduleByDate({
-            "doctorId": "66a776f354c2bd0642e7b5e7",
+            "doctorId": "66bf3adcdd3df57c89074fe1",
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
         } else {
@@ -192,6 +194,44 @@ class SetScheduleController extends GetxController {
     return resp;
   }
 
+  Future<Map<String, dynamic>> copyScheduleForToday(
+      body, BuildContext context, fToast) async {
+    Map<String, dynamic> resp = {};
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/api/doctor/schedule/copy'));
+
+      request.headers.addAll(headers);
+
+      request.body = jsonEncode(body);
+
+      http.StreamedResponse response = await request.send();
+      resp = await CommonMethods.decodeStreamedResponse(response);
+      if (response.statusCode == 404) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 201) {
+        showToast(fToast, resp["message"], false);
+      } else if (response.statusCode == 400) {
+        showToast(fToast, resp["message"], true);
+      } else {
+        if (response.statusCode == 200) {
+          showToast(fToast, resp["message"], false);
+        } else {
+          showToast(fToast, resp["message"], true);
+          // isDataLoading.value = false;
+          if (kDebugMode) {
+            print(response.reasonPhrase);
+          }
+        }
+      }
+    } catch (e) {}
+    // isDataLoading.value = false;
+    return resp;
+  }
+
   Future<Map<String, dynamic>> deleteAllSchedule(
       String id, BuildContext context, fToast) async {
     Map<String, dynamic> resp = {};
@@ -236,65 +276,65 @@ class SetScheduleController extends GetxController {
     isDataLoading.value = true;
     for (int i = 0; i < newList.length; i++) {
       if (newList[i]["edit"] == true) {
-        // try {
-        var headers = {
-          'Content-Type': 'application/json',
-        };
-        var request = http.Request(
-            'PUT', Uri.parse('$baseUrl/api/doctor/schedule/update'));
+        try {
+          var headers = {
+            'Content-Type': 'application/json',
+          };
+          var request = http.Request(
+              'PUT', Uri.parse('$baseUrl/api/doctor/schedule/update'));
 
-        request.headers.addAll(headers);
-        if (doesTimeRangeCrossMidnight(
-            "${newList[i]["startController"].text} ${newList[i]["startAm"]}",
-            "${newList[i]["endController"].text} ${newList[i]["endAm"]}")) {
-          request.body = jsonEncode({
-            "doctorId": "66a776f354c2bd0642e7b5e7",
-            "newSlot": {
-              "slotStartTime":
-                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
-              "slotEndTime":
-                  "${DateFormat("yyyy-MM-dd").format(dateTime.add(Duration(days: 1)))} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
-            },
-            "oldSlot": {
-              "slotStartTime": schduleList.first.slots[i].slotStartTime,
-              "slotEndTime": schduleList.first.slots[i].slotEndTime,
-            },
-            "date": DateFormat("yyyy-MM-dd").format(dateTime)
-          });
-        } else {
-          request.body = jsonEncode({
-            "doctorId": "66a776f354c2bd0642e7b5e7",
-            "newSlot": {
-              "slotStartTime":
-                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
-              "slotEndTime":
-                  "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
-            },
-            "oldSlot": {
-              "slotStartTime": schduleList.first.slots[i].slotStartTime,
-              "slotEndTime": schduleList.first.slots[i].slotEndTime,
-            },
-            "date": DateFormat("yyyy-MM-dd").format(dateTime)
-          });
-        }
-
-        http.StreamedResponse response = await request.send();
-        resp = await CommonMethods.decodeStreamedResponse(response);
-        if (response.statusCode == 401) {
-        } else if (response.statusCode == 400) {
-          showToast(fToast, resp["error"], true);
-        } else {
-          if (response.statusCode == 200) {
-            showToast(fToast, resp["message"], false);
+          request.headers.addAll(headers);
+          if (doesTimeRangeCrossMidnight(
+              "${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+              "${newList[i]["endController"].text} ${newList[i]["endAm"]}")) {
+            request.body = jsonEncode({
+              "doctorId": "66bf3adcdd3df57c89074fe1",
+              "newSlot": {
+                "slotStartTime":
+                    "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+                "slotEndTime":
+                    "${DateFormat("yyyy-MM-dd").format(dateTime.add(Duration(days: 1)))} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
+              },
+              "oldSlot": {
+                "slotStartTime": schduleList.first.slots[i].slotStartTime,
+                "slotEndTime": schduleList.first.slots[i].slotEndTime,
+              },
+              "date": DateFormat("yyyy-MM-dd").format(dateTime)
+            });
           } else {
+            request.body = jsonEncode({
+              "doctorId": "66bf3adcdd3df57c89074fe1",
+              "newSlot": {
+                "slotStartTime":
+                    "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
+                "slotEndTime":
+                    "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["endController"].text} ${newList[i]["endAm"]}"
+              },
+              "oldSlot": {
+                "slotStartTime": schduleList.first.slots[i].slotStartTime,
+                "slotEndTime": schduleList.first.slots[i].slotEndTime,
+              },
+              "date": DateFormat("yyyy-MM-dd").format(dateTime)
+            });
+          }
+
+          http.StreamedResponse response = await request.send();
+          resp = await CommonMethods.decodeStreamedResponse(response);
+          if (response.statusCode == 401) {
+          } else if (response.statusCode == 400) {
             showToast(fToast, resp["error"], true);
-            isDataLoading.value = false;
-            if (kDebugMode) {
-              print(response.reasonPhrase);
+          } else {
+            if (response.statusCode == 200) {
+              showToast(fToast, resp["message"], false);
+            } else {
+              showToast(fToast, resp["error"], true);
+              isDataLoading.value = false;
+              if (kDebugMode) {
+                print(response.reasonPhrase);
+              }
             }
           }
-        }
-        // } catch (e) {}
+        } catch (e) {}
       }
     }
     isDataLoading.value = false;
@@ -323,7 +363,7 @@ class SetScheduleController extends GetxController {
 
   clearnewList() {
     newList.clear();
-    update();
+    // update();
   }
 
   Future<Map<String, dynamic>> getScheduleByDate(
@@ -331,7 +371,7 @@ class SetScheduleController extends GetxController {
     schduleList = [];
     clearnewList();
     isDataLoading.value = true;
-    update();
+    // update();
 
     Map<String, dynamic> resp = {};
     try {
@@ -390,16 +430,175 @@ class SetScheduleController extends GetxController {
     return resp;
   }
 
+  Future<Map<String, dynamic>> getScheduleById(id, BuildContext context) async {
+    schduleList = [];
+    clearnewList();
+    isDataLoading.value = true;
+    // update();
+
+    Map<String, dynamic> resp = {};
+    // try {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('GET',
+        Uri.parse('$baseUrl/api/doctor/schedule/getById?scheduleId=$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 401) {
+      schduleList = [];
+    } else if (response.statusCode == 400) {
+      schduleList = [];
+    } else {
+      if (response.statusCode == 201) {
+        resp = await CommonMethods.decodeStreamedResponse(response);
+        Datum datum = Datum.fromJson(resp["data"]);
+        schduleList.add(datum);
+        clearnewList();
+        for (var element in schduleList.first.slots) {
+          newList.add({
+            "startAm": element.slotStartTime.split(' ')[2],
+            "endAm": element.slotEndTime.split(' ')[2],
+            "startTime": element.slotStartTime.split(' ')[1],
+            "endTime": element.slotEndTime.split(' ')[1],
+            "startController": TextEditingController(
+                text: element.slotStartTime.split(' ')[1]),
+            "endController":
+                TextEditingController(text: element.slotEndTime.split(' ')[1]),
+            "read": true,
+            "new": false,
+            "edit": false
+          });
+        }
+        // } else {
+        //   schduleList = [];
+        // }
+      } else {
+        schduleList = [];
+      }
+    }
+    // } catch (e) {}
+    isDataLoading.value = false;
+    update();
+    return resp;
+  }
+
+  Future<Map<String, dynamic>> getPreviousScheduleListData(
+      body, BuildContext context) async {
+    previousScheduleList = [];
+    isDataLoading.value = true;
+    update();
+
+    Map<String, dynamic> resp = {};
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = http.Request(
+          'GET', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
+
+      request.headers.addAll(headers);
+
+      request.body = jsonEncode(body);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 401) {
+        previousScheduleList = [];
+      } else if (response.statusCode == 400) {
+        previousScheduleList = [];
+      } else {
+        if (response.statusCode == 200) {
+          resp = await CommonMethods.decodeStreamedResponse(response);
+
+          if (resp["data"] is List) {
+            List<dynamic> dataList = resp["data"];
+            previousScheduleList = dataList.expand((innerList) {
+              return (innerList as List)
+                  .map<Datum>((data) => Datum.fromJson(data))
+                  .toList();
+            }).toList();
+          } else {
+            previousScheduleList = [];
+          }
+        } else {
+          previousScheduleList = [];
+        }
+      }
+    } catch (e) {}
+    isDataLoading.value = false;
+    update();
+    return resp;
+  }
+
+  Future<Map<String, dynamic>> getSavedScheduleList(
+      body, BuildContext context) async {
+    // savedScheduleList = [];
+    isDataLoading.value = true;
+    // update();
+
+    Map<String, dynamic> resp = {};
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = http.Request(
+          'GET', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
+
+      request.headers.addAll(headers);
+
+      request.body = jsonEncode(body);
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 401) {
+        savedScheduleList = [];
+      } else if (response.statusCode == 400) {
+        savedScheduleList = [];
+      } else {
+        if (response.statusCode == 200) {
+          resp = await CommonMethods.decodeStreamedResponse(response);
+
+          if (resp["data"] is List) {
+            List<dynamic> dataList = resp["data"];
+            savedScheduleList = dataList.expand((innerList) {
+              return (innerList as List)
+                  .map<Datum>((data) => Datum.fromJson(data))
+                  .toList();
+            }).toList();
+            // update();
+            print("sdsdsds====${savedScheduleList[9].slots[1].slotStartTime}");
+          } else {
+            savedScheduleList = [];
+          }
+        } else {
+          savedScheduleList = [];
+        }
+      }
+    } catch (e) {}
+    isDataLoading.value = false;
+    update();
+    return resp;
+  }
+
   void updateReadStatus(Map<dynamic, dynamic> element) {
     for (int i = 0; i < newList.length; i++) {
       if (element == newList[i]) {
         newList[i]["read"] = false;
         newList[i]["edit"] = true;
-        // break; // Exit the loop once the item is found and updated
       } else {
         newList[i]["read"] = true;
         newList[i]["edit"] = false;
       }
+    }
+    update();
+  }
+
+  void updateAllReadStatus() {
+    for (int i = 0; i < newList.length; i++) {
+      newList[i]["read"] = true;
+      newList[i]["edit"] = false;
     }
     update();
   }

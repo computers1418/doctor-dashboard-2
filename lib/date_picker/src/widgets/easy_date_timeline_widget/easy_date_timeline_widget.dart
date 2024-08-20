@@ -13,21 +13,20 @@ import 'selected_date_widget.dart';
 
 /// Represents a timeline widget for displaying dates in a horizontal line.
 class EasyDateTimeLine extends StatefulWidget {
-  const EasyDateTimeLine({
-    super.key,
-    required this.initialDate,
-    this.disabledDates,
-    this.headerProps = const EasyHeaderProps(),
-    this.timeLineProps = const EasyTimeLineProps(),
-    this.dayProps = const EasyDayProps(),
-    this.onDateChange,
-    this.itemBuilder,
-    this.activeColor,
-    this.locale = "en_US",
-    required this.onTap
-  });
-  final VoidCallback onTap;
+  const EasyDateTimeLine(
+      {super.key,
+      required this.initialDate,
+      this.disabledDates,
+      this.headerProps = const EasyHeaderProps(),
+      this.timeLineProps = const EasyTimeLineProps(),
+      this.dayProps = const EasyDayProps(),
+      this.onDateChange,
+      this.itemBuilder,
+      this.activeColor,
+      this.locale = "en_US",
+      required this.onTap});
 
+  final VoidCallback onTap;
 
   /// Represents the initial date for the timeline widget.
   /// This is the date that will be displayed as the first day in the timeline.
@@ -81,8 +80,10 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
   late int _initialDay;
 
   late ValueNotifier<DateTime?> _focusedDateListener;
+  late ScrollController _controller;
 
   DateTime get initialDate => widget.initialDate;
+
   @override
   void initState() {
     // Init easy date timeline locale
@@ -93,6 +94,9 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
         EasyDateUtils.convertDateToEasyMonth(widget.initialDate, widget.locale);
     _initialDay = widget.initialDate.day;
     _focusedDateListener = ValueNotifier(initialDate);
+    _controller = ScrollController(
+      initialScrollOffset: _calculateDateOffset(widget.initialDate),
+    );
   }
 
   void _onFocusedDateChanged(DateTime date) {
@@ -103,6 +107,7 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
   @override
   void dispose() {
     _focusedDateListener.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -147,35 +152,33 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
                     ? MainAxisAlignment.center
                     : MainAxisAlignment.spaceBetween,
                 children: [
-                  // SelectedDateWidget(
-                  //   date: focusedDate ?? initialDate,
-                  //   locale: widget.locale,
-                  //   headerProps: _headerProps,
-                  // ),
-                  // if (_showMonthPicker(pickerType: MonthPickerType.dropDown))
-                  //   child!,
                   if (_showMonthPicker(pickerType: MonthPickerType.switcher))
                     EasyMonthSwitcher(
                       locale: widget.locale,
                       value: _easyMonth,
                       onMonthChange: _onMonthChange,
                       style: _headerProps.monthStyle,
+                      onChange: () {
+                        _controller.animateTo(
+                          0.0, // Scroll to the start (offset 0.0)
+                          duration: Duration(seconds: 1),
+                          // Duration of the scroll animation
+                          curve: Curves.easeInOut, // Curve for the animation
+                        );
+                      },
                     ),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       height: 40,
                       decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(40),
                           color: HexColor(pinkColor)),
                       child: Center(
                         child: Text(
                           "DONE",
-                          style: CustomFonts.slussen12W700(
-                              color: Colors.white),
+                          style: CustomFonts.slussen12W700(color: Colors.white),
                         ),
                       ),
                     ),
@@ -197,6 +200,7 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
             activeDayTextColor: activeDayTextColor,
             activeDayColor: activeDayColor,
             locale: widget.locale,
+            controller: _controller,
           ),
         ],
       ),
@@ -214,6 +218,36 @@ class _EasyDateTimeLineState extends State<EasyDateTimeLine> {
       _initialDay = 1;
       _easyMonth = month!;
     });
+  }
+
+  double _calculateDateOffset(DateTime date) {
+    final startDate = DateTime.now().month == widget.initialDate.month
+        ? DateTime(DateTime.now().year, DateTime.now().month, dayCount())
+        : widget.initialDate;
+    int offset = date.difference(startDate).inDays;
+    double adjustedHPadding =
+        widget.timeLineProps.hPadding > EasyConstants.timelinePadding
+            ? (widget.timeLineProps.hPadding - EasyConstants.timelinePadding)
+            : 0.0;
+    if (offset == 0) {
+      return 0.0;
+    }
+    return (offset *
+            (widget.dayProps.landScapeMode
+                ? widget.dayProps.height
+                : widget.dayProps.width)) +
+        (offset * widget.timeLineProps.separatorPadding) +
+        adjustedHPadding;
+  }
+
+  int dayCount() {
+    DateTime endDate = DateTime.now();
+    DateTime startDate = DateTime(endDate.year, endDate.month, 1);
+
+    Duration difference = endDate.difference(startDate);
+
+    int daysCount = difference.inDays + 1;
+    return daysCount;
   }
 
   /// The method returns a boolean value, which indicates whether the month picker

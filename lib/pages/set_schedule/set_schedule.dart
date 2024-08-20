@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
 import 'package:doctor_dashboard/controller/set_schedule_controller.dart';
@@ -25,9 +27,13 @@ import '../../date_picker/src/utils/easy_date_utils.dart';
 import '../../date_picker/src/widgets/easy_date_timeline_widget/easy_date_timeline_widget.dart';
 import '../../model/schedule.dart';
 import '../../widgets/drawer.dart';
+import '../previous_schedules/previous_schedules.dart';
 
 class SetSchedule extends StatefulWidget {
-  const SetSchedule({Key? key}) : super(key: key);
+  String id = "";
+  String date = "";
+
+  SetSchedule({Key? key, this.id = "", this.date = ""}) : super(key: key);
 
   @override
   State<SetSchedule> createState() => _SetScheduleState();
@@ -84,6 +90,9 @@ class _SetScheduleState extends State<SetSchedule>
   int selectedDate = -1;
   List<DateTime> schedule = [];
   List<DateTime> newScheduleSelect = [];
+  int selectPreviousIndex = -1;
+
+  // List<Datum> previousScheduleList = [];
 
   List days = [
     'Sun',
@@ -108,18 +117,35 @@ class _SetScheduleState extends State<SetSchedule>
     return remainingDays;
   }
 
+  List<String> list() {
+    DateTime today = DateTime.now();
+    List<String> dateList = [];
+
+    for (int i = 1; i <= 30; i++) {
+      DateTime date = today.subtract(Duration(days: i));
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      dateList.add(formattedDate);
+    }
+
+    // Print the list of dates
+    return dateList;
+  }
+
   @override
   void initState() {
     super.initState();
+    if (widget.id.isEmpty) {
+      setScheduleController.getScheduleByDate({
+        "doctorId": "66bf3adcdd3df57c89074fe1",
+        "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
+      }, context);
+    } else {
+      dateTime = DateTime.parse(widget.date);
+      setScheduleController.getScheduleById(widget.id, context);
+    }
+    setScheduleController.getPreviousScheduleListData(
+        {"doctorId": "66bf3adcdd3df57c89074fe1", "dateArray": list()}, context);
 
-    // for (int i = 0; i < dateLength(); i++) {
-    //   schedule.add(DateTime(DateTime.now().year, DateTime.now().month, i + 1));
-    // }
-
-    setScheduleController.getScheduleByDate({
-      "doctorId": "66a776f354c2bd0642e7b5e7",
-      "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
-    }, context);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness:
@@ -278,20 +304,21 @@ class _SetScheduleState extends State<SetSchedule>
                             durationMS: 5000,
                             scrollSpeed: -4.4,
                             builder: (context, controller, physics) => ListView(
+                              padding: EdgeInsets.zero,
                               controller: _scrollController,
-                              // physics: isCollapsed
-                              //     ? physics
-                              //     : const NeverScrollableScrollPhysics(),
                               children: [
+                                SizedBox(
+                                  height: 12,
+                                ),
                                 EasyDateTimeLine(
-                                  initialDate: DateTime.now(),
+                                  initialDate: dateTime,
                                   disabledDates: _getDisabledDates(),
                                   onDateChange: (selectedDate) {
                                     setState(() {
                                       dateTime = selectedDate;
                                       selectSlotData = null;
                                       setScheduleController.getScheduleByDate({
-                                        "doctorId": "66a776f354c2bd0642e7b5e7",
+                                        "doctorId": "66bf3adcdd3df57c89074fe1",
                                         "dateArray": [
                                           "${DateFormat("yyyy-MM-dd").format(dateTime)}"
                                         ]
@@ -347,7 +374,7 @@ class _SetScheduleState extends State<SetSchedule>
                                   ),
                                   onTap: () {
                                     setScheduleController.createSchedule({
-                                      "doctorId": "66a776f354c2bd0642e7b5e7",
+                                      "doctorId": "66bf3adcdd3df57c89074fe1",
                                       "startTime":
                                           "${startTimeController.text} ${startTimeam}",
                                       "endTime":
@@ -356,6 +383,10 @@ class _SetScheduleState extends State<SetSchedule>
                                       "date": DateFormat("yyyy-MM-dd")
                                           .format(dateTime)
                                     }, context, fToast, dateTime);
+                                    setScheduleController.getSavedScheduleList({
+                                      "doctorId": "66bf3adcdd3df57c89074fe1",
+                                      "dateArray": generateDateList()
+                                    }, context);
                                     selectSlotData = null;
                                   },
                                 ),
@@ -631,11 +662,6 @@ class _SetScheduleState extends State<SetSchedule>
                                                             ],
                                                             decoration:
                                                                 InputDecoration(
-                                                              // contentPadding:
-                                                              //     const EdgeInsets
-                                                              //         .symmetric(
-                                                              //         horizontal:
-                                                              //             12),
                                                               border:
                                                                   InputBorder
                                                                       .none,
@@ -908,6 +934,13 @@ class _SetScheduleState extends State<SetSchedule>
                                                               .slussen24W700(
                                                                   color: HexColor(
                                                                       "#FFFFFF")),
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          inputFormatters: [
+                                                            FilteringTextInputFormatter
+                                                                .singleLineFormatter
+                                                          ],
                                                           decoration:
                                                               InputDecoration(
                                                             contentPadding:
@@ -1022,152 +1055,6 @@ class _SetScheduleState extends State<SetSchedule>
                                         ],
                                       ),
                                     )),
-                                // Padding(
-                                //   padding: const EdgeInsets.all(16.0),
-                                //   child: Row(
-                                //     mainAxisAlignment:
-                                //         MainAxisAlignment.spaceBetween,
-                                //     children: [
-                                //       Column(
-                                //         crossAxisAlignment:
-                                //             CrossAxisAlignment.start,
-                                //         children: [
-                                //           Text(
-                                //             "26 Feb, Monday",
-                                //             style: CustomFonts.slussen16W700(
-                                //                 color: HexColor(primaryColor)),
-                                //           ),
-                                //           Text(
-                                //             "10 Appointments scheduled for today",
-                                //             style: TextStyle(
-                                //               color: HexColor(primaryColor)
-                                //                   .withOpacity(.4),
-                                //               fontSize: 8,
-                                //               fontWeight: FontWeight.w400,
-                                //             ),
-                                //           ),
-                                //         ],
-                                //       ),
-                                //       Row(
-                                //         children: [
-                                //           Container(
-                                //             padding: const EdgeInsets.all(9),
-                                //             height: 30,
-                                //             width: 30,
-                                //             decoration: BoxDecoration(
-                                //               shape: BoxShape.circle,
-                                //               color: HexColor("#F7F9FC"),
-                                //             ),
-                                //             child: Center(
-                                //                 child: Image.asset(
-                                //                     "assets/images/delete.png")),
-                                //           ),
-                                //           const SizedBox(
-                                //             width: 4,
-                                //           ),
-                                //           Container(
-                                //             padding: const EdgeInsets.symmetric(
-                                //                 horizontal: 12),
-                                //             height: 30,
-                                //             decoration: BoxDecoration(
-                                //               color: HexColor(pinkColor),
-                                //               borderRadius:
-                                //                   BorderRadius.circular(40),
-                                //             ),
-                                //             child: Row(
-                                //               mainAxisAlignment:
-                                //                   MainAxisAlignment.center,
-                                //               children: [
-                                //                 Text(
-                                //                   "schedules ",
-                                //                   style:
-                                //                       CustomFonts.slussen10W700(
-                                //                           color: Colors.white),
-                                //                 ),
-                                //                 const Icon(
-                                //                   Icons.keyboard_arrow_up,
-                                //                   color: Colors.white,
-                                //                   size: 14,
-                                //                 )
-                                //               ],
-                                //             ),
-                                //           ),
-                                //         ],
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
-                                // const SizedBox(
-                                //   height: 8,
-                                // ),
-                                // SingleChildScrollView(
-                                //   scrollDirection: Axis.horizontal,
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.symmetric(
-                                //         horizontal: 16),
-                                //     child: Row(
-                                //       children: [
-                                //         for (int i = 0; i < 8; i++)
-                                //           Padding(
-                                //             padding:
-                                //                 const EdgeInsets.only(right: 8),
-                                //             child: Container(
-                                //               padding: const EdgeInsets.symmetric(
-                                //                   horizontal: 24, vertical: 16),
-                                //               // height: 110,
-                                //               decoration: BoxDecoration(
-                                //                 color: HexColor("#FFFFFF"),
-                                //                 borderRadius:
-                                //                     BorderRadius.circular(25),
-                                //               ),
-                                //               child: Column(
-                                //                 mainAxisAlignment:
-                                //                     MainAxisAlignment.center,
-                                //                 children: [
-                                //                   Text(
-                                //                     "Am",
-                                //                     style:
-                                //                         CustomFonts.slussen10W600(
-                                //                             color: HexColor(
-                                //                                     primaryColor)
-                                //                                 .withOpacity(.5)),
-                                //                   ),
-                                //                   Text(
-                                //                     "09:00",
-                                //                     style:
-                                //                         CustomFonts.slussen14W700(
-                                //                             color: HexColor(
-                                //                                 primaryColor)),
-                                //                   ),
-                                //                   Text(
-                                //                     "-",
-                                //                     style:
-                                //                         CustomFonts.slussen14W700(
-                                //                             color: HexColor(
-                                //                                 primaryColor)),
-                                //                   ),
-                                //                   Text(
-                                //                     "09:30",
-                                //                     style:
-                                //                         CustomFonts.slussen14W700(
-                                //                             color: HexColor(
-                                //                                 primaryColor)),
-                                //                   ),
-                                //                   Text(
-                                //                     "Am",
-                                //                     style:
-                                //                         CustomFonts.slussen10W600(
-                                //                             color: HexColor(
-                                //                                 primaryColor)),
-                                //                   ),
-                                //                 ],
-                                //               ),
-                                //             ),
-                                //           )
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
                                 SizedBox(
                                   height: 16,
                                 ),
@@ -1358,7 +1245,7 @@ class _SetScheduleState extends State<SetSchedule>
                                                   setScheduleController
                                                       .createASlot({
                                                     "doctorId":
-                                                        "66a776f354c2bd0642e7b5e7",
+                                                        "66bf3adcdd3df57c89074fe1",
                                                     "slots": slotList,
                                                     "date":
                                                         DateFormat("yyyy-MM-dd")
@@ -1371,11 +1258,20 @@ class _SetScheduleState extends State<SetSchedule>
                                                       setScheduleController
                                                           .getScheduleByDate({
                                                         "doctorId":
-                                                            "66a776f354c2bd0642e7b5e7",
+                                                            "66bf3adcdd3df57c89074fe1",
                                                         "dateArray": [
                                                           "${DateFormat("yyyy-MM-dd").format(dateTime)}"
                                                         ]
                                                       }, context);
+                                                      setScheduleController
+                                                          .getSavedScheduleList(
+                                                              {
+                                                            "doctorId":
+                                                                "66bf3adcdd3df57c89074fe1",
+                                                            "dateArray":
+                                                                generateDateList()
+                                                          },
+                                                              context);
                                                     },
                                                   );
                                                 } else if (schedule.newList
@@ -1393,14 +1289,35 @@ class _SetScheduleState extends State<SetSchedule>
                                                       setScheduleController
                                                           .getScheduleByDate({
                                                         "doctorId":
-                                                            "66a776f354c2bd0642e7b5e7",
+                                                            "66bf3adcdd3df57c89074fe1",
                                                         "dateArray": [
                                                           "${DateFormat("yyyy-MM-dd").format(dateTime)}"
                                                         ]
                                                       }, context);
+                                                      setScheduleController
+                                                          .getSavedScheduleList(
+                                                              {
+                                                            "doctorId":
+                                                                "66bf3adcdd3df57c89074fe1",
+                                                            "dateArray":
+                                                                generateDateList()
+                                                          },
+                                                              context);
                                                     },
                                                   );
                                                 }
+                                                // Future.delayed(
+                                                //   Duration(seconds: 5),
+                                                //   () {
+                                                //     setScheduleController
+                                                //         .getSavedScheduleList({
+                                                //       "doctorId":
+                                                //           "66bf3adcdd3df57c89074fe1",
+                                                //       "dateArray":
+                                                //           generateDateList()
+                                                //     }, context);
+                                                //   },
+                                                // );
                                                 // });
                                               },
                                             ),
@@ -1490,10 +1407,17 @@ class _SetScheduleState extends State<SetSchedule>
                                                                 setScheduleController
                                                                     .getScheduleByDate({
                                                                   "doctorId":
-                                                                      "66a776f354c2bd0642e7b5e7",
+                                                                      "66bf3adcdd3df57c89074fe1",
                                                                   "dateArray": [
                                                                     "${DateFormat("yyyy-MM-dd").format(dateTime)}"
                                                                   ]
+                                                                }, context);
+                                                                setScheduleController
+                                                                    .getSavedScheduleList({
+                                                                  "doctorId":
+                                                                      "66bf3adcdd3df57c89074fe1",
+                                                                  "dateArray":
+                                                                      generateDateList()
                                                                 }, context);
                                                                 setState(() {
                                                                   selectSlotData =
@@ -1521,10 +1445,17 @@ class _SetScheduleState extends State<SetSchedule>
                                                                 setScheduleController
                                                                     .getScheduleByDate({
                                                                   "doctorId":
-                                                                      "66a776f354c2bd0642e7b5e7",
+                                                                      "66bf3adcdd3df57c89074fe1",
                                                                   "dateArray": [
                                                                     "${DateFormat("yyyy-MM-dd").format(dateTime)}"
                                                                   ]
+                                                                }, context);
+                                                                setScheduleController
+                                                                    .getSavedScheduleList({
+                                                                  "doctorId":
+                                                                      "66bf3adcdd3df57c89074fe1",
+                                                                  "dateArray":
+                                                                      generateDateList()
                                                                 }, context);
                                                                 setState(() {
                                                                   selectSlotData =
@@ -1536,6 +1467,10 @@ class _SetScheduleState extends State<SetSchedule>
                                                             );
                                                           }
                                                         },
+                                                        data: selectSlotData ==
+                                                                null
+                                                            ? "Are you sure you want to delete the entire slot of ${DateFormat("d MMM").format(dateTime)}?"
+                                                            : "Are you sure want to delete?",
                                                       );
                                                     },
                                                   );
@@ -1587,7 +1522,23 @@ class _SetScheduleState extends State<SetSchedule>
                                                     ],
                                                   )
                                                 : schedule.newList.isEmpty
-                                                    ? SizedBox()
+                                                    ? Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 16),
+                                                        child: Text(
+                                                          "Schedule slots has not been created.",
+                                                          style: TextStyle(
+                                                            color: HexColor(
+                                                                    primaryColor)
+                                                                .withOpacity(
+                                                                    .4),
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                      )
                                                     : Column(
                                                         children: [
                                                           const SizedBox(
@@ -1621,6 +1572,8 @@ class _SetScheduleState extends State<SetSchedule>
                                                                           () {
                                                                         selectSlotData =
                                                                             schedule.newList[index];
+                                                                        setScheduleController
+                                                                            .updateAllReadStatus();
                                                                       });
                                                                     },
                                                                     child:
@@ -1992,8 +1945,14 @@ class _SetScheduleState extends State<SetSchedule>
                                   (value) {
                                     Get.back();
                                     newScheduleSelect.clear();
+                                    setScheduleController.getSavedScheduleList({
+                                      "doctorId": "66bf3adcdd3df57c89074fe1",
+                                      "dateArray": generateDateList()
+                                    }, context);
                                   },
                                 );
+                              } else {
+                                Navigator.pop(context);
                               }
                             },
                             child: Container(
@@ -2004,7 +1963,7 @@ class _SetScheduleState extends State<SetSchedule>
                               padding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 18),
                               child: Text(
-                                "DONE",
+                                newScheduleSelect.isNotEmpty ? "Done" : "Hide",
                                 style: CustomFonts.slussen10W700(
                                     color: HexColor("#201A3F")),
                               ),
@@ -2121,175 +2080,264 @@ class _SetScheduleState extends State<SetSchedule>
     );
   }
 
+  List<String> generateDateList() {
+    DateTime today = DateTime.now();
+    List<String> dateList = [];
+
+    // Calculate the date three months from today
+    DateTime threeMonthsLater =
+        DateTime(today.year, today.month + 3, today.day);
+
+    // Generate dates from today until the date three months later
+    for (DateTime date = today;
+        date.isBefore(threeMonthsLater);
+        date = date.add(Duration(days: 1))) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      dateList.add(formattedDate);
+    }
+
+    return dateList;
+  }
+
   Future previousScheduleDialog() {
     return showDialog(
       context: context,
       builder: (context) {
-        // return Dialog(
-        //   insetPadding: EdgeInsets.symmetric(horizontal: 20),
-        //   backgroundColor: HexColor("#E49356"),
-        //   shape:
-        //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-        //   child: StatefulBuilder(
-        //     builder: (context, setState) => ClipRRect(
-        //       borderRadius: BorderRadius.circular(35),
-        //       child: Container(
-        //         height: 400,
-        //         decoration:
-        //             BoxDecoration(borderRadius: BorderRadius.circular(35)),
-        //         child: Padding(
-        //           padding: EdgeInsets.only(left: 25, right: 20),
-        //           child: Column(
-        //             mainAxisSize: MainAxisSize.min,
-        //             children: [
-        //               SizedBox(
-        //                 height: 16,
-        //               ),
-        //               Row(
-        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   Text(
-        //                     "Copy Schedule",
-        //                     style: CustomFonts.slussen16W700(
-        //                         color: HexColor("#7F4010")),
-        //                   ),
-        //                   Container(
-        //                     decoration: BoxDecoration(
-        //                       color: Colors.white,
-        //                       borderRadius: BorderRadius.circular(40),
-        //                     ),
-        //                     padding: EdgeInsets.symmetric(
-        //                         vertical: 8, horizontal: 18),
-        //                     child: Text(
-        //                       "DONE",
-        //                       style: CustomFonts.slussen10W700(
-        //                           color: HexColor("#201A3F")),
-        //                     ),
-        //                   )
-        //                 ],
-        //               ),
-        //               SizedBox(
-        //                 height: 11,
-        //               ),
-        //               Expanded(
-        //                 child: Theme(
-        //                   data: ThemeData(
-        //                     highlightColor: Colors.white, //Does not work
-        //                   ),
-        //                   child: RawScrollbar(
-        //                     controller: _firstController,
-        //                     thumbColor: Colors.white,
-        //                     trackColor: HexColor("#F1A165"),
-        //                     radius: Radius.circular(25),
-        //                     trackRadius: Radius.circular(25),
-        //                     trackBorderColor: HexColor("#F1A165"),
-        //                     padding: EdgeInsets.only(bottom: 50),
-        //                     thickness: 6,
-        //                     trackVisibility: true,
-        //                     thumbVisibility: true,
-        //                     child: ListView.separated(
-        //                       separatorBuilder: (context, index) {
-        //                         return SizedBox(
-        //                           height: 6,
-        //                         );
-        //                       },
-        //                       padding: EdgeInsets.only(right: 25),
-        //                       controller: _firstController,
-        //                       itemCount: schedule.length,
-        //                       itemBuilder: (context, index) {
-        //                         return GestureDetector(
-        //                           onTap: () {
-        //                             setState(() {
-        //                               if (schedule[index]["check"] == true) {
-        //                                 schedule[index]["check"] = false;
-        //                               } else {
-        //                                 schedule[index]["check"] = true;
-        //                               }
-        //                             });
-        //                           },
-        //                           child: Container(
-        //                             decoration: BoxDecoration(
-        //                                 color: HexColor("#F1A165"),
-        //                                 borderRadius:
-        //                                     BorderRadius.circular(45)),
-        //                             padding: EdgeInsets.only(
-        //                                 left: 30,
-        //                                 right: 14,
-        //                                 top: 10,
-        //                                 bottom: 10),
-        //                             child: Row(
-        //                               children: [
-        //                                 Expanded(
-        //                                   child: Column(
-        //                                     crossAxisAlignment:
-        //                                         CrossAxisAlignment.start,
-        //                                     children: [
-        //                                       Text(
-        //                                         "2024",
-        //                                         style: CustomFonts.slussen8W500(
-        //                                             color: HexColor("#7F4010")),
-        //                                       ),
-        //                                       SizedBox(
-        //                                         height: 2,
-        //                                       ),
-        //                                       Text(
-        //                                         schedule[index]["date"],
-        //                                         style:
-        //                                             CustomFonts.slussen14W700(
-        //                                                 color: Colors.white),
-        //                                       ),
-        //                                     ],
-        //                                   ),
-        //                                 ),
-        //                                 Container(
-        //                                   decoration: BoxDecoration(
-        //                                       color: HexColor("#E957C9"),
-        //                                       borderRadius:
-        //                                           BorderRadius.circular(25)),
-        //                                   padding: EdgeInsets.symmetric(
-        //                                       vertical: 8, horizontal: 14),
-        //                                   child: Text(
-        //                                     "View",
-        //                                     style: CustomFonts.slussen9W700(
-        //                                         color: Colors.white),
-        //                                   ),
-        //                                 ),
-        //                                 SizedBox(
-        //                                   width: 6,
-        //                                 ),
-        //                                 Container(
-        //                                   width: 34,
-        //                                   alignment: Alignment.center,
-        //                                   child:
-        //                                       schedule[index]["check"] == true
-        //                                           ? Image.asset(
-        //                                               "lib/pages/set_schedule/assets/blue_check.png",
-        //                                               height: 34,
-        //                                               width: 34,
-        //                                             )
-        //                                           : Image.asset(
-        //                                               "lib/pages/set_schedule/assets/add.png",
-        //                                               height: 26,
-        //                                               width: 26,
-        //                                             ),
-        //                                 )
-        //                               ],
-        //                             ),
-        //                           ),
-        //                         );
-        //                       },
-        //                     ),
-        //                   ),
-        //                 ),
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // );
-        return Container();
+        return GetBuilder<SetScheduleController>(
+          init: SetScheduleController(),
+          builder: (controller) => Dialog(
+            insetPadding: EdgeInsets.symmetric(horizontal: 20),
+            backgroundColor: HexColor("#E49356"),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+            child: StatefulBuilder(
+              builder: (context, setState) => ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                child: Container(
+                  height: 400,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(35)),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 25, right: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Copy Schedule",
+                              style: CustomFonts.slussen16W700(
+                                  color: HexColor("#7F4010")),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (selectPreviousIndex != -1) {
+                                  setScheduleController.copyScheduleForToday({
+                                    "scheduleId": controller
+                                        .previousScheduleList[
+                                            selectPreviousIndex]
+                                        .id,
+                                    "newScheduleDate": DateFormat("yyyy-MM-dd")
+                                        .format(dateTime)
+                                  }, context, fToast).then(
+                                    (value) {
+                                      Get.back();
+                                      setScheduleController.getScheduleByDate({
+                                        "doctorId": "66bf3adcdd3df57c89074fe1",
+                                        "dateArray": [
+                                          "${DateFormat("yyyy-MM-dd").format(dateTime)}"
+                                        ]
+                                      }, context);
+                                      setScheduleController
+                                          .getSavedScheduleList({
+                                        "doctorId": "66bf3adcdd3df57c89074fe1",
+                                        "dateArray": generateDateList()
+                                      }, context);
+                                      selectPreviousIndex = -1;
+                                    },
+                                  );
+                                } else {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 18),
+                                child: Text(
+                                  selectPreviousIndex != -1 ? "Done" : "Hide",
+                                  style: CustomFonts.slussen10W700(
+                                      color: HexColor("#201A3F")),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 11,
+                        ),
+                        controller.previousScheduleList.isEmpty
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Expanded(
+                                child: Theme(
+                                  data: ThemeData(
+                                    highlightColor:
+                                        Colors.white, //Does not work
+                                  ),
+                                  child: RawScrollbar(
+                                    controller: _firstController,
+                                    thumbColor: Colors.white,
+                                    trackColor: HexColor("#F1A165"),
+                                    radius: Radius.circular(25),
+                                    trackRadius: Radius.circular(25),
+                                    trackBorderColor: HexColor("#F1A165"),
+                                    padding: EdgeInsets.only(bottom: 50),
+                                    thickness: 6,
+                                    trackVisibility: true,
+                                    thumbVisibility: true,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(
+                                          height: 6,
+                                        );
+                                      },
+                                      padding: EdgeInsets.only(right: 25),
+                                      controller: _firstController,
+                                      itemCount: controller
+                                          .previousScheduleList.length,
+                                      itemBuilder: (context, index) {
+                                        Datum data = controller
+                                            .previousScheduleList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectPreviousIndex = index;
+                                              // if (schedule[index]["check"] == true) {
+                                              //   schedule[index]["check"] = false;
+                                              // } else {
+                                              //   schedule[index]["check"] = true;
+                                              // }
+                                            });
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: HexColor("#F1A165"),
+                                                borderRadius:
+                                                    BorderRadius.circular(45)),
+                                            padding: EdgeInsets.only(
+                                                left: 30,
+                                                right: 14,
+                                                top: 10,
+                                                bottom: 10),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        DateFormat('yyyy')
+                                                            .format(
+                                                                DateTime.parse(
+                                                                    data.date)),
+                                                        style: CustomFonts
+                                                            .slussen8W500(
+                                                                color: HexColor(
+                                                                    "#7F4010")),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      Text(
+                                                        DateFormat('d MMM, E')
+                                                            .format(
+                                                                DateTime.parse(
+                                                                    data.date)),
+                                                        style: CustomFonts
+                                                            .slussen14W700(
+                                                                color: Colors
+                                                                    .white),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PreviousSchedules(
+                                                                  id: data.id,
+                                                                )));
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            HexColor("#E957C9"),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25)),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 8,
+                                                            horizontal: 14),
+                                                    child: Text(
+                                                      "View",
+                                                      style: CustomFonts
+                                                          .slussen9W700(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 6,
+                                                ),
+                                                Container(
+                                                  width: 34,
+                                                  alignment: Alignment.center,
+                                                  child: selectPreviousIndex ==
+                                                          index
+                                                      ? Image.asset(
+                                                          "lib/pages/set_schedule/assets/blue_check.png",
+                                                          height: 34,
+                                                          width: 34,
+                                                        )
+                                                      : Image.asset(
+                                                          "lib/pages/set_schedule/assets/add.png",
+                                                          height: 26,
+                                                          width: 26,
+                                                        ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
       },
     );
   }

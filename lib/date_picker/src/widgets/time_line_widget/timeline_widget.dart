@@ -20,12 +20,14 @@ class TimeLineWidget extends StatefulWidget {
     this.timeLineProps = const EasyTimeLineProps(),
     this.onDateChange,
     this.itemBuilder,
+    required this.controller,
   })  : assert(timeLineProps.hPadding > -1,
             "Can't set timeline hPadding less than zero."),
         assert(timeLineProps.separatorPadding > -1,
             "Can't set timeline separatorPadding less than zero."),
         assert(timeLineProps.vPadding > -1,
             "Can't set timeline vPadding less than zero.");
+  final ScrollController controller;
 
   /// Represents the initial date for the timeline widget.
   /// This is the date that will be displayed as the first day in the timeline.
@@ -82,21 +84,21 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
 
   double get _dayOffsetConstrains => _isLandscapeMode ? _dayHeight : _dayWidth;
 
-  late ScrollController _controller;
+  // late ScrollController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = ScrollController(
-      initialScrollOffset: _calculateDateOffset(widget.initialDate),
-    );
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = ScrollController(
+  //     initialScrollOffset: _calculateDateOffset(widget.initialDate),
+  //   );
+  // }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   /// the method calculates the number of days between startDate and date using the difference() method
   /// of the Duration class. This value is stored in the offset variable.
@@ -142,7 +144,7 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
         child: ScrollConfiguration(
           behavior: EasyCustomScrollBehavior(),
           child: ListView.separated(
-            controller: _controller,
+            controller: widget.controller,
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(
               horizontal: _timeLineProps.hPadding,

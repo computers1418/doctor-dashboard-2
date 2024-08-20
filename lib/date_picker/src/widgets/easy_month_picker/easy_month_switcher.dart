@@ -7,13 +7,13 @@ import '../../utils/utils.dart';
 
 /// A widget that displays a button for switching to the previous or next month.
 class EasyMonthSwitcher extends StatefulWidget {
-  const EasyMonthSwitcher({
-    super.key,
-    required this.locale,
-    required this.value,
-    this.onMonthChange,
-    this.style,
-  });
+  const EasyMonthSwitcher(
+      {super.key,
+      required this.locale,
+      required this.value,
+      this.onMonthChange,
+      this.style,
+      this.onChange});
 
   /// A `String` that represents the locale code to use for formatting the month name in the switcher.
   final String locale;
@@ -23,6 +23,8 @@ class EasyMonthSwitcher extends StatefulWidget {
 
   /// A callback function that is called when the selected month changes.
   final OnMonthChangeCallBack? onMonthChange;
+
+  final VoidCallback? onChange;
 
   /// The text style applied to the month string.
   final TextStyle? style;
@@ -66,6 +68,7 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
                     }
                     _currentMonth--;
                     widget.onMonthChange?.call(_yearMonths[_currentMonth - 1]);
+                    widget.onChange!();
                   },
                   child: Container(
                     height: 36,
@@ -100,6 +103,7 @@ class _EasyMonthSwitcherState extends State<EasyMonthSwitcher> {
               }
               _currentMonth++;
               widget.onMonthChange?.call(_yearMonths[_currentMonth - 1]);
+              widget.onChange!();
             },
             child: Container(
               height: 36,

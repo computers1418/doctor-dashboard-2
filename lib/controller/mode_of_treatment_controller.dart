@@ -29,7 +29,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'GET',
           Uri.parse(
-              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/get'));
+              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/get'));
 
       request.headers.addAll(headers);
 
@@ -65,7 +65,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/add'));
+              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/add'));
 
       request.headers.addAll(headers);
 
@@ -102,7 +102,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66a776f354c2bd0642e7b5e7/guideline/delete'));
+              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/delete'));
 
       request.headers.addAll(headers);
 
@@ -233,7 +233,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'GET',
           Uri.parse(
-              '$baseUrl/api/treatment-mode/detailsByDoctorId/66a776f354c2bd0642e7b5e7'));
+              '$baseUrl/api/treatment-mode/detailsByDoctorId/66bf3adcdd3df57c89074fe1'));
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
