@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors_const.dart';
 
-
 class SingleSelect extends StatefulWidget {
   final List<String> items;
   final String label;
@@ -30,6 +29,7 @@ class _SingleSelectState extends State<SingleSelect> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton2(
           customButton: Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
             height: 50,
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -37,9 +37,20 @@ class _SingleSelectState extends State<SingleSelect> {
                     ? ColorsConst.secondary
                     : ColorsConst.secondary.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(32)),
-            child: (selectedValue ?? widget.label).bold12(
-              color:
-                  widget.enable ? Colors.white : Colors.white.withOpacity(0.4),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                selectedValue ?? widget.label,
+                style: TextStyle(
+                    fontFamily: 'Slussen',
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: widget.enable
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.4)),
+                textAlign:
+                    TextAlign.center, // Ensure dropdown item text is centered
+              ),
             ),
           ),
           selectedItemBuilder: (_) {

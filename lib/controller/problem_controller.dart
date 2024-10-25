@@ -13,7 +13,10 @@ import '../constants/constants.dart';
 import '../model/set_problem_model.dart';
 
 class ProblemController extends GetxController {
-  // List<SetProblemModel> problemList = [];
+  List<SetProblemModel> getProblemList = [];
+  List<TestModel> getTestList = [];
+  List<SurgeryModel> getSurgeryList = [];
+  List<MedicineModel> getMedicineList = [];
   List<Map<dynamic, dynamic>> newProblemList = [];
   List<Map<dynamic, dynamic>> newTestList = [];
   List<Map<dynamic, dynamic>> newMedicineList = [];
@@ -60,8 +63,9 @@ class ProblemController extends GetxController {
         if (resp["data"] != null) {
           clearNewProblemList();
           List<dynamic> dataList = resp["data"];
-
-          // Assuming you have a SetProblemModel with a fromJson method
+          getProblemList = dataList
+              .map((element) => SetProblemModel.fromJson(element))
+              .toList();
           List<SetProblemModel> problemList = dataList
               .map((element) => SetProblemModel.fromJson(element))
               .toList();
@@ -111,6 +115,8 @@ class ProblemController extends GetxController {
         if (resp["data"] != null) {
           clearTestList();
           List<dynamic> dataList = resp["data"];
+          getTestList =
+              dataList.map((element) => TestModel.fromJson(element)).toList();
 
           // Assuming you have a SetProblemModel with a fromJson method
           List<TestModel> problemList =
@@ -161,6 +167,9 @@ class ProblemController extends GetxController {
         if (resp["data"] != null) {
           clearTestList();
           List<dynamic> dataList = resp["data"];
+          getMedicineList = dataList
+              .map((element) => MedicineModel.fromJson(element))
+              .toList();
 
           // Assuming you have a SetProblemModel with a fromJson method
           List<MedicineModel> problemList = dataList
@@ -212,6 +221,9 @@ class ProblemController extends GetxController {
         if (resp["data"] != null) {
           clearTestList();
           List<dynamic> dataList = resp["data"];
+          getSurgeryList = dataList
+              .map((element) => SurgeryModel.fromJson(element))
+              .toList();
 
           // Assuming you have a SetProblemModel with a fromJson method
           List<SurgeryModel> problemList = dataList

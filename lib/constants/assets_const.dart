@@ -8,7 +8,7 @@ class AssetsConst {
   static const number = "res/images/number.png";
   static const mail = "res/images/mail.png";
   static const close = "res/images/close.png";
-  static const mailSent = "res/images/mail-sent.png";
+  static const mailSent = "assets/images/send.png";
 
 
 

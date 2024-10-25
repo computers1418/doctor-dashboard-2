@@ -13,11 +13,12 @@ const String pinkColor = "#FF65DE";
 
 // String baseUrl = 'http://13.127.57.197';
 // String baseUrl = 'http://www.health24.fun';
-String baseUrl = 'https://162.240.106.108:9091';
+// String baseUrl = 'https://162.240.106.108:9091';
+String baseUrl = 'http://ec2-54-196-7-155.compute-1.amazonaws.com:9091';
 
 showToast(FToast fToast, String text, bool error) {
   return fToast.showToast(
-    // toastDuration: Duration(seconds: 3),
+    toastDuration: Duration(seconds: 3),
     child: Container(
       decoration: BoxDecoration(
           color: HexColor("#201A3F"), borderRadius: BorderRadius.circular(45)),

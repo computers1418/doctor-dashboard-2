@@ -183,7 +183,9 @@ class ModeOfTreatmentController extends GetxController {
         if (response.statusCode == 200) {
           resp = await CommonMethods.decodeStreamedResponse(response);
           treatment = true;
-          getTreatmentModes(context);
+          treatmentModeList = List<String>.from(resp['data']['treatmentMode']);
+          update();
+          // getTreatmentModes(context);
         } else {
           if (kDebugMode) {
             print(response.reasonPhrase);

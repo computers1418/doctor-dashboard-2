@@ -16,14 +16,18 @@
 
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
+import 'package:doctor_dashboard/controller/consultation_controller.dart';
+import 'package:doctor_dashboard/model/phone_email_consult_model.dart';
 import 'package:doctor_dashboard/widgets/custom_appbar.dart';
 import 'package:doctor_dashboard/widgets/neumorphic_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 
 import '../../widgets/drawer.dart';
@@ -44,21 +48,23 @@ class _AppointmentHistoryState extends State<AppointmentHistory>
   late Animation<double> _scaleAnimation;
   late Animation<double> _menuScaleAnimation;
   late Animation<Offset> _slideAnimation;
+  ConsultationController consultationController =
+      Get.put(ConsultationController());
 
   final _scrollController = ScrollController();
   double _currentOffset = 0.0;
 
   List<String> timeRangeList = [
-    'All Time',
+    // 'All Time',
     '1 Week',
-    '15 Days',
     '1 Month',
+    '2 Months',
     '3 Months',
     '6 Months',
     '1 Year'
   ];
 
-  String selectedTime = 'All Time';
+  String selectedTime = '1 Week';
 
   bool showTimeSelector = false;
 
@@ -71,6 +77,10 @@ class _AppointmentHistoryState extends State<AppointmentHistory>
           Brightness.light, //<-- For Android SEE HERE (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
+    consultationController.getHistoryAppointment({
+      "doctorId": "66bf3adcdd3df57c89074fe1",
+      "range": selectedTime == "1 Week" ? "week" : selectedTime
+    });
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.6).animate(_controller);
     _menuScaleAnimation =
@@ -138,123 +148,37 @@ class _AppointmentHistoryState extends State<AppointmentHistory>
   }
 
   Widget content(context) {
-    return AnimatedPositioned(
-      duration: duration,
-      top: 0,
-      bottom: 0,
-      left: isCollapsed ? 0 : 0.6 * screenWidth,
-      right: isCollapsed ? 0 : -0.2 * screenWidth,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Material(
-          animationDuration: duration,
-          borderRadius: BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
-          elevation: 8,
-          color: Colors.white,
-          child: ClipRRect(
+    return GetBuilder<ConsultationController>(
+      init: ConsultationController(),
+      builder: (controller) => AnimatedPositioned(
+        duration: duration,
+        top: 0,
+        bottom: 0,
+        left: isCollapsed ? 0 : 0.5 * screenWidth,
+        right: isCollapsed ? 0 : -0.5 * screenWidth,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Material(
+            animationDuration: duration,
             borderRadius:
                 BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
-            child: Container(
-              width: double.infinity,
-              color: HexColor("#201A3F"),
-              child: Column(
-                children: [
-                  CustomAppbar(callback: callback),
-                  Expanded(
-                    child: DynMouseScroll(
-                      durationMS: 5000,
-                      scrollSpeed: -4.4,
-                      builder: (context, controller, physics) => ListView(
-                        padding: EdgeInsets.zero,
-                        controller: _scrollController,
-                        physics: isCollapsed
-                            ? physics
-                            : const NeverScrollableScrollPhysics(),
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            elevation: 8,
+            color: Colors.white,
+            child: ClipRRect(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(isCollapsed ? 0 : 40)),
+              child: Container(
+                width: double.infinity,
+                color: HexColor("#201A3F"),
+                child: Column(
+                  children: [
+                    CustomAppbar(callback: callback),
+                    controller.historyByYesterday.isEmpty
+                        ? SizedBox()
+                        : Column(
                             children: [
                               const SizedBox(
                                 height: 24,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Container(
-                                            height: 50,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                color: Colors.white
-                                                    .withOpacity(.05)),
-                                            child: Center(
-                                                child: TextField(
-                                              style: CustomFonts.slussen14W600(
-                                                  color: Colors.white),
-                                              decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets.only(
-                                                          left: 16, right: 50),
-                                                  hintText: "Search",
-                                                  hintStyle:
-                                                      CustomFonts.slussen14W600(
-                                                          color: Colors.white
-                                                              .withOpacity(.7)),
-                                                  border: InputBorder.none),
-                                            )),
-                                          ),
-                                          Positioned(
-                                            right: 5,
-                                            child: Container(
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  gradient:
-                                                      LinearGradient(colors: [
-                                                    HexColor("#E7CB87"),
-                                                    HexColor("#E49356"),
-                                                  ])),
-                                              child: Image.asset(
-                                                "lib/pages/dashboard/assets/search.png",
-                                                height: 20,
-                                                width: 20,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Container(
-                                      height: 50,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 19),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: HexColor("#FF65DE"),
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      child: Text(
-                                        "ADD\nNEW",
-                                        style: CustomFonts.slussen12W700(
-                                            color: Colors.white),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
                               ),
                               Padding(
                                 padding:
@@ -284,320 +208,268 @@ class _AppointmentHistoryState extends State<AppointmentHistory>
                               const SizedBox(
                                 height: 16,
                               ),
-                              for (int i = 0; i < 2; i++)
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 12, left: 16, right: 16),
-                                  child: Container(
-                                    height: screenHeight * 0.1,
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: HexColor("#FFFFFF"),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(
-                                            screenHeight * 0.08),
-                                        topRight: Radius.circular(
-                                            screenHeight * 0.03),
-                                        bottomLeft: Radius.circular(
-                                            screenHeight * 0.08),
-                                        bottomRight: Radius.circular(
-                                            screenHeight * 0.08),
+                              ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                itemCount: controller.historyByYesterday.length,
+                                itemBuilder: (context, index) {
+                                  PhoneEmailConsultModel model =
+                                      controller.historyByYesterday[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 12, left: 16, right: 16),
+                                    child: Container(
+                                      height: screenHeight * 0.1,
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: HexColor("#FFFFFF"),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(
+                                              screenHeight * 0.08),
+                                          topRight: Radius.circular(
+                                              screenHeight * 0.03),
+                                          bottomLeft: Radius.circular(
+                                              screenHeight * 0.08),
+                                          bottomRight: Radius.circular(
+                                              screenHeight * 0.08),
+                                        ),
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "lib/pages/dashboard/assets/img.png",
-                                          height: screenHeight * 0.08,
-                                          width: screenHeight * 0.08,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Expanded(
-                                          child: Column(
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            "lib/pages/dashboard/assets/img.png",
+                                            height: screenHeight * 0.08,
+                                            width: screenHeight * 0.08,
+                                          ),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  model.name!,
+                                                  style:
+                                                      CustomFonts.slussen14W700(
+                                                          color: HexColor(
+                                                              "#201A3F")),
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight * 0.005,
+                                                ),
+                                                Text(
+                                                  "ID - ${model.id}",
+                                                  style:
+                                                      CustomFonts.slussen8W500(
+                                                          color: HexColor(
+                                                                  "#201A3F")
+                                                              .withOpacity(.4)),
+                                                ),
+                                                SizedBox(
+                                                  height: screenHeight * 0.0075,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          colors: [
+                                                            HexColor("#E2C680"),
+                                                            HexColor("#D8874B"),
+                                                          ]),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              35)),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 9,
+                                                      vertical: 4),
+                                                  child: RichText(
+                                                    maxLines: 1,
+                                                    text: TextSpan(
+                                                        text: "Dental Braces ",
+                                                        style: CustomFonts
+                                                            .slussen10W500(
+                                                                color: Colors
+                                                                    .white),
+                                                        children: [
+                                                          TextSpan(
+                                                              text:
+                                                                  "(Paid - Rs. 2000)",
+                                                              style: CustomFonts
+                                                                  .slussen10W700(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis))
+                                                        ]),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          // const Spacer(),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                "Rooney Jay",
-                                                style:
-                                                    CustomFonts.slussen14W700(
-                                                        color: HexColor(
-                                                            "#201A3F")),
-                                              ),
-                                              SizedBox(
-                                                height: screenHeight * 0.005,
-                                              ),
-                                              Text(
-                                                "ID - F864HIA85VX00",
+                                                DateFormat('d MMM, E')
+                                                    .format(model.dateTime!),
                                                 style: CustomFonts.slussen8W500(
                                                     color: HexColor("#201A3F")
                                                         .withOpacity(.4)),
                                               ),
                                               SizedBox(
-                                                height: screenHeight * 0.0075,
+                                                height: screenHeight * 0.02,
                                               ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    gradient:
-                                                        LinearGradient(colors: [
-                                                      HexColor("#E2C680"),
-                                                      HexColor("#D8874B"),
-                                                    ]),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            35)),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 9, vertical: 4),
-                                                child: RichText(
-                                                  maxLines: 1,
-                                                  text: TextSpan(
-                                                      text: "Dental Braces ",
-                                                      style: CustomFonts
-                                                          .slussen10W500(
-                                                              color:
-                                                                  Colors.white),
-                                                      children: [
-                                                        TextSpan(
-                                                            text:
-                                                                "(Paid - Rs. 2000)",
-                                                            style: CustomFonts
-                                                                .slussen10W700(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis))
-                                                      ]),
-                                                ),
-                                              )
+                                              Image.asset(
+                                                "lib/pages/search_result/assets/forward.png",
+                                                height: 30,
+                                                width: 30,
+                                              ),
                                             ],
                                           ),
-                                        ),
-                                        // const Spacer(),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              "21 Feb, Wed",
-                                              style: CustomFonts.slussen8W500(
-                                                  color: HexColor("#201A3F")
-                                                      .withOpacity(.4)),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight * 0.02,
-                                            ),
-                                            Image.asset(
-                                              "lib/pages/search_result/assets/forward.png",
-                                              height: 30,
-                                              width: 30,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                height: 28,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Align(
+                                  child: Text(
+                                    "History",
+                                    style: CustomFonts.slussen12W500(
+                                        color: Colors.white),
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: HexColor("#F2F7FB"),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(45),
+                                      topRight: Radius.circular(45),
                                     ),
                                   ),
-                                ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Stack(
-                                alignment: Alignment.topLeft,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  child: Column(
                                     children: [
-                                      Container(
-                                        height: 28,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "History",
-                                              style: CustomFonts.slussen12W500(
-                                                  color: Colors.white),
-                                            ),
-                                            const SizedBox()
-                                          ],
-                                        ),
-                                      ),
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.all(16),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: HexColor("#F2F7FB"),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(45),
-                                            topRight: Radius.circular(45),
-                                            bottomLeft: Radius.circular(45),
-                                            bottomRight: Radius.circular(45),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            for (int i = 0; i < 8; i++)
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  bottom: 12,
-                                                ),
-                                                child: Container(
-                                                  height: screenHeight * 0.1,
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    color: HexColor("#F2F7FB"),
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft: Radius.circular(
-                                                          screenHeight * 0.08),
-                                                      topRight: Radius.circular(
-                                                          screenHeight * 0.03),
-                                                      bottomLeft:
-                                                          Radius.circular(
-                                                              screenHeight *
-                                                                  0.08),
-                                                      bottomRight:
-                                                          Radius.circular(
-                                                              screenHeight *
-                                                                  0.08),
-                                                    ),
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                        color:
-                                                            Color(0xffFFFFFF),
-                                                        offset:
-                                                            Offset(-5.0, -5.0),
-                                                        blurRadius: 8,
-                                                        spreadRadius: 0.0,
-                                                      ),
-                                                      BoxShadow(
-                                                        color:
-                                                            Color(0xffE1EAF1),
-                                                        offset:
-                                                            Offset(5.0, 5.0),
-                                                        blurRadius: 8,
-                                                        spreadRadius: 0.0,
-                                                      ),
-                                                    ],
+                                      Expanded(
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          itemCount: controller
+                                              .historyByUpcoming.length,
+                                          itemBuilder: (context, index) {
+                                            PhoneEmailConsultModel model =
+                                                controller
+                                                    .historyByUpcoming[index];
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                bottom: 12,
+                                              ),
+                                              child: Container(
+                                                height: screenHeight * 0.1,
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: HexColor("#F2F7FB"),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft: Radius.circular(
+                                                        screenHeight * 0.08),
+                                                    topRight: Radius.circular(
+                                                        screenHeight * 0.03),
+                                                    bottomLeft: Radius.circular(
+                                                        screenHeight * 0.08),
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                            screenHeight *
+                                                                0.08),
                                                   ),
-                                                  child: Row(
-                                                    children: [
-                                                      Image.asset(
-                                                        "lib/pages/dashboard/assets/img.png",
-                                                        height:
-                                                            screenHeight * 0.08,
-                                                        width:
-                                                            screenHeight * 0.08,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 8,
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              "Rooney Jay",
-                                                              style: CustomFonts
-                                                                  .slussen14W700(
-                                                                      color: HexColor(
-                                                                          "#201A3F")),
-                                                            ),
-                                                            SizedBox(
-                                                              height:
-                                                                  screenHeight *
-                                                                      0.005,
-                                                            ),
-                                                            Text(
-                                                              "ID - F864HIA85VX00",
-                                                              style: CustomFonts.slussen8W500(
-                                                                  color: HexColor(
-                                                                          "#201A3F")
-                                                                      .withOpacity(
-                                                                          .4)),
-                                                            ),
-                                                            SizedBox(
-                                                              height:
-                                                                  screenHeight *
-                                                                      0.0075,
-                                                            ),
-                                                            Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                      gradient:
-                                                                          LinearGradient(
-                                                                              colors: [
-                                                                            HexColor("#E2C680"),
-                                                                            HexColor("#D8874B"),
-                                                                          ]),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              35)),
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          9,
-                                                                      vertical:
-                                                                          4),
-                                                              child: RichText(
-                                                                maxLines: 1,
-                                                                text: TextSpan(
-                                                                    text:
-                                                                        "Dental Braces ",
-                                                                    style: CustomFonts
-                                                                        .slussen10W500(
-                                                                            color:
-                                                                                Colors.white),
-                                                                    children: [
-                                                                      TextSpan(
-                                                                          text:
-                                                                              "(Paid - Rs. 2000)",
-                                                                          style: CustomFonts.slussen10W700(
-                                                                              color: Colors.white,
-                                                                              overflow: TextOverflow.ellipsis))
-                                                                    ]),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 8,
-                                                      ),
-                                                      Column(
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Color(0xffFFFFFF),
+                                                      offset:
+                                                          Offset(-5.0, -5.0),
+                                                      blurRadius: 8,
+                                                      spreadRadius: 0.0,
+                                                    ),
+                                                    BoxShadow(
+                                                      color: Color(0xffE1EAF1),
+                                                      offset: Offset(5.0, 5.0),
+                                                      blurRadius: 8,
+                                                      spreadRadius: 0.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      "lib/pages/dashboard/assets/img.png",
+                                                      height:
+                                                          screenHeight * 0.08,
+                                                      width:
+                                                          screenHeight * 0.08,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
-                                                                .end,
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Text(
-                                                            "21 Feb, Wed",
+                                                            model.name!,
+                                                            style: CustomFonts
+                                                                .slussen14W700(
+                                                                    color: HexColor(
+                                                                        "#201A3F")),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                screenHeight *
+                                                                    0.005,
+                                                          ),
+                                                          Text(
+                                                            "ID - ${model.id}",
                                                             style: CustomFonts.slussen8W500(
                                                                 color: HexColor(
                                                                         "#201A3F")
@@ -607,143 +479,242 @@ class _AppointmentHistoryState extends State<AppointmentHistory>
                                                           SizedBox(
                                                             height:
                                                                 screenHeight *
-                                                                    0.02,
+                                                                    0.0075,
                                                           ),
-                                                          Image.asset(
-                                                            "lib/pages/search_result/assets/forward.png",
-                                                            height: 30,
-                                                            width: 30,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const SizedBox(),
-                                        GlassContainer.clearGlass(
-                                            height: showTimeSelector ? 150 : 28,
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                            width: 100,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 4),
-                                              child: !showTimeSelector
-                                                  ? InkWell(
-                                                      onTap: () => setState(() {
-                                                        showTimeSelector = true;
-                                                      }),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Center(
-                                                              child: Text(
-                                                                  selectedTime,
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                            colors: [
+                                                                          HexColor(
+                                                                              "#E2C680"),
+                                                                          HexColor(
+                                                                              "#D8874B"),
+                                                                        ]),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            35)),
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        9,
+                                                                    vertical:
+                                                                        4),
+                                                            child: RichText(
+                                                              maxLines: 1,
+                                                              text: TextSpan(
+                                                                  text:
+                                                                      "Dental Braces ",
                                                                   style: CustomFonts
-                                                                      .slussen12W700(
+                                                                      .slussen10W500(
                                                                           color:
-                                                                              HexColor(pinkColor))),
+                                                                              Colors.white),
+                                                                  children: [
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "(Paid - Rs. 2000)",
+                                                                        style: CustomFonts.slussen10W700(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            overflow: TextOverflow.ellipsis))
+                                                                  ]),
                                                             ),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 16,
-                                                              child: Icon(
-                                                                Icons
-                                                                    .keyboard_arrow_down,
-                                                                size: 16,
-                                                                color: Colors
-                                                                    .white,
-                                                              ))
+                                                          )
                                                         ],
                                                       ),
-                                                    )
-                                                  : Column(
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .end,
                                                       children: [
-                                                        for (String item
-                                                            in timeRangeList)
-                                                          InkWell(
-                                                            onTap: () =>
-                                                                setState(() {
-                                                              selectedTime =
-                                                                  item;
-                                                              showTimeSelector =
-                                                                  false;
-                                                            }),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical:
-                                                                          2),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Text(
-                                                                    item,
-                                                                    style: selectedTime ==
-                                                                            item
-                                                                        ? CustomFonts.slussen12W700(
-                                                                            color: HexColor(
-                                                                                pinkColor))
-                                                                        : CustomFonts.slussen10W500(
-                                                                            color:
-                                                                                HexColor("#201A3F").withOpacity(.7)),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      width: 16,
-                                                                      child: 'All Time' ==
-                                                                              item
-                                                                          ? const Icon(
-                                                                              Icons.keyboard_arrow_up,
-                                                                              size: 16,
-                                                                              color: Colors.white,
-                                                                            )
-                                                                          : const SizedBox())
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          )
+                                                        Text(
+                                                          DateFormat('d MMM, E')
+                                                              .format(model
+                                                                  .dateTime!),
+                                                          style: CustomFonts
+                                                              .slussen8W500(
+                                                                  color: HexColor(
+                                                                          "#201A3F")
+                                                                      .withOpacity(
+                                                                          .4)),
+                                                        ),
+                                                        SizedBox(
+                                                          height: screenHeight *
+                                                              0.02,
+                                                        ),
+                                                        Image.asset(
+                                                          "lib/pages/search_result/assets/forward.png",
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
                                                       ],
                                                     ),
-                                            ))
-                                      ],
-                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 16),
+                              child: GlassContainer.clearGlass(
+                                  height: showTimeSelector ? 150 : 28,
+                                  borderRadius: BorderRadius.circular(13),
+                                  width: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
+                                    child: !showTimeSelector
+                                        ? InkWell(
+                                            onTap: () => setState(() {
+                                              showTimeSelector = true;
+                                            }),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Expanded(
+                                                  child: Center(
+                                                    child: Text(selectedTime,
+                                                        style: CustomFonts
+                                                            .slussen12W700(
+                                                                color: HexColor(
+                                                                    pinkColor))),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                    width: 16,
+                                                    child: Icon(
+                                                      Icons.keyboard_arrow_down,
+                                                      size: 16,
+                                                      color: Colors.white,
+                                                    ))
+                                              ],
+                                            ),
+                                          )
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              for (String item in timeRangeList)
+                                                InkWell(
+                                                  onTap: () => setState(() {
+                                                    selectedTime = item;
+                                                    showTimeSelector = false;
+                                                    if (selectedTime ==
+                                                        "1 Week") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "week"
+                                                      });
+                                                    } else if (selectedTime ==
+                                                        "1 Month") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "month"
+                                                      });
+                                                    } else if (selectedTime ==
+                                                        "2 Months") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "2months"
+                                                      });
+                                                    } else if (selectedTime ==
+                                                        "3 Months") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "3months"
+                                                      });
+                                                    } else if (selectedTime ==
+                                                        "6 Months") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "6months"
+                                                      });
+                                                    } else if (selectedTime ==
+                                                        "1 Year") {
+                                                      consultationController
+                                                          .getHistoryAppointment({
+                                                        "doctorId":
+                                                            "66bf3adcdd3df57c89074fe1",
+                                                        "range": "years"
+                                                      });
+                                                    }
+                                                  }),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 2),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          item,
+                                                          style: selectedTime ==
+                                                                  item
+                                                              ? CustomFonts
+                                                                  .slussen12W700(
+                                                                      color: HexColor(
+                                                                          pinkColor))
+                                                              : CustomFonts.slussen10W500(
+                                                                  color: HexColor(
+                                                                          "#201A3F")
+                                                                      .withOpacity(
+                                                                          .7)),
+                                                        ),
+                                                        SizedBox(
+                                                            width: 16,
+                                                            child: 'All Time' ==
+                                                                    item
+                                                                ? const Icon(
+                                                                    Icons
+                                                                        .keyboard_arrow_up,
+                                                                    size: 16,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  )
+                                                                : const SizedBox())
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                            ],
+                                          ),
+                                  )),
+                            ),
+                          )
                         ],
                       ),
-                    ),
-                  ),
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

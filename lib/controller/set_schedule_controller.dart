@@ -42,6 +42,7 @@ class SetScheduleController extends GetxController {
       } else {
         if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
+
           getScheduleByDate({
             "doctorId": "66bf3adcdd3df57c89074fe1",
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
@@ -158,7 +159,6 @@ class SetScheduleController extends GetxController {
     Map<String, dynamic> resp = {};
 
     // isDataLoading.value = true;
-    print("sdsdsds=====${body}");
     try {
       var headers = {
         'Content-Type': 'application/json',
@@ -371,7 +371,6 @@ class SetScheduleController extends GetxController {
     schduleList = [];
     clearnewList();
     isDataLoading.value = true;
-    // update();
 
     Map<String, dynamic> resp = {};
     try {
@@ -379,7 +378,7 @@ class SetScheduleController extends GetxController {
         'Content-Type': 'application/json',
       };
       var request = http.Request(
-          'GET', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
+          'POST', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
 
       request.headers.addAll(headers);
 
@@ -498,7 +497,7 @@ class SetScheduleController extends GetxController {
         'Content-Type': 'application/json',
       };
       var request = http.Request(
-          'GET', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
+          'POST', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
 
       request.headers.addAll(headers);
 
@@ -545,7 +544,7 @@ class SetScheduleController extends GetxController {
         'Content-Type': 'application/json',
       };
       var request = http.Request(
-          'GET', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
+          'POST', Uri.parse('$baseUrl/api/doctor/schedule/getByDate'));
 
       request.headers.addAll(headers);
 

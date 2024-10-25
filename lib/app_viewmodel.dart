@@ -50,6 +50,7 @@ class AppViewModel {
 
   showSuccessSheet(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
         context: context,
         builder: (_) {
           return const SuccessSheet();

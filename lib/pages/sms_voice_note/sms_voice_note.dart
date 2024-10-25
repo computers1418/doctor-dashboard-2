@@ -144,16 +144,32 @@ class _SmsVoiceNoteState extends State<SmsVoiceNote> {
                     children: [
                       Expanded(
                         child: SingleSelect(
-                            items: templates, label: "No SMS Template"),
+                            items: templates, label: "SMS Template 4"),
                       ),
-                      20.w(),
+                      10.w(),
                       Expanded(
                         child: SingleSelect(
                           items: templates,
                           label: "No Email Template",
                           enable: false,
                         ),
-                      )
+                      ),
+                      10.w(),
+                      Expanded(
+                        child: SingleSelect(
+                          items: templates,
+                          label: "No Voice Template",
+                          enable: false,
+                        ),
+                      ),
+                      10.w(),
+                      Expanded(
+                        child: SingleSelect(
+                          items: templates,
+                          label: "No WhatsApp Template",
+                          enable: false,
+                        ),
+                      ),
                     ],
                   ),
                   20.h(),

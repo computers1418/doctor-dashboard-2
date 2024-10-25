@@ -40,9 +40,11 @@ class SetProblemModel {
         doctorId: json["doctorId"] ?? "",
         problemName: json["problemName"] ?? "",
         price: json["price"] ?? "",
-        description: json["description"]  ?? "",
-        createdAt: DateTime.parse(json["createdAt"] ?? DateTime.now().toString()),
-        updatedAt: DateTime.parse(json["updatedAt"] ?? DateTime.now().toString()),
+        description: json["description"] ?? "",
+        createdAt:
+            DateTime.parse(json["createdAt"] ?? DateTime.now().toString()),
+        updatedAt:
+            DateTime.parse(json["updatedAt"] ?? DateTime.now().toString()),
         v: json["__v"] ?? 0,
       );
 

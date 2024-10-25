@@ -1,6 +1,8 @@
 import 'package:doctor_dashboard/constants/constants.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
+import 'package:doctor_dashboard/controller/consultation_controller.dart';
 import 'package:doctor_dashboard/extensions/number_exten.dart';
+import 'package:doctor_dashboard/model/consultation_model.dart';
 import 'package:doctor_dashboard/notification_popup/popup_1.dart';
 import 'package:doctor_dashboard/notification_popup/popup_10.dart';
 import 'package:doctor_dashboard/notification_popup/popup_11.dart';
@@ -18,10 +20,15 @@ import 'package:doctor_dashboard/widgets/custom_appbar.dart';
 import 'package:doctor_dashboard/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
+
+import '../../model/phone_email_consult_model.dart';
+import '../new_consultation_details/new_consultation_details.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -51,6 +58,8 @@ class _DashboardState extends State<Dashboard>
   int greatestValue = 0;
 
   final ScrollController _firstController = ScrollController();
+  ConsultationController consultationController =
+      Get.put(ConsultationController());
 
   @override
   void initState() {
@@ -61,7 +70,8 @@ class _DashboardState extends State<Dashboard>
           Brightness.light, //<-- For Android SEE HERE (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
-
+    consultationController.getHistoryByDoctorId(
+        {"doctorId": "66bf3adcdd3df57c89074fe1", "range": "month"});
     setState(() {
       greatestValue = graphData
           .reduce((value, element) => value > element ? value : element);
@@ -145,8 +155,8 @@ class _DashboardState extends State<Dashboard>
       duration: duration,
       top: 0,
       bottom: 0,
-      left: isCollapsed ? 0 : 0.6 * screenWidth,
-      right: isCollapsed ? 0 : -0.2 * screenWidth,
+      left: isCollapsed ? 0 : 0.5 * screenWidth,
+      right: isCollapsed ? 0 : -0.5 * screenWidth,
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: Material(
@@ -842,187 +852,222 @@ class _DashboardState extends State<Dashboard>
                             const SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Container(
-                                width: double.infinity,
-                                height: 380,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xffffffff),
-                                  borderRadius: BorderRadius.circular(35),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(0xff000000)
-                                          .withOpacity(.1),
-                                      offset: const Offset(-10.0, -10.0),
-                                      blurRadius: 20,
-                                      spreadRadius: 0.0,
-                                    ),
-                                    BoxShadow(
-                                      color: const Color(0xff000000)
-                                          .withOpacity(.1),
-                                      offset: const Offset(10.0, 10.0),
-                                      blurRadius: 20,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 12, top: 12, right: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12),
-                                        child: Text(
-                                          "Next",
-                                          style: CustomFonts.slussen16W700(
-                                              color: HexColor("#201A3F")),
-                                        ),
+                            GetBuilder<ConsultationController>(
+                              init: ConsultationController(),
+                              builder: (controller) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 380,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(35),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0xff000000)
+                                            .withOpacity(.1),
+                                        offset: const Offset(-10.0, -10.0),
+                                        blurRadius: 20,
+                                        spreadRadius: 0.0,
                                       ),
-                                      Expanded(
-                                          child: Scrollbar(
-                                        thickness: 6.0,
-                                        trackVisibility: true,
-                                        thumbVisibility: true,
-                                        controller: _firstController,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: SingleChildScrollView(
-                                            controller: _firstController,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  for (int i = 0; i < 8; i++)
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 12),
-                                                      child: Container(
-                                                        height: 90,
+                                      BoxShadow(
+                                        color: const Color(0xff000000)
+                                            .withOpacity(.1),
+                                        offset: const Offset(10.0, 10.0),
+                                        blurRadius: 20,
+                                        spreadRadius: 0.0,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12, top: 12, right: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 12),
+                                          child: Text(
+                                            "Next",
+                                            style: CustomFonts.slussen16W700(
+                                                color: HexColor("#201A3F")),
+                                          ),
+                                        ),
+                                        controller.historyDoctorIdIsFetching
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                color: HexColor("#201A3F"),
+                                              ))
+                                            : controller.historyByDoctorIdList
+                                                    .isEmpty
+                                                ? SizedBox()
+                                                : Expanded(
+                                                    child: Scrollbar(
+                                                    thickness: 6.0,
+                                                    trackVisibility: true,
+                                                    thumbVisibility: true,
+                                                    controller:
+                                                        _firstController,
+                                                    child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .all(6),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: HexColor(
-                                                                  "#F4F4F7")
-                                                              .withOpacity(.5),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(45),
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            Image.asset(
-                                                              "lib/pages/dashboard/assets/img.png",
-                                                              height: 74,
-                                                              width: 74,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 8,
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  "Taylor Russel",
-                                                                  style: CustomFonts
-                                                                      .slussen14W700(),
+                                                                .symmetric(
+                                                                vertical: 10),
+                                                        child: ListView.builder(
+                                                          controller:
+                                                              _firstController,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  right: 20),
+                                                          itemCount: controller
+                                                              .historyByDoctorIdList
+                                                              .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            PhoneEmailConsultModel
+                                                                consultationModel =
+                                                                controller
+                                                                        .historyByDoctorIdList[
+                                                                    index];
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      bottom:
+                                                                          12),
+                                                              child: Container(
+                                                                height: 90,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(6),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: HexColor(
+                                                                          "#F4F4F7")
+                                                                      .withOpacity(
+                                                                          .5),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              45),
                                                                 ),
-                                                                const SizedBox(
-                                                                  height: 4,
-                                                                ),
-                                                                Text(
-                                                                  "Dental Check - Up",
-                                                                  style: CustomFonts
-                                                                      .slussen8W600(),
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 6,
-                                                                ),
-                                                                Container(
-                                                                  height: 20,
-                                                                  width: 122,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                          gradient: LinearGradient(
-                                                                              colors: [
+                                                                child: Row(
+                                                                  children: [
+                                                                    Image.asset(
+                                                                      "lib/pages/dashboard/assets/img.png",
+                                                                      height:
+                                                                          74,
+                                                                      width: 74,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 8,
+                                                                    ),
+                                                                    Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          consultationModel
+                                                                              .name!,
+                                                                          style:
+                                                                              CustomFonts.slussen14W700(),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          height:
+                                                                              4,
+                                                                        ),
+                                                                        Text(
+                                                                          "Dental Check - Up",
+                                                                          style:
+                                                                              CustomFonts.slussen8W600(),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          height:
+                                                                              6,
+                                                                        ),
+                                                                        Container(
+                                                                          height:
+                                                                              20,
+                                                                          // width:
+                                                                          //     122,
+                                                                          padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                              horizontal: 10),
+                                                                          decoration: BoxDecoration(
+                                                                              gradient: LinearGradient(colors: [
                                                                                 HexColor("#E2C680"),
                                                                                 HexColor("#D8874B"),
                                                                               ]),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(35)),
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                        "Today at 10:30 am",
-                                                                        style: CustomFonts.slussen10W500(
-                                                                            color:
-                                                                                Colors.white)),
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            const Spacer(),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const ProfileView(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                              child: Container(
-                                                                height: 30,
-                                                                width: 30,
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    border: Border.all(
-                                                                        color: HexColor(
-                                                                            "#201A3F"))),
-                                                                child: Center(
-                                                                  child: Image.asset(
-                                                                      "lib/pages/dashboard/assets/arrow.png",
-                                                                      height:
-                                                                          13,
-                                                                      width: 13,
-                                                                      color: HexColor(
-                                                                          "#201A3F")),
+                                                                              borderRadius: BorderRadius.circular(35)),
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                Text(formatDate(consultationModel.dateTime.toString()), style: CustomFonts.slussen10W500(color: Colors.white)),
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    const Spacer(),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        // Navigator
+                                                                        //     .push(
+                                                                        //   context,
+                                                                        //   MaterialPageRoute(
+                                                                        //     builder: (context) =>
+                                                                        //         const ProfileView(),
+                                                                        //   ),
+                                                                        // );
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) => NewConsultationDetails(
+                                                                                      isNew: false,
+                                                                                      model: consultationModel,
+                                                                                    )));
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            30,
+                                                                        width:
+                                                                            30,
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            border: Border.all(color: HexColor("#201A3F"))),
+                                                                        child:
+                                                                            Center(
+                                                                          child: Image.asset(
+                                                                              "lib/pages/dashboard/assets/arrow.png",
+                                                                              height: 13,
+                                                                              width: 13,
+                                                                              color: HexColor("#201A3F")),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 24,
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 24,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ))
-                                    ],
+                                                            );
+                                                          },
+                                                        )),
+                                                  ))
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1481,5 +1526,20 @@ class _DashboardState extends State<Dashboard>
         ),
       ),
     );
+  }
+
+  String formatDate(String isoDateString) {
+    DateTime dateTime = DateTime.parse(isoDateString);
+    DateTime now = DateTime.now();
+
+    String formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+    if (now.day == dateTime.day &&
+        now.month == dateTime.month &&
+        now.year == dateTime.year) {
+      return 'Today at $formattedTime';
+    } else {
+      return "${DateFormat('MMM dd, yyyy').format(dateTime)} at ${DateFormat('hh:mm a').format(dateTime)}";
+    }
   }
 }
