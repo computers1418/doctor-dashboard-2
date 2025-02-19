@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doctor_dashboard/constants/common_methods.dart';
 import 'package:doctor_dashboard/controller/consultation_controller.dart';
 import 'package:doctor_dashboard/controller/problem_controller.dart';
@@ -21,6 +23,7 @@ import 'package:doctor_dashboard/pages/set_problem/set_problem.dart';
 import 'package:doctor_dashboard/pages/set_schedule/set_schedule.dart';
 import 'package:doctor_dashboard/pages/sms_voice_note/sms_voice_note.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
@@ -82,301 +85,315 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Dashboard())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Dashboard"),
+    return WillPopScope(
+      onWillPop: () {
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else if (Platform.isIOS) {
+          exit(0);
+        }
+        return Future.value(false);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Dashboard())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Dashboard"),
+                    ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationScreen())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Notification"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SmsVoiceNote())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("SMS & Voice Notes"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchResult())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Search Result"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AppointmentHistory())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Appointment History"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NewConsultationDetails(
+                                isNew: true,
+                              ))),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("New Consultation Details"),
+                    ),
+                  ),
+                ),
+                // InkWell(
+                //   onTap: () => Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => NewConsultationDetails(
+                //                 isNew: false,
+                //               ))),
+                //   child: Card(
+                //     child: Container(
+                //       width: double.infinity,
+                //       padding: const EdgeInsets.all(10.0),
+                //       child: const Text("Existing Consultation Details"),
+                //     ),
+                //   ),
+                // ),
+                InkWell(
+                  onTap: () => CommonMethods.showProblemBottomSheet(
+                      context, problemController, consultationController),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Select Problem"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const NotificationScreen())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Notification"),
+                      builder: (context) => const SetProblem(),
+                    ),
+                  ),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Set Problem"),
+                    ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProblemIcons())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Problem Icons"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Login"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OtpScreen())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("OTP"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Forgot Password"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SetPasswordScreen())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Set Password"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SavedSchedules())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Saved Schedules"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PreviousSchedules())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Previous Schedules"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SetSchedule())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Set Schedules"),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SmsVoiceNote())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("SMS & Voice Notes"),
+                      builder: (context) => const ProfileView(),
+                    ),
+                  ),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Profile View"),
+                    ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
+                InkWell(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SearchResult())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Search Result"),
+                      builder: (context) => const HistoryView(),
+                    ),
+                  ),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("History View"),
+                    ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AppointmentHistory())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Appointment History"),
+                // InkWell(
+                //   onTap: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => const ChooseConsultationView(),
+                //     ),
+                //   ),
+                //   child: Card(
+                //     child: Container(
+                //       width: double.infinity,
+                //       padding: const EdgeInsets.all(10.0),
+                //       child: const Text("Choose Consultation"),
+                //     ),
+                //   ),
+                // ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ModeOfTreatment())),
+                  child: Card(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text("Mode of Treatment"),
+                    ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NewConsultationDetails(
-                              isNew: true,
-                            ))),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("New Consultation Details"),
-                  ),
-                ),
-              ),
-              // InkWell(
-              //   onTap: () => Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => NewConsultationDetails(
-              //                 isNew: false,
-              //               ))),
-              //   child: Card(
-              //     child: Container(
-              //       width: double.infinity,
-              //       padding: const EdgeInsets.all(10.0),
-              //       child: const Text("Existing Consultation Details"),
-              //     ),
-              //   ),
-              // ),
-              InkWell(
-                onTap: () => CommonMethods.showProblemBottomSheet(
-                    context, problemController, consultationController),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Select Problem"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SetProblem(),
-                  ),
-                ),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Set Problem"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProblemIcons())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Problem Icons"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Login"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const OtpScreen())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("OTP"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ForgotPasswordScreen())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Forgot Password"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SetPasswordScreen())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Set Password"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SavedSchedules())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Saved Schedules"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PreviousSchedules())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Previous Schedules"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SetSchedule())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Set Schedules"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileView(),
-                  ),
-                ),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Profile View"),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HistoryView(),
-                  ),
-                ),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("History View"),
-                  ),
-                ),
-              ),
-              // InkWell(
-              //   onTap: () => Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const ChooseConsultationView(),
-              //     ),
-              //   ),
-              //   child: Card(
-              //     child: Container(
-              //       width: double.infinity,
-              //       padding: const EdgeInsets.all(10.0),
-              //       child: const Text("Choose Consultation"),
-              //     ),
-              //   ),
-              // ),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ModeOfTreatment())),
-                child: Card(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    child: const Text("Mode of Treatment"),
-                  ),
-                ),
-              ),
-              // InkWell(onTap: () => Navigator.push(context,
-              // MaterialPageRoute(builder: (context) => const Profile(
+                // InkWell(onTap: () => Navigator.push(context,
+                // MaterialPageRoute(builder: (context) => const Profile(
 
-              // ))),
-              //   child: Card(
-              //     child: Container(
-              //       width: double.infinity,
-              //       padding: const EdgeInsets.all(10.0),
-              //       child: const Text("Profile"),
-              //     ),
-              //   ),
-              // ),
-            ],
+                // ))),
+                //   child: Card(
+                //     child: Container(
+                //       width: double.infinity,
+                //       padding: const EdgeInsets.all(10.0),
+                //       child: const Text("Profile"),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ),

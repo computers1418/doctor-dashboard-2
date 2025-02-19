@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../constants/common_methods.dart';
 import '../constants/constants.dart';
+import '../constants/pref_data.dart';
 import '../model/guideline_get_model.dart';
 import '../model/treatment_mode_model.dart';
 
@@ -21,15 +22,14 @@ class ModeOfTreatmentController extends GetxController {
   String detailsId = "";
 
   Future<Map<String, dynamic>> getGuideline() async {
+    String doctorId = await PrefData.getDoctorId();
     Map<String, dynamic> resp = {};
     try {
       var headers = {
         'Content-Type': 'application/json',
       };
       var request = http.Request(
-          'GET',
-          Uri.parse(
-              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/get'));
+          'GET', Uri.parse('$baseUrl/api/doctor/$doctorId/guideline/get'));
 
       request.headers.addAll(headers);
 
@@ -57,6 +57,7 @@ class ModeOfTreatmentController extends GetxController {
 
   Future<Map<String, dynamic>> addGuideline(
       body, BuildContext context, fToast) async {
+    String doctorId = await PrefData.getDoctorId();
     Map<String, dynamic> resp = {};
     try {
       var headers = {
@@ -65,7 +66,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/add'));
+              '$baseUrl/api/doctor/$doctorId/guideline/add'));
 
       request.headers.addAll(headers);
 
@@ -94,6 +95,7 @@ class ModeOfTreatmentController extends GetxController {
 
   Future<Map<String, dynamic>> deleteGuidelines(
       BuildContext context, fToast) async {
+    String doctorId = await PrefData.getDoctorId();
     Map<String, dynamic> resp = {};
     try {
       var headers = {
@@ -102,7 +104,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'POST',
           Uri.parse(
-              '$baseUrl/api/doctor/66bf3adcdd3df57c89074fe1/guideline/delete'));
+              '$baseUrl/api/doctor/$doctorId/guideline/delete'));
 
       request.headers.addAll(headers);
 
@@ -228,6 +230,8 @@ class ModeOfTreatmentController extends GetxController {
   Future<Map<String, dynamic>> getTreatmentModesByDoctorId(
       BuildContext context) async {
     Map<String, dynamic> resp = {};
+    String doctorId = await PrefData.getDoctorId();
+    print(doctorId);
     try {
       var headers = {
         'Content-Type': 'application/json',
@@ -235,7 +239,7 @@ class ModeOfTreatmentController extends GetxController {
       var request = http.Request(
           'GET',
           Uri.parse(
-              '$baseUrl/api/treatment-mode/detailsByDoctorId/66bf3adcdd3df57c89074fe1'));
+              '$baseUrl/api/treatment-mode/detailsByDoctorId/$doctorId'));
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();

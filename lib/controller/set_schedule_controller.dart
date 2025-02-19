@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 
 import '../constants/common_methods.dart';
 import '../constants/constants.dart';
+import '../constants/pref_data.dart';
 
 class SetScheduleController extends GetxController {
   List<Datum> schduleList = [];
@@ -44,7 +45,7 @@ class SetScheduleController extends GetxController {
           showToast(fToast, resp["message"], false);
 
           getScheduleByDate({
-            "doctorId": "66bf3adcdd3df57c89074fe1",
+            "doctorId": await PrefData.getDoctorId(),
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
         } else {
@@ -98,7 +99,7 @@ class SetScheduleController extends GetxController {
           isDataLoading.value = false;
           showToast(fToast, resp["message"], false);
           getScheduleByDate({
-            "doctorId": "66bf3adcdd3df57c89074fe1",
+            "doctorId": await PrefData.getDoctorId(),
             "dateArray": ["${DateFormat("yyyy-MM-dd").format(dateTime)}"]
           }, context);
         } else {
@@ -288,7 +289,7 @@ class SetScheduleController extends GetxController {
               "${newList[i]["startController"].text} ${newList[i]["startAm"]}",
               "${newList[i]["endController"].text} ${newList[i]["endAm"]}")) {
             request.body = jsonEncode({
-              "doctorId": "66bf3adcdd3df57c89074fe1",
+              "doctorId": await PrefData.getDoctorId(),
               "newSlot": {
                 "slotStartTime":
                     "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",
@@ -303,7 +304,7 @@ class SetScheduleController extends GetxController {
             });
           } else {
             request.body = jsonEncode({
-              "doctorId": "66bf3adcdd3df57c89074fe1",
+              "doctorId": await PrefData.getDoctorId(),
               "newSlot": {
                 "slotStartTime":
                     "${DateFormat("yyyy-MM-dd").format(dateTime)} ${newList[i]["startController"].text} ${newList[i]["startAm"]}",

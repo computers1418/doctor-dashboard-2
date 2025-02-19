@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:doctor_dashboard/constants/pref_data.dart';
 import 'package:doctor_dashboard/constants/text_style.dart';
 import 'package:doctor_dashboard/controller/consultation_controller.dart';
 import 'package:doctor_dashboard/model/medicine_model.dart';
@@ -44,7 +45,7 @@ class CommonMethods {
       ProblemController problemController,
       ConsultationController consultationController) async {
     problemController.getAllSetProblemList(
-        {"doctorId": "66bf3adcdd3df57c89074fe1", "isDoctor": "yes"});
+        {"doctorId": await PrefData.getDoctorId(), "isDoctor": "yes"});
     List<String> problemList = consultationController.selectProblem;
 
     await showModalBottomSheet<void>(
@@ -317,7 +318,8 @@ class CommonMethods {
       context,
       ProblemController problemController,
       ConsultationController consultationController) async {
-    problemController.getAllTestList({"doctorId": "66bf3adcdd3df57c89074fe1"});
+    problemController
+        .getAllTestList({"doctorId": await PrefData.getDoctorId()});
     List<String> testList = consultationController.selectTest;
 
     await showModalBottomSheet<void>(
@@ -588,7 +590,7 @@ class CommonMethods {
       ProblemController problemController,
       ConsultationController consultationController) async {
     problemController
-        .getAllSurgeryList({"doctorId": "66bf3adcdd3df57c89074fe1"});
+        .getAllSurgeryList({"doctorId": await PrefData.getDoctorId()});
     List<String> surgeryList = consultationController.selectSurgery;
 
     await showModalBottomSheet<void>(
@@ -862,7 +864,7 @@ class CommonMethods {
       ProblemController problemController,
       ConsultationController consultationController) async {
     problemController
-        .getAllMedicineList({"doctorId": "66bf3adcdd3df57c89074fe1"});
+        .getAllMedicineList({"doctorId": await PrefData.getDoctorId()});
     List<String> medicineList = consultationController.selectMedicine;
 
     await showModalBottomSheet<void>(

@@ -14,7 +14,7 @@ const String pinkColor = "#FF65DE";
 // String baseUrl = 'http://13.127.57.197';
 // String baseUrl = 'http://www.health24.fun';
 // String baseUrl = 'https://162.240.106.108:9091';
-String baseUrl = 'http://ec2-54-196-7-155.compute-1.amazonaws.com:9091';
+String baseUrl = 'https://api.dentistindiaplus.com';
 
 showToast(FToast fToast, String text, bool error) {
   return fToast.showToast(

@@ -23,6 +23,13 @@ class ProblemController extends GetxController {
   List<Map<dynamic, dynamic>> newSurgeryList = [];
   var isFetching = false.obs;
 
+  clearAllList() {
+    newProblemList.clear();
+    newTestList.clear();
+    newMedicineList.clear();
+    newSurgeryList.clear();
+  }
+
   addController(Map<dynamic, dynamic> data) {
     newProblemList.add(data);
     update();
@@ -118,7 +125,6 @@ class ProblemController extends GetxController {
           getTestList =
               dataList.map((element) => TestModel.fromJson(element)).toList();
 
-          // Assuming you have a SetProblemModel with a fromJson method
           List<TestModel> problemList =
               dataList.map((element) => TestModel.fromJson(element)).toList();
           for (var element in problemList) {
@@ -479,7 +485,7 @@ class ProblemController extends GetxController {
         if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
           // getListInvitation();
-          // getAllSurgeryList({"doctorId": "66bf3adcdd3df57c89074fe1"});
+          // getAllSurgeryList({"doctorId": await PrefData.getDoctorId()});
         } else {
           showToast(fToast, resp["message"], true);
           if (kDebugMode) {
@@ -549,7 +555,7 @@ class ProblemController extends GetxController {
         if (response.statusCode == 200) {
           showToast(fToast, resp["message"], false);
           // getAllSetProblemList(
-          //     {"doctorId": "66bf3adcdd3df57c89074fe1", "isDoctor": "yes"});
+          //     {"doctorId": await PrefData.getDoctorId(), "isDoctor": "yes"});
           action();
         } else {
           showToast(fToast, resp["message"], true);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:doctor_dashboard/constants/pref_data.dart';
 import 'package:doctor_dashboard/pages/otp/otp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -64,6 +65,76 @@ class LoginController extends GetxController {
       }
     } catch (e) {}
     return resp;
+  }
+
+  Future<Map<String, dynamic>> loginApi(
+      body, BuildContext context, fToast, Function function) async {
+    Map<String, dynamic> resp = {};
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request =
+          http.Request('POST', Uri.parse('$baseUrl/api/doctor/auth/login'));
+
+      request.headers.addAll(headers);
+
+      request.body = jsonEncode(body);
+
+      http.StreamedResponse response = await request.send();
+      resp = await CommonMethods.decodeStreamedResponse(response);
+
+      if (response.statusCode == 400) {
+        showToast(fToast, resp["message"], false);
+      } else {
+        if (response.statusCode == 200) {
+          showToast(fToast, resp["message"], false);
+          PrefData.setDoctorId(resp["data"]["id"]);
+          function();
+
+          update();
+        } else {
+          showToast(fToast, resp["message"], true);
+          if (kDebugMode) {
+            print(response.reasonPhrase);
+          }
+        }
+      }
+    } catch (e) {}
+    return resp;
+  }
+
+  Future<bool> checkOnboardingApi(
+      userName, BuildContext context, fToast) async {
+    Map<String, dynamic> resp = {};
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+      var request = http.Request(
+          'GET',
+          Uri.parse(
+              '$baseUrl/api/doctor/onboarding/check-onboarding?userName=$userName'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      resp = await CommonMethods.decodeStreamedResponse(response);
+      print(resp);
+      if (response.statusCode == 400) {
+        showToast(fToast, resp["message"], true);
+        return resp["isOnboardingCompleted"];
+
+      } else {
+        if (response.statusCode == 200) {
+          showToast(fToast, resp["message"], false);
+          return resp["isOnboardingCompleted"];
+        } else {
+          return resp["isOnboardingCompleted"];
+        }
+      }
+    } catch (e) {}
+    return false;
   }
 
   Future<Map<String, dynamic>> otpValidateApi(
@@ -133,17 +204,16 @@ class LoginController extends GetxController {
     return resp;
   }
 
-  Future<Map<String, dynamic>> changePasswordApi(body,
-      BuildContext context, fToast, String password, Function function) async {
+  Future<Map<String, dynamic>> createPasswordApi(body, BuildContext context,
+      fToast, String password, Function function) async {
     Map<String, dynamic> resp = {};
-    print("sdsdsd=====${body}");
 
     try {
       var headers = {
         'Content-Type': 'application/json',
       };
       var request = http.Request(
-          'POST', Uri.parse('$baseUrl/api/doctor/onboarding/change-password'));
+          'POST', Uri.parse('$baseUrl/api/doctor/onboarding/create-password'));
 
       request.headers.addAll(headers);
 
